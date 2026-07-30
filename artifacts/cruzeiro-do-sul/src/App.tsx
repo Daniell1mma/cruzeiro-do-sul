@@ -3,6 +3,8 @@ import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
 import { Route, Switch, Router as WouterRouter } from 'wouter';
+import { AuthProvider } from '@/contexts/AuthContext';
+import { ProtectedRoute } from '@/components/ProtectedRoute';
 
 // Public Pages
 import { Home } from '@/pages/public/Home';
@@ -19,6 +21,7 @@ import { Faq } from '@/pages/public/Faq';
 import { Contact } from '@/pages/public/Contact';
 
 // Admin Pages
+import { AdminLogin } from '@/pages/admin/Login';
 import { Dashboard } from '@/pages/admin/Dashboard';
 import { Posts } from '@/pages/admin/Posts';
 import { Settings } from '@/pages/admin/Settings';
@@ -42,22 +45,23 @@ function Router() {
       <Route path="/atendimento" component={Attendance} />
       <Route path="/faq" component={Faq} />
       <Route path="/contato" component={Contact} />
-      
-      {/* Admin Routes */}
-      <Route path="/admin" component={Dashboard} />
-      <Route path="/admin/posts" component={Posts} />
-      <Route path="/admin/settings" component={Settings} />
-      <Route path="/admin/testimonials" component={Testimonials} />
-      
-      {/* 
-      Additional admin routes to be fully implemented:
-      <Route path="/admin/courses" component={AdminCourses} />
-      <Route path="/admin/library" component={AdminLibrary} />
-      <Route path="/admin/gallery" component={AdminGallery} />
-      <Route path="/admin/timeline" component={AdminTimeline} />
-      <Route path="/admin/comments" component={AdminComments} />
-      <Route path="/admin/faq" component={AdminFaq} />
-      */}
+
+      {/* Admin Login (unprotected) */}
+      <Route path="/admin/login" component={AdminLogin} />
+
+      {/* Admin Routes (protected) */}
+      <Route path="/admin">
+        {() => <ProtectedRoute component={Dashboard} />}
+      </Route>
+      <Route path="/admin/posts">
+        {() => <ProtectedRoute component={Posts} />}
+      </Route>
+      <Route path="/admin/settings">
+        {() => <ProtectedRoute component={Settings} />}
+      </Route>
+      <Route path="/admin/testimonials">
+        {() => <ProtectedRoute component={Testimonials} />}
+      </Route>
 
       <Route component={NotFound} />
     </Switch>
@@ -68,9 +72,11 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
-          <Router />
-        </WouterRouter>
+        <AuthProvider>
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+            <Router />
+          </WouterRouter>
+        </AuthProvider>
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>

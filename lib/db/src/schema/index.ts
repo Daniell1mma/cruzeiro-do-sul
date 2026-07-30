@@ -7,3 +7,4 @@ export * from "./testimonials";
 export * from "./comments";
 export * from "./faq";
 export * from "./settings";
+export * from "./admin-users";

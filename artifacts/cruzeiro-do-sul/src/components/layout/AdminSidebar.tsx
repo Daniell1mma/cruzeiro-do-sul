@@ -1,4 +1,5 @@
 import { Link, useLocation } from "wouter";
+import { useAuth } from "@/contexts/AuthContext";
 import { 
   LayoutDashboard, 
   FileText, 
@@ -10,11 +11,13 @@ import {
   MessageCircle,
   HelpCircle,
   Clock,
-  LogOut
+  LogOut,
+  Globe
 } from "lucide-react";
 
 export function AdminSidebar() {
   const [location] = useLocation();
+  const { user, logout } = useAuth();
 
   const links = [
     { name: "Dashboard", path: "/admin", icon: <LayoutDashboard size={20} /> },
@@ -31,7 +34,7 @@ export function AdminSidebar() {
 
   return (
     <aside className="w-64 bg-sidebar border-r border-sidebar-border min-h-screen flex flex-col sticky top-0 h-screen overflow-y-auto">
-      <div className="p-6">
+      <div className="p-6 flex-1">
         <div className="flex items-center gap-3 mb-8">
           <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-serif font-bold text-xl">
             F
@@ -41,6 +44,13 @@ export function AdminSidebar() {
             <span className="text-xs text-sidebar-foreground/60">Cruzeiro do Sul</span>
           </div>
         </div>
+
+        {user && (
+          <div className="mb-6 px-3 py-2.5 bg-sidebar-accent/40 rounded-lg">
+            <p className="text-xs font-semibold text-sidebar-foreground truncate">{user.name}</p>
+            <p className="text-xs text-sidebar-foreground/50 truncate">{user.email}</p>
+          </div>
+        )}
 
         <nav className="space-y-1">
           {links.map((link) => {
@@ -58,19 +68,26 @@ export function AdminSidebar() {
                 {link.icon}
                 {link.name}
               </Link>
-            )
+            );
           })}
         </nav>
       </div>
 
-      <div className="mt-auto p-6 border-t border-sidebar-border">
+      <div className="p-6 border-t border-sidebar-border space-y-1">
         <Link 
           href="/" 
-          className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-sidebar-foreground/70 hover:text-sidebar-foreground"
+          className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-sidebar-foreground/70 hover:text-sidebar-foreground rounded-lg hover:bg-sidebar-accent/50 transition-colors"
+        >
+          <Globe size={20} />
+          Ver Site
+        </Link>
+        <button
+          onClick={logout}
+          className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-red-500/80 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
         >
           <LogOut size={20} />
-          Voltar ao Site
-        </Link>
+          Sair
+        </button>
       </div>
     </aside>
   );
