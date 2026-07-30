@@ -24,10 +24,20 @@ import { Contact } from '@/pages/public/Contact';
 import { AdminLogin } from '@/pages/admin/Login';
 import { Dashboard } from '@/pages/admin/Dashboard';
 import { Posts } from '@/pages/admin/Posts';
-import { Settings } from '@/pages/admin/Settings';
+import { Courses as AdminCourses } from '@/pages/admin/Courses';
+import { Library as AdminLibrary } from '@/pages/admin/Library';
+import { Gallery as AdminGallery } from '@/pages/admin/Gallery';
+import { Timeline } from '@/pages/admin/Timeline';
 import { Testimonials } from '@/pages/admin/Testimonials';
+import { Comments } from '@/pages/admin/Comments';
+import { Faq as AdminFaq } from '@/pages/admin/Faq';
+import { Settings } from '@/pages/admin/Settings';
 
 const queryClient = new QueryClient();
+
+function AdminRoute({ component }: { component: React.ComponentType }) {
+  return <ProtectedRoute component={component} />;
+}
 
 function Router() {
   return (
@@ -50,18 +60,16 @@ function Router() {
       <Route path="/admin/login" component={AdminLogin} />
 
       {/* Admin Routes (protected) */}
-      <Route path="/admin">
-        {() => <ProtectedRoute component={Dashboard} />}
-      </Route>
-      <Route path="/admin/posts">
-        {() => <ProtectedRoute component={Posts} />}
-      </Route>
-      <Route path="/admin/settings">
-        {() => <ProtectedRoute component={Settings} />}
-      </Route>
-      <Route path="/admin/testimonials">
-        {() => <ProtectedRoute component={Testimonials} />}
-      </Route>
+      <Route path="/admin">{() => <AdminRoute component={Dashboard} />}</Route>
+      <Route path="/admin/posts">{() => <AdminRoute component={Posts} />}</Route>
+      <Route path="/admin/courses">{() => <AdminRoute component={AdminCourses} />}</Route>
+      <Route path="/admin/library">{() => <AdminRoute component={AdminLibrary} />}</Route>
+      <Route path="/admin/gallery">{() => <AdminRoute component={AdminGallery} />}</Route>
+      <Route path="/admin/timeline">{() => <AdminRoute component={Timeline} />}</Route>
+      <Route path="/admin/testimonials">{() => <AdminRoute component={Testimonials} />}</Route>
+      <Route path="/admin/comments">{() => <AdminRoute component={Comments} />}</Route>
+      <Route path="/admin/faq">{() => <AdminRoute component={AdminFaq} />}</Route>
+      <Route path="/admin/settings">{() => <AdminRoute component={Settings} />}</Route>
 
       <Route component={NotFound} />
     </Switch>
