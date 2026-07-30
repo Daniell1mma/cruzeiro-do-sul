@@ -3,33 +3,33 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { useListFaqItems } from "@workspace/api-client-react";
 
 export function Apometria() {
-  const { data: faqItems } = useListFaqItems({ category: 'apometria' });
+  const { data: faqItems } = useListFaqItems({ category: "apometria" });
 
   return (
     <PublicLayout>
-      <section className="bg-muted pt-20 pb-16">
+      <section className="bg-muted pt-14 pb-12 md:pt-20 md:pb-16">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="max-w-3xl mx-auto text-center space-y-6">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground">
+          <div className="max-w-3xl mx-auto text-center space-y-4 md:space-y-6">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-foreground">
               O que é Apometria?
             </h1>
-            <p className="text-xl text-foreground/80 leading-relaxed">
+            <p className="text-lg md:text-xl text-foreground/80 leading-relaxed">
               Uma técnica terapêutica espiritual baseada no desdobramento induzido dos corpos sutis.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4 md:px-6 max-w-4xl">
-          <div className="prose prose-lg prose-headings:font-serif prose-headings:text-foreground max-w-none mb-20">
-            <img 
-              src="/apometria.jpg" 
-              alt="Representação da energia apométrica" 
-              className="w-full rounded-2xl shadow-sm mb-12 aspect-[21/9] object-cover border border-border" 
+          <div className="prose prose-base md:prose-lg prose-headings:font-serif prose-headings:text-foreground max-w-none mb-16 md:mb-20">
+            <img
+              src="/apometria.jpg"
+              alt="Representação da energia apométrica"
+              className="w-full rounded-2xl shadow-sm mb-8 md:mb-12 aspect-[16/9] md:aspect-[21/9] object-cover border border-border"
             />
-            
-            <p className="lead text-2xl text-primary font-serif italic text-center mb-12">
+
+            <p className="lead text-lg md:text-2xl text-primary font-serif italic text-center mb-8 md:mb-12">
               "Apometria não é religião, é uma técnica de tratamento espiritual calcada em princípios físicos e energéticos."
             </p>
 
@@ -53,13 +53,15 @@ export function Apometria() {
           </div>
 
           {faqItems && faqItems.length > 0 && (
-            <div className="mt-16 pt-16 border-t border-border">
-              <h2 className="text-3xl font-serif font-bold text-center mb-10">Dúvidas Frequentes sobre Apometria</h2>
+            <div className="mt-12 md:mt-16 pt-12 md:pt-16 border-t border-border">
+              <h2 className="text-2xl md:text-3xl font-serif font-bold text-center mb-8 md:mb-10">
+                Dúvidas Frequentes sobre Apometria
+              </h2>
               <Accordion type="single" collapsible className="w-full">
                 {faqItems.map((item) => (
                   <AccordionItem key={item.id} value={`item-${item.id}`}>
-                    <AccordionTrigger className="text-left font-bold text-lg">{item.question}</AccordionTrigger>
-                    <AccordionContent className="text-base text-foreground/80 leading-relaxed">
+                    <AccordionTrigger className="text-left font-bold text-base md:text-lg">{item.question}</AccordionTrigger>
+                    <AccordionContent className="text-sm md:text-base text-foreground/80 leading-relaxed">
                       {item.answer}
                     </AccordionContent>
                   </AccordionItem>

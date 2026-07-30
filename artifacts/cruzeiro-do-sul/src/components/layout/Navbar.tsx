@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
@@ -21,92 +21,139 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on path change
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [location]);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileMenuOpen]);
+
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white shadow-sm py-3" : "bg-white/95 backdrop-blur-sm py-4"
-      }`}
-    >
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            {/* Logo placeholder */}
-            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-serif font-bold text-xl">
-              F
-            </div>
-            <div className="flex flex-col">
-              <span className="font-serif font-bold text-primary leading-none text-lg">Cruzeiro do Sul</span>
-              <span className="text-[10px] text-muted-foreground uppercase tracking-widest">Fraternidade</span>
-            </div>
-          </Link>
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled ? "bg-white shadow-md py-2" : "bg-white/97 backdrop-blur-sm py-3"
+        }`}
+      >
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex items-center gap-4">
 
-          {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-6">
-            <ul className="flex items-center gap-5 text-sm font-medium text-foreground">
-              {navLinks.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    href={link.path}
-                    className={`transition-colors hover:text-primary ${
-                      location === link.path ? "text-primary font-bold" : "text-foreground/80"
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <Button asChild className="bg-secondary hover:bg-secondary/90 text-white rounded-full px-6">
-              <Link href="/atendimento">Solicitar Atendimento</Link>
-            </Button>
-          </nav>
+            {/* Logo — left */}
+            <Link href="/" className="flex items-center gap-2 shrink-0">
+              <div className="w-9 h-9 bg-primary rounded-full flex items-center justify-center text-white font-serif font-bold text-lg">
+                F
+              </div>
+              <div className="flex flex-col">
+                <span className="font-serif font-bold text-primary leading-none text-base sm:text-lg">Cruzeiro do Sul</span>
+                <span className="text-[9px] text-muted-foreground uppercase tracking-widest hidden sm:block">Fraternidade</span>
+              </div>
+            </Link>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            className="lg:hidden p-2 text-foreground"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </div>
+            {/* Desktop Nav — centered */}
+            <nav className="hidden lg:flex flex-1 items-center justify-center">
+              <ul className="flex items-center gap-1 xl:gap-1.5 text-[13px] font-medium">
+                {navLinks.map((link) => (
+                  <li key={link.path}>
+                    <Link
+                      href={link.path}
+                      className={`px-2.5 py-1.5 rounded-lg transition-colors hover:text-primary hover:bg-primary/5 ${
+                        location === link.path
+                          ? "text-primary font-bold bg-primary/8"
+                          : "text-foreground/75"
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-      {/* Mobile Nav */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 right-0 bg-white border-t border-border shadow-lg animate-in slide-in-from-top-2">
-          <nav className="flex flex-col p-4 max-h-[80vh] overflow-y-auto">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                href={link.path}
-                className={`py-3 px-4 border-b border-border/50 text-sm font-medium ${
-                  location === link.path ? "text-primary bg-primary/5" : "text-foreground"
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
-            <div className="pt-4 pb-2 px-4">
-              <Button asChild className="w-full bg-secondary hover:bg-secondary/90 text-white rounded-full">
+            {/* CTA — right */}
+            <div className="hidden lg:flex items-center shrink-0 ml-auto">
+              <Button asChild size="sm" className="bg-secondary hover:bg-secondary/90 text-white rounded-full px-5 text-[13px]">
                 <Link href="/atendimento">Solicitar Atendimento</Link>
               </Button>
             </div>
-          </nav>
+
+            {/* Mobile Toggle */}
+            <button
+              className="lg:hidden ml-auto p-2 -mr-2 text-foreground rounded-lg hover:bg-muted transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
+              aria-expanded={mobileMenuOpen}
+            >
+              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
         </div>
-      )}
-    </header>
+      </header>
+
+      {/* Mobile Menu Overlay */}
+      <div
+        className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${
+          mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setMobileMenuOpen(false)}
+        aria-hidden="true"
+      >
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+      </div>
+
+      <aside
+        className={`fixed top-0 right-0 h-full w-[min(320px,85vw)] z-50 lg:hidden bg-white shadow-2xl flex flex-col transition-transform duration-300 ease-in-out ${
+          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+        aria-label="Menu de navegação"
+      >
+        {/* Drawer header */}
+        <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-serif font-bold text-sm">F</div>
+            <span className="font-serif font-bold text-primary text-base">Cruzeiro do Sul</span>
+          </div>
+          <button
+            onClick={() => setMobileMenuOpen(false)}
+            className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            aria-label="Fechar menu"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Nav links */}
+        <nav className="flex-1 overflow-y-auto py-3">
+          {navLinks.map((link) => (
+            <Link
+              key={link.path}
+              href={link.path}
+              className={`flex items-center justify-between px-5 py-3.5 text-sm font-medium transition-colors ${
+                location === link.path
+                  ? "text-primary bg-primary/5 font-bold"
+                  : "text-foreground hover:text-primary hover:bg-muted/60"
+              }`}
+            >
+              {link.name}
+              <ChevronRight size={15} className={location === link.path ? "text-primary" : "text-muted-foreground/50"} />
+            </Link>
+          ))}
+        </nav>
+
+        {/* CTA */}
+        <div className="p-5 border-t border-border">
+          <Button asChild className="w-full bg-secondary hover:bg-secondary/90 text-white rounded-full h-12 text-sm font-bold">
+            <Link href="/atendimento">Solicitar Atendimento</Link>
+          </Button>
+        </div>
+      </aside>
+    </>
   );
 }
