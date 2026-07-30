@@ -50,7 +50,7 @@ export function Footer() {
             </h3>
             <ul className="space-y-3 text-sm text-primary-foreground/80">
               <li><Link href="/" className="hover:text-white transition-colors">Início</Link></li>
-              <li><Link href="/quem-somos" className="hover:text-white transition-colors">Quem Somos</Link></li>
+              <li><Link href="/a-fraternidade" className="hover:text-white transition-colors">A Fraternidade</Link></li>
               <li><Link href="/apometria" className="hover:text-white transition-colors">A Apometria</Link></li>
               <li><Link href="/cursos" className="hover:text-white transition-colors">Nossos Cursos</Link></li>
               <li><Link href="/atendimento" className="hover:text-white transition-colors">Atendimento</Link></li>
