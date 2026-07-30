@@ -1,9 +1,10 @@
 import { PublicLayout } from "@/components/layout/PublicLayout";
-import { useGetPostBySlug } from "@workspace/api-client-react";
+import { useGetPostBySlug, useListComments, useCreateComment } from "@workspace/api-client-react";
 import { useParams, Link } from "wouter";
-import { Calendar, User, ArrowLeft } from "lucide-react";
+import { Calendar, User, ArrowLeft, MessageCircle, Send, CheckCircle } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { useState } from "react";
 
 export function BlogPost() {
   const { slug } = useParams();
@@ -100,7 +101,165 @@ export function BlogPost() {
             </div>
           )}
         </div>
+
+        {/* Comments Section */}
+        <CommentsSection postId={post.id} />
       </article>
     </PublicLayout>
+  );
+}
+
+// ─── Comments Section ──────────────────────────────────────────────────────────
+
+function CommentsSection({ postId }: { postId: number }) {
+  const { data: comments, refetch } = useListComments({ postId, postType: "blog", approved: true });
+  const { mutateAsync: createComment, isPending } = useCreateComment();
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", content: "" });
+  const [formError, setFormError] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    setFormError("");
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name.trim() || !form.email.trim() || !form.content.trim()) {
+      setFormError("Preencha todos os campos obrigatórios.");
+      return;
+    }
+    try {
+      await createComment({ data: { postId, postType: "blog", ...form } });
+      setSubmitted(true);
+      setForm({ name: "", email: "", content: "" });
+      refetch();
+    } catch {
+      setFormError("Erro ao enviar comentário. Tente novamente.");
+    }
+  };
+
+  return (
+    <section className="container mx-auto px-4 max-w-3xl mt-20">
+      <div className="border-t border-border pt-12">
+        <h2 className="text-2xl font-serif font-bold text-foreground mb-2 flex items-center gap-3">
+          <MessageCircle className="w-6 h-6 text-primary" />
+          Comentários
+        </h2>
+        <p className="text-sm text-muted-foreground mb-10">
+          Compartilhe sua reflexão. Os comentários são revisados antes de serem publicados.
+        </p>
+
+        {/* Approved comments list */}
+        {comments && comments.length > 0 ? (
+          <div className="space-y-6 mb-14">
+            {comments.map((comment) => (
+              <div key={comment.id} className="bg-muted rounded-2xl p-6">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 bg-primary/10 rounded-full flex items-center justify-center font-bold text-primary text-sm">
+                      {comment.name.charAt(0).toUpperCase()}
+                    </div>
+                    <span className="font-bold text-foreground">{comment.name}</span>
+                  </div>
+                  <time className="text-xs text-muted-foreground">
+                    {format(new Date(comment.createdAt), "dd/MM/yyyy", { locale: ptBR })}
+                  </time>
+                </div>
+                <p className="text-foreground/80 leading-relaxed text-sm">{comment.content}</p>
+                {comment.adminReply && (
+                  <div className="mt-4 pl-4 border-l-2 border-primary/30">
+                    <p className="text-xs font-bold text-primary mb-1">Resposta da Fraternidade</p>
+                    <p className="text-foreground/70 text-sm leading-relaxed">{comment.adminReply}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-10 text-muted-foreground text-sm mb-14">
+            Nenhum comentário ainda. Seja o primeiro a compartilhar sua reflexão!
+          </div>
+        )}
+
+        {/* Submit form */}
+        {submitted ? (
+          <div className="bg-accent/40 border border-primary/20 rounded-2xl p-8 text-center">
+            <CheckCircle className="w-10 h-10 text-primary mx-auto mb-4" />
+            <h3 className="font-bold text-lg text-foreground mb-2">Comentário enviado!</h3>
+            <p className="text-sm text-muted-foreground">
+              Obrigado pela sua mensagem. Ela será publicada após revisão da nossa equipe.
+            </p>
+            <button
+              onClick={() => setSubmitted(false)}
+              className="mt-6 text-sm text-primary font-medium hover:underline"
+            >
+              Enviar outro comentário
+            </button>
+          </div>
+        ) : (
+          <div className="bg-muted/50 border border-border rounded-2xl p-8">
+            <h3 className="font-bold text-lg text-foreground mb-6">Deixe seu comentário</h3>
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Nome <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    placeholder="Seu nome"
+                    className="w-full border border-border rounded-xl px-4 py-3 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    E-mail <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    placeholder="seu@email.com"
+                    className="w-full border border-border rounded-xl px-4 py-3 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  Comentário <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  name="content"
+                  value={form.content}
+                  onChange={handleChange}
+                  placeholder="Compartilhe sua reflexão sobre este artigo..."
+                  rows={5}
+                  className="w-full border border-border rounded-xl px-4 py-3 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition resize-none"
+                />
+              </div>
+              {formError && (
+                <p className="text-sm text-red-500">{formError}</p>
+              )}
+              <p className="text-xs text-muted-foreground">
+                * O e-mail não será publicado. Os comentários passam por moderação antes de aparecer.
+              </p>
+              <button
+                type="submit"
+                disabled={isPending}
+                className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded-xl text-sm transition disabled:opacity-60"
+              >
+                <Send size={16} />
+                {isPending ? "Enviando…" : "Enviar comentário"}
+              </button>
+            </form>
+          </div>
+        )}
+      </div>
+    </section>
   );
 }

@@ -5,12 +5,11 @@ import { Button } from "@/components/ui/button";
 
 const navLinks = [
   { name: "Início", path: "/" },
-  { name: "Quem Somos", path: "/quem-somos" },
-  { name: "Nossa História", path: "/nossa-historia" },
+  { name: "A Fraternidade", path: "/a-fraternidade" },
   { name: "Apometria", path: "/apometria" },
   { name: "Cursos", path: "/cursos" },
-  { name: "Biblioteca", path: "/biblioteca" },
   { name: "Blog", path: "/blog" },
+  { name: "Biblioteca", path: "/biblioteca" },
   { name: "Galeria", path: "/galeria" },
   { name: "FAQ", path: "/faq" },
   { name: "Contato", path: "/contato" },

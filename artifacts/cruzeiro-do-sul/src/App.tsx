@@ -10,6 +10,7 @@ import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { Home } from '@/pages/public/Home';
 import { About } from '@/pages/public/About';
 import { History } from '@/pages/public/History';
+import { Fraternidade } from '@/pages/public/Fraternidade';
 import { Apometria } from '@/pages/public/Apometria';
 import { Courses } from '@/pages/public/Courses';
 import { Library } from '@/pages/public/Library';
@@ -44,8 +45,10 @@ function Router() {
     <Switch>
       {/* Public Routes */}
       <Route path="/" component={Home} />
-      <Route path="/quem-somos" component={About} />
-      <Route path="/nossa-historia" component={History} />
+      <Route path="/a-fraternidade" component={Fraternidade} />
+      {/* Legacy redirects */}
+      <Route path="/quem-somos">{() => { window.location.replace('/a-fraternidade'); return null; }}</Route>
+      <Route path="/nossa-historia">{() => { window.location.replace('/a-fraternidade'); return null; }}</Route>
       <Route path="/apometria" component={Apometria} />
       <Route path="/cursos" component={Courses} />
       <Route path="/biblioteca" component={Library} />

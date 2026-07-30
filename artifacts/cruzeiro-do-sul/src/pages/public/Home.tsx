@@ -1,18 +1,21 @@
 import { PublicLayout } from "@/components/layout/PublicLayout";
 import { Link } from "wouter";
-import { Heart, Sparkles, BookOpen, ShieldCheck, ArrowRight, Star } from "lucide-react";
+import { Heart, Sparkles, BookOpen, ShieldCheck, ArrowRight, Star, HelpCircle } from "lucide-react";
 import { 
   useGetFeaturedCourses, 
   useGetRecentPosts, 
   useListAlbums, 
-  useListTestimonials 
+  useListTestimonials,
+  useListFaqItems,
 } from "@workspace/api-client-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export function Home() {
   const { data: courses } = useGetFeaturedCourses();
   const { data: posts } = useGetRecentPosts({ limit: 3 });
   const { data: albums } = useListAlbums();
   const { data: testimonials } = useListTestimonials({ approved: true });
+  const { data: faqItems } = useListFaqItems();
 
   const differentials = [
     {
@@ -98,7 +101,7 @@ export function Home() {
                 Trabalhamos com profundo respeito, ética e responsabilidade, buscando sempre o alívio das dores da alma e o esclarecimento consciencial, desmistificando o processo de cura espiritual e tornando-o acessível a todos que buscam auxílio sincero.
               </p>
               <div className="pt-4">
-                <Link href="/quem-somos" className="text-primary font-bold hover:underline inline-flex items-center gap-2">
+                <Link href="/a-fraternidade" className="text-primary font-bold hover:underline inline-flex items-center gap-2">
                   Nossa História e Missão <ArrowRight size={16} />
                 </Link>
               </div>
@@ -218,8 +221,44 @@ export function Home() {
         </section>
       )}
 
+      {/* FAQ Section */}
+      {faqItems && faqItems.length > 0 && (
+        <section className="py-24 bg-white">
+          <div className="container px-4 md:px-6 mx-auto max-w-3xl">
+            <div className="text-center mb-14 space-y-4">
+              <div className="w-14 h-14 bg-accent rounded-full flex items-center justify-center mx-auto text-primary">
+                <HelpCircle size={28} />
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground">Dúvidas Frequentes</h2>
+              <p className="text-foreground/70 text-lg">
+                Respostas para as perguntas mais comuns sobre a Fraternidade e a Apometria.
+              </p>
+            </div>
+            <Accordion type="multiple" className="w-full">
+              {faqItems.slice(0, 6).map((item) => (
+                <AccordionItem key={item.id} value={`faq-${item.id}`}>
+                  <AccordionTrigger className="text-left font-semibold text-base">
+                    {item.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-foreground/75 leading-relaxed">
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+            {faqItems.length > 6 && (
+              <div className="text-center mt-10">
+                <Link href="/faq" className="inline-flex items-center gap-2 text-primary font-bold hover:underline">
+                  Ver todas as perguntas <ArrowRight size={16} />
+                </Link>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
       {/* CTA Bottom */}
-      <section className="py-32 bg-white text-center">
+      <section className="py-32 bg-muted text-center">
         <div className="container px-4 md:px-6 mx-auto max-w-3xl">
           <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-6">
             Sente que precisa de ajuda?
