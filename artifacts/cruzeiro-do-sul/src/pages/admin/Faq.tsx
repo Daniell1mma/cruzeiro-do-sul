@@ -1,27 +1,55 @@
+import { useState } from "react";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import {
-  useListFaqItems, useDeleteFaqItem, useCreateFaqItem, useUpdateFaqItem,
+  useListFaqItems, useCreateFaqItem, useUpdateFaqItem, useDeleteFaqItem,
   getListFaqItemsQueryKey,
 } from "@workspace/api-client-react";
+import type { FaqItem, FaqItemInput } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
-import { Trash2, Plus, ChevronDown, ChevronRight } from "lucide-react";
+import { Plus, Edit2, Trash2, ChevronDown, ChevronRight } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { FormModal, Input, Textarea, Row } from "@/components/admin/FormModal";
+
+const EMPTY: FaqItemInput = { question: "", answer: "", category: "", sortOrder: 0 };
 
 export function Faq() {
   const { data: items, isLoading } = useListFaqItems();
-  const deleteItem = useDeleteFaqItem();
   const createItem = useCreateFaqItem();
   const updateItem = useUpdateFaqItem();
+  const deleteItem = useDeleteFaqItem();
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
-  const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ question: "", answer: "", category: "", sortOrder: 0 });
+  const [modal, setModal] = useState<{ open: boolean; editing: FaqItem | null }>({ open: false, editing: null });
+  const [form, setForm] = useState<FaqItemInput>(EMPTY);
   const [expanded, setExpanded] = useState<Record<number, boolean>>({});
 
   const invalidate = () => queryClient.invalidateQueries({ queryKey: getListFaqItemsQueryKey() });
+
+  const openCreate = () => { setForm(EMPTY); setModal({ open: true, editing: null }); };
+  const openEdit = (item: FaqItem) => {
+    setForm({ question: item.question, answer: item.answer, category: item.category ?? "", sortOrder: item.sortOrder ?? 0 });
+    setModal({ open: true, editing: item });
+  };
+  const closeModal = () => setModal({ open: false, editing: null });
+  const set = (k: keyof FaqItemInput, v: unknown) => setForm(f => ({ ...f, [k]: v }));
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const data = { ...form, sortOrder: Number(form.sortOrder) };
+    if (modal.editing) {
+      updateItem.mutate({ id: modal.editing.id, data }, {
+        onSuccess: () => { toast({ title: "Pergunta atualizada" }); invalidate(); closeModal(); },
+        onError:   () => toast({ title: "Erro ao salvar", variant: "destructive" }),
+      });
+    } else {
+      createItem.mutate({ data }, {
+        onSuccess: () => { toast({ title: "Pergunta adicionada" }); invalidate(); closeModal(); },
+        onError:   () => toast({ title: "Erro ao criar", variant: "destructive" }),
+      });
+    }
+  };
 
   const handleDelete = (id: number) => {
     if (!confirm("Excluir esta pergunta?")) return;
@@ -31,20 +59,8 @@ export function Faq() {
     });
   };
 
-  const handleCreate = (e: React.FormEvent) => {
-    e.preventDefault();
-    createItem.mutate({ data: { question: form.question, answer: form.answer, category: form.category || undefined, sortOrder: Number(form.sortOrder) } }, {
-      onSuccess: () => {
-        toast({ title: "Pergunta adicionada" });
-        invalidate();
-        setShowForm(false);
-        setForm({ question: "", answer: "", category: "", sortOrder: 0 });
-      },
-      onError: () => toast({ title: "Erro ao salvar", variant: "destructive" }),
-    });
-  };
-
-  const toggle = (id: number) => setExpanded(prev => ({ ...prev, [id]: !prev[id] }));
+  const toggle = (id: number) => setExpanded(p => ({ ...p, [id]: !p[id] }));
+  const isPending = createItem.isPending || updateItem.isPending;
 
   return (
     <AdminLayout>
@@ -53,42 +69,8 @@ export function Faq() {
           <h1 className="text-3xl font-serif font-bold text-foreground">FAQ</h1>
           <p className="text-muted-foreground mt-2">Gerencie as perguntas frequentes do site.</p>
         </div>
-        <Button className="gap-2" onClick={() => setShowForm(v => !v)}>
-          <Plus size={16} /> Nova Pergunta
-        </Button>
+        <Button className="gap-2" onClick={openCreate}><Plus size={16} /> Nova Pergunta</Button>
       </div>
-
-      {showForm && (
-        <form onSubmit={handleCreate} className="bg-white rounded-xl shadow-sm border border-border p-6 mb-6 space-y-4">
-          <h2 className="font-bold text-lg">Nova Pergunta</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">Categoria</label>
-              <input value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))}
-                placeholder="Ex: Apometria, Cursos…" className="w-full px-3 py-2 rounded-lg border border-input text-sm focus:outline-none focus:ring-2 focus:ring-primary/40" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Ordem</label>
-              <input type="number" value={form.sortOrder} onChange={e => setForm(f => ({ ...f, sortOrder: +e.target.value }))}
-                className="w-full px-3 py-2 rounded-lg border border-input text-sm focus:outline-none focus:ring-2 focus:ring-primary/40" />
-            </div>
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Pergunta *</label>
-            <input required value={form.question} onChange={e => setForm(f => ({ ...f, question: e.target.value }))}
-              placeholder="Ex: O que é Apometria?" className="w-full px-3 py-2 rounded-lg border border-input text-sm focus:outline-none focus:ring-2 focus:ring-primary/40" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Resposta *</label>
-            <textarea required rows={4} value={form.answer} onChange={e => setForm(f => ({ ...f, answer: e.target.value }))}
-              className="w-full px-3 py-2 rounded-lg border border-input text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 resize-none" />
-          </div>
-          <div className="flex gap-3 justify-end">
-            <Button type="button" variant="outline" onClick={() => setShowForm(false)}>Cancelar</Button>
-            <Button type="submit" disabled={createItem.isPending}>{createItem.isPending ? "Salvando…" : "Salvar"}</Button>
-          </div>
-        </form>
-      )}
 
       {isLoading ? (
         <div className="p-8 flex justify-center"><div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" /></div>
@@ -106,9 +88,10 @@ export function Faq() {
                     {item.category && <span className="ml-3 text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">{item.category}</span>}
                   </div>
                 </button>
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive shrink-0" onClick={() => handleDelete(item.id)}>
-                  <Trash2 size={16} />
-                </Button>
+                <div className="flex gap-2 shrink-0">
+                  <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-primary" onClick={() => openEdit(item)}><Edit2 size={16} /></Button>
+                  <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive" onClick={() => handleDelete(item.id)}><Trash2 size={16} /></Button>
+                </div>
               </div>
               {expanded[item.id] && (
                 <div className="px-6 pb-5 pt-1 bg-muted/20">
@@ -119,6 +102,15 @@ export function Faq() {
           ))}
         </div>
       )}
+
+      <FormModal open={modal.open} onClose={closeModal} title={modal.editing ? "Editar Pergunta" : "Nova Pergunta"} onSubmit={handleSubmit} isPending={isPending} size="lg">
+        <Row>
+          <Input label="Categoria" value={form.category ?? ""} onChange={e => set("category", e.target.value)} placeholder="Ex: Apometria, Cursos, Atendimento" />
+          <Input label="Ordem de exibição" type="number" value={String(form.sortOrder ?? 0)} onChange={e => set("sortOrder", +e.target.value)} hint="Menor número aparece primeiro" />
+        </Row>
+        <Input label="Pergunta" required value={form.question} onChange={e => set("question", e.target.value)} placeholder="Ex: O que é Apometria?" />
+        <Textarea label="Resposta" required rows={5} value={form.answer} onChange={e => set("answer", e.target.value)} />
+      </FormModal>
     </AdminLayout>
   );
 }

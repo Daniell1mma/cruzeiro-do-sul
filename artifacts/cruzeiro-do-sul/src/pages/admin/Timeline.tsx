@@ -1,46 +1,64 @@
+import { useState } from "react";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import {
-  useListTimelineEvents, useDeleteTimelineEvent, useCreateTimelineEvent,
+  useListTimelineEvents, useCreateTimelineEvent, useUpdateTimelineEvent, useDeleteTimelineEvent,
   getListTimelineEventsQueryKey,
 } from "@workspace/api-client-react";
+import type { TimelineEvent, TimelineEventInput } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
-import { Trash2, Plus } from "lucide-react";
+import { Plus, Edit2, Trash2 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { FormModal, Input, Textarea, Row } from "@/components/admin/FormModal";
+
+const EMPTY: TimelineEventInput = { year: "", title: "", text: "", imageUrl: "", sortOrder: 0 };
 
 export function Timeline() {
   const { data: events, isLoading } = useListTimelineEvents();
-  const deleteEvent = useDeleteTimelineEvent();
   const createEvent = useCreateTimelineEvent();
+  const updateEvent = useUpdateTimelineEvent();
+  const deleteEvent = useDeleteTimelineEvent();
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
-  const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ year: "", title: "", text: "", sortOrder: 0 });
+  const [modal, setModal] = useState<{ open: boolean; editing: TimelineEvent | null }>({ open: false, editing: null });
+  const [form, setForm] = useState<TimelineEventInput>(EMPTY);
 
   const invalidate = () => queryClient.invalidateQueries({ queryKey: getListTimelineEventsQueryKey() });
 
+  const openCreate = () => { setForm(EMPTY); setModal({ open: true, editing: null }); };
+  const openEdit = (ev: TimelineEvent) => {
+    setForm({ year: ev.year, title: ev.title, text: ev.text, imageUrl: ev.imageUrl ?? "", sortOrder: ev.sortOrder ?? 0 });
+    setModal({ open: true, editing: ev });
+  };
+  const closeModal = () => setModal({ open: false, editing: null });
+  const set = (k: keyof TimelineEventInput, v: unknown) => setForm(f => ({ ...f, [k]: v }));
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const data = { ...form, sortOrder: Number(form.sortOrder) };
+    if (modal.editing) {
+      updateEvent.mutate({ id: modal.editing.id, data }, {
+        onSuccess: () => { toast({ title: "Evento atualizado" }); invalidate(); closeModal(); },
+        onError:   () => toast({ title: "Erro ao salvar", variant: "destructive" }),
+      });
+    } else {
+      createEvent.mutate({ data }, {
+        onSuccess: () => { toast({ title: "Evento adicionado" }); invalidate(); closeModal(); },
+        onError:   () => toast({ title: "Erro ao criar", variant: "destructive" }),
+      });
+    }
+  };
+
   const handleDelete = (id: number) => {
-    if (!confirm("Excluir este evento da linha do tempo?")) return;
+    if (!confirm("Excluir este evento?")) return;
     deleteEvent.mutate({ id }, {
       onSuccess: () => { toast({ title: "Evento excluído" }); invalidate(); },
       onError:   () => toast({ title: "Erro ao excluir", variant: "destructive" }),
     });
   };
 
-  const handleCreate = (e: React.FormEvent) => {
-    e.preventDefault();
-    createEvent.mutate({ data: { year: form.year, title: form.title, text: form.text, sortOrder: Number(form.sortOrder) } }, {
-      onSuccess: () => {
-        toast({ title: "Evento adicionado" });
-        invalidate();
-        setShowForm(false);
-        setForm({ year: "", title: "", text: "", sortOrder: 0 });
-      },
-      onError: () => toast({ title: "Erro ao salvar", variant: "destructive" }),
-    });
-  };
+  const isPending = createEvent.isPending || updateEvent.isPending;
 
   return (
     <AdminLayout>
@@ -49,42 +67,8 @@ export function Timeline() {
           <h1 className="text-3xl font-serif font-bold text-foreground">Nossa História</h1>
           <p className="text-muted-foreground mt-2">Gerencie os eventos da linha do tempo.</p>
         </div>
-        <Button className="gap-2" onClick={() => setShowForm(v => !v)}>
-          <Plus size={16} /> Novo Evento
-        </Button>
+        <Button className="gap-2" onClick={openCreate}><Plus size={16} /> Novo Evento</Button>
       </div>
-
-      {showForm && (
-        <form onSubmit={handleCreate} className="bg-white rounded-xl shadow-sm border border-border p-6 mb-6 space-y-4">
-          <h2 className="font-bold text-lg">Novo Evento</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">Ano *</label>
-              <input required value={form.year} onChange={e => setForm(f => ({ ...f, year: e.target.value }))}
-                placeholder="2024" className="w-full px-3 py-2 rounded-lg border border-input text-sm focus:outline-none focus:ring-2 focus:ring-primary/40" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Ordem</label>
-              <input type="number" value={form.sortOrder} onChange={e => setForm(f => ({ ...f, sortOrder: +e.target.value }))}
-                className="w-full px-3 py-2 rounded-lg border border-input text-sm focus:outline-none focus:ring-2 focus:ring-primary/40" />
-            </div>
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Título *</label>
-            <input required value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
-              placeholder="Ex: Fundação da Fraternidade" className="w-full px-3 py-2 rounded-lg border border-input text-sm focus:outline-none focus:ring-2 focus:ring-primary/40" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Descrição</label>
-            <textarea rows={3} value={form.text} onChange={e => setForm(f => ({ ...f, text: e.target.value }))}
-              className="w-full px-3 py-2 rounded-lg border border-input text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 resize-none" />
-          </div>
-          <div className="flex gap-3 justify-end">
-            <Button type="button" variant="outline" onClick={() => setShowForm(false)}>Cancelar</Button>
-            <Button type="submit" disabled={createEvent.isPending}>{createEvent.isPending ? "Salvando…" : "Salvar"}</Button>
-          </div>
-        </form>
-      )}
 
       <div className="bg-white rounded-xl shadow-sm border border-border overflow-hidden">
         {isLoading ? (
@@ -98,21 +82,22 @@ export function Timeline() {
                 <th className="px-6 py-4 font-medium w-20">Ano</th>
                 <th className="px-6 py-4 font-medium">Título</th>
                 <th className="px-6 py-4 font-medium w-1/2">Descrição</th>
-                <th className="px-6 py-4 font-medium w-16">Ordem</th>
+                <th className="px-6 py-4 font-medium w-16 text-center">Ordem</th>
                 <th className="px-6 py-4 font-medium text-right">Ações</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
               {events.map(ev => (
                 <tr key={ev.id} className="hover:bg-muted/30 transition-colors">
-                  <td className="px-6 py-4 font-bold text-primary">{ev.year}</td>
+                  <td className="px-6 py-4 font-bold text-primary text-lg">{ev.year}</td>
                   <td className="px-6 py-4 font-medium text-foreground">{ev.title}</td>
-                  <td className="px-6 py-4 text-muted-foreground text-xs line-clamp-2">{ev.text || '-'}</td>
-                  <td className="px-6 py-4 text-muted-foreground text-center">{ev.sortOrder ?? '-'}</td>
+                  <td className="px-6 py-4 text-muted-foreground text-xs line-clamp-2">{ev.text}</td>
+                  <td className="px-6 py-4 text-center text-muted-foreground">{ev.sortOrder}</td>
                   <td className="px-6 py-4 text-right">
-                    <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive" onClick={() => handleDelete(ev.id)}>
-                      <Trash2 size={16} />
-                    </Button>
+                    <div className="flex justify-end gap-2">
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-primary" onClick={() => openEdit(ev)}><Edit2 size={16} /></Button>
+                      <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive" onClick={() => handleDelete(ev.id)}><Trash2 size={16} /></Button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -120,6 +105,16 @@ export function Timeline() {
           </table>
         )}
       </div>
+
+      <FormModal open={modal.open} onClose={closeModal} title={modal.editing ? "Editar Evento" : "Novo Evento"} onSubmit={handleSubmit} isPending={isPending}>
+        <Row>
+          <Input label="Ano" required value={form.year} onChange={e => set("year", e.target.value)} placeholder="Ex: 2005" />
+          <Input label="Ordem de exibição" type="number" value={String(form.sortOrder ?? 0)} onChange={e => set("sortOrder", +e.target.value)} hint="Menor número aparece primeiro" />
+        </Row>
+        <Input label="Título do Evento" required value={form.title} onChange={e => set("title", e.target.value)} placeholder="Ex: Fundação da Fraternidade" />
+        <Textarea label="Descrição" required rows={4} value={form.text} onChange={e => set("text", e.target.value)} />
+        <Input label="URL da Imagem" value={form.imageUrl ?? ""} onChange={e => set("imageUrl", e.target.value)} hint="Opcional — foto associada ao evento" />
+      </FormModal>
     </AdminLayout>
   );
 }
