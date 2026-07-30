@@ -1,0 +1,685 @@
+# PROJETO COMPLETO - SITE INSTITUCIONAL DA FRATERNIDADE CRUZEIRO DO SUL
+
+Quero que você atue como um Arquiteto de Software Sênior, Product Designer (UX/UI), Desenvolvedor Full Stack, Especialista em SEO, Especialista em Performance Web, Especialista em Acessibilidade (WCAG), Especialista em Segurança e Especialista em Headless CMS.
+
+**IMPORTANTE: NÃO COMECE A PROGRAMAR IMEDIATAMENTE.**
+
+Primeiro, analise todos os requisitos abaixo e apresente um **PRD (Product Requirements Document)** extremamente detalhado contendo:
+
+* Objetivos do projeto
+* Arquitetura da solução
+* Tecnologias escolhidas e justificativas
+* Fluxo do usuário
+* Jornada do visitante
+* Estrutura do banco de dados
+* Modelagem das entidades
+* Arquitetura das páginas
+* Sitemap
+* Wireframes conceituais
+* Estrutura dos componentes
+* Plano de SEO
+* Plano de acessibilidade
+* Plano de segurança
+* Estratégia de performance
+* Organização das pastas
+* Roadmap de desenvolvimento
+
+Somente após minha aprovação do PRD, inicie a implementação.
+
+---
+
+# Objetivo do Projeto
+
+Desenvolver um site institucional moderno para a **Fraternidade Cruzeiro do Sul**, localizada em **Guarulhos/SP**.
+
+O objetivo principal é transmitir:
+
+* Paz
+* Acolhimento
+* Profissionalismo
+* Credibilidade
+* Organização
+* Espiritualidade equilibrada
+* Transparência
+* Confiança
+
+O site deverá atender dois públicos:
+
+* Pessoas que procuram atendimento espiritual.
+* Pessoas interessadas em conhecer ou estudar Apometria.
+
+O foco da experiência deverá conduzir naturalmente o visitante até o botão **Solicitar Atendimento**.
+
+---
+
+# Identidade Visual
+
+Quero um visual extremamente elegante.
+
+Inspirado no nível de acabamento de empresas como:
+
+* Apple
+* Stripe
+* Notion
+* Airbnb
+* Linear
+* Vercel
+
+**Não copiar a identidade visual dessas empresas**, apenas utilizar como referência em:
+
+* organização
+* tipografia
+* espaçamento
+* refinamento
+* qualidade visual
+* experiência do usuário
+
+O resultado deverá ser premium.
+
+---
+
+# Paleta de Cores
+
+Fundo:
+
+Branco (#FFFFFF)
+
+Cor Principal:
+
+Azul profundo (#1E5AA8)
+
+Cor Secundária:
+
+Verde suave (#3FAF75)
+
+Cor de Apoio:
+
+Azul claro (#DCEEFF)
+
+Separadores:
+
+Cinza muito claro (#F5F7FA)
+
+Texto:
+
+Cinza escuro (#333333)
+
+Botões:
+
+Azul e Verde.
+
+Os títulos deverão alternar entre azul e verde.
+
+---
+
+# Estilo Visual
+
+Quero um design inspirado em:
+
+* Natureza
+* Luz
+* Harmonia
+* Paz
+* Esperança
+* Cura
+* Serenidade
+
+Evite:
+
+* aparência esotérica
+* excesso de símbolos
+* brilhos exagerados
+* efeitos chamativos
+
+Quero uma espiritualidade elegante e acolhedora.
+
+Priorizar:
+
+* muito espaço em branco
+* tipografia moderna
+* ícones minimalistas
+* sombras suaves
+* bordas arredondadas
+* micro animações
+* transições suaves
+* excelente leitura
+* experiência premium
+
+---
+
+# Estrutura do Site
+
+Menu superior fixo contendo:
+
+* Início
+* Quem Somos
+* Nossa História
+* O que é Apometria
+* Cursos
+* Biblioteca
+* Blog
+* Galeria
+* Atendimento
+* FAQ
+* Contato
+
+Botão destacado:
+
+**Solicitar Atendimento**
+
+---
+
+# Página Inicial
+
+Hero Section contendo:
+
+* título principal
+* subtítulo
+* imagem inspiradora
+* botão Conheça a Apometria
+* botão Solicitar Atendimento
+
+Após isso criar:
+
+* Resumo da Fraternidade
+* Diferenciais
+* Benefícios do Atendimento
+* Cursos em destaque
+* Últimas publicações
+* Galeria
+* Depoimentos
+* Localização
+* CTA para atendimento
+
+---
+
+# Quem Somos
+
+Editar facilmente:
+
+* História
+* Missão
+* Visão
+* Valores
+* Objetivos
+* Trabalho voluntário
+
+---
+
+# Nossa História
+
+Criar uma Timeline moderna.
+
+Cada evento deverá possuir:
+
+* Data
+* Título
+* Texto
+* Imagem
+
+---
+
+# O que é Apometria
+
+Explicar de forma simples:
+
+* O que é
+* História
+* Origem
+* Como funciona
+* Como ocorre um atendimento
+* O que esperar
+* Perguntas comuns
+
+Linguagem simples para quem nunca ouviu falar sobre Apometria.
+
+---
+
+# Cursos
+
+Cada curso deverá conter:
+
+* Nome
+* Imagem
+* Descrição
+* Público
+* Duração
+* Professor
+* Status
+* Botão Saiba Mais
+
+---
+
+# Biblioteca
+
+Área para disponibilizar:
+
+* PDFs
+* Livros
+* Apostilas
+* Áudios
+* Vídeos
+* Artigos
+
+Organizados por categorias.
+
+---
+
+# Blog
+
+Criar um sistema completo de artigos.
+
+Cada postagem deverá possuir:
+
+* título
+* subtítulo
+* capa
+* conteúdo rico
+* imagens
+* galeria
+* vídeos
+* autor
+* categoria
+* tags
+* SEO
+* URL amigável
+* rascunho
+* agendamento
+* destaque
+
+Editor semelhante ao Notion.
+
+---
+
+# Galeria
+
+Criar álbuns.
+
+Upload múltiplo.
+
+Organização por categorias.
+
+Descrição das imagens.
+
+Drag and Drop.
+
+---
+
+# Atendimento
+
+Esta será a principal página.
+
+Explicar como funciona.
+
+Criar um grande botão:
+
+**Preencher Ficha de Atendimento**
+
+Esse botão deverá abrir um Google Forms.
+
+O link ficará configurável pelo administrador.
+
+Criar um passo a passo:
+
+1. Preencher ficha
+
+2. Aguardar contato
+
+3. Comparecer ao atendimento
+
+---
+
+# FAQ
+
+Accordion.
+
+Administrador poderá criar perguntas ilimitadas.
+
+---
+
+# Contato
+
+Inserir:
+
+* endereço
+* WhatsApp
+* telefone
+* email
+* Instagram
+* Facebook
+* Google Maps
+
+---
+
+# Rodapé
+
+* Direitos autorais
+* Política de Privacidade
+* Termos de Uso
+* Contatos
+* Redes Sociais
+
+---
+
+# Comentários
+
+Criar sistema de comentários.
+
+Permitir comentários em:
+
+* Blog
+* Artigos
+* Página "O que é Apometria"
+* Outras páginas institucionais configuráveis pelo administrador
+
+Fluxo:
+
+Usuário comenta
+
+↓
+
+Comentário fica pendente
+
+↓
+
+Administrador aprova
+
+↓
+
+Comentário aparece
+
+Cada comentário deverá conter:
+
+* Nome
+* Email
+* Comentário
+* Data
+
+Administrador poderá:
+
+* responder
+* aprovar
+* editar
+* excluir
+* ocultar
+
+Sistema anti-spam obrigatório.
+
+---
+
+# Depoimentos
+
+Criar sistema próprio.
+
+Permitir:
+
+* Nome
+* Cidade
+* Foto
+* Texto
+* Data
+
+Administrador aprova antes da publicação.
+
+---
+
+# Arquitetura
+
+Utilizar arquitetura Headless CMS.
+
+Preferência:
+
+Payload CMS
+
+Caso exista justificativa técnica, poderá utilizar:
+
+* Directus
+* Strapi
+
+---
+
+# Front-end
+
+Utilizar:
+
+* Next.js
+* React
+* TypeScript
+* Tailwind CSS
+
+Código organizado.
+
+Componentes reutilizáveis.
+
+---
+
+# Painel Administrativo
+
+Criar um painel moderno.
+
+Interface extremamente simples.
+
+Qualquer pessoa sem conhecimento técnico deverá conseguir atualizar o site.
+
+Permitir editar absolutamente tudo sem alterar código.
+
+---
+
+# Dashboard
+
+Mostrar:
+
+* Total de posts
+* Total de cursos
+* Total de imagens
+* Comentários pendentes
+* Últimas alterações
+
+---
+
+# Usuários
+
+Criar níveis:
+
+Administrador
+
+Editor
+
+Moderador
+
+Visualizador
+
+---
+
+# O administrador poderá editar
+
+Página inicial
+
+Quem Somos
+
+Nossa História
+
+Cursos
+
+Biblioteca
+
+Blog
+
+FAQ
+
+Contato
+
+Rodapé
+
+Logo
+
+Favicon
+
+Cores
+
+Redes sociais
+
+Links
+
+Google Forms
+
+Google Maps
+
+Textos
+
+Botões
+
+Imagens
+
+Galerias
+
+Depoimentos
+
+Comentários
+
+---
+
+# Editor
+
+Utilizar editor visual semelhante ao:
+
+* Notion
+* WordPress
+* Webflow
+
+Editar conteúdo deverá ser extremamente simples.
+
+---
+
+# Funcionalidades
+
+Adicionar:
+
+* Scroll suave
+* Lazy Loading
+* Busca interna
+* Botão WhatsApp
+* Voltar ao topo
+* Compartilhar artigos
+* Newsletter (estrutura preparada)
+* Sistema de pesquisa
+
+---
+
+# SEO
+
+Implementar:
+
+Meta Title
+
+Meta Description
+
+Schema.org
+
+Open Graph
+
+Sitemap XML
+
+Robots.txt
+
+Canonical
+
+Breadcrumbs
+
+URLs amigáveis
+
+Performance Lighthouse acima de 95.
+
+---
+
+# Acessibilidade
+
+Implementar WCAG 2.2.
+
+Contraste adequado.
+
+Navegação por teclado.
+
+ARIA Labels.
+
+Leitores de tela.
+
+---
+
+# Segurança
+
+Implementar:
+
+* Login seguro
+* Recuperação de senha
+* Controle de permissões
+* Proteção CSRF
+* Proteção XSS
+* Proteção SQL Injection
+* Rate Limit
+* Backup automático
+* Logs de auditoria
+
+---
+
+# Performance
+
+Site extremamente rápido.
+
+Otimizar:
+
+* Imagens
+* Fontes
+* Cache
+* Renderização
+* Bundle
+
+---
+
+# Escalabilidade
+
+Preparar o sistema para futuramente adicionar:
+
+* Área do aluno
+* Área dos terapeutas
+* Cursos EAD
+* Agenda
+* Eventos
+* Doações online
+* Transmissões ao vivo
+* Integração com WhatsApp
+* Integração com Google Calendar
+* Integração com Google Drive
+* Área de documentos
+* Login social
+
+---
+
+# Qualidade do Código
+
+Seguir princípios:
+
+* SOLID
+* Clean Code
+* DRY
+* KISS
+
+Código limpo.
+
+Bem documentado.
+
+Componentizado.
+
+Escalável.
+
+---
+
+# Objetivo Final
+
+Quero que este projeto seja uma referência entre os sites institucionais de escolas de Apometria no Brasil.
+
+O visitante deve sentir paz, acolhimento e confiança desde o primeiro acesso.
+
+A experiência deve ser moderna, intuitiva, elegante, extremamente profissional e fácil de administrar.
+
+Antes de escrever qualquer linha de código, apresente o PRD completo, a arquitetura proposta e as justificativas técnicas. Aguarde minha aprovação antes de iniciar o desenvolvimento.

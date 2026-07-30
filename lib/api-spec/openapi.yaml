@@ -3,20 +3,40 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: API specification for Fraternidade Cruzeiro do Sul
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: posts
+    description: Blog posts
+  - name: courses
+    description: Courses
+  - name: library
+    description: Library items
+  - name: gallery
+    description: Photo gallery
+  - name: timeline
+    description: History timeline events
+  - name: testimonials
+    description: Testimonials
+  - name: comments
+    description: Comments
+  - name: faq
+    description: Frequently asked questions
+  - name: settings
+    description: Site settings
+  - name: dashboard
+    description: Admin dashboard
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,13 +44,1509 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  # ── Dashboard ────────────────────────────────────────────────────────────
+  /dashboard/stats:
+    get:
+      operationId: getDashboardStats
+      tags: [dashboard]
+      summary: Get dashboard statistics
+      responses:
+        "200":
+          description: Dashboard statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardStats"
+
+  # ── Blog Posts ────────────────────────────────────────────────────────────
+  /posts:
+    get:
+      operationId: listPosts
+      tags: [posts]
+      summary: List blog posts
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum: [draft, published, scheduled]
+        - in: query
+          name: category
+          schema:
+            type: string
+        - in: query
+          name: featured
+          schema:
+            type: boolean
+        - in: query
+          name: limit
+          schema:
+            type: number
+            default: 20
+        - in: query
+          name: offset
+          schema:
+            type: number
+            default: 0
+      responses:
+        "200":
+          description: List of posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Post"
+    post:
+      operationId: createPost
+      tags: [posts]
+      summary: Create a blog post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostInput"
+      responses:
+        "201":
+          description: Created post
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Post"
+
+  /posts/featured:
+    get:
+      operationId: getFeaturedPosts
+      tags: [posts]
+      summary: Get featured blog posts
+      responses:
+        "200":
+          description: Featured posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Post"
+
+  /posts/recent:
+    get:
+      operationId: getRecentPosts
+      tags: [posts]
+      summary: Get recent published blog posts
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: number
+            default: 6
+      responses:
+        "200":
+          description: Recent posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Post"
+
+  /posts/{id}:
+    get:
+      operationId: getPost
+      tags: [posts]
+      summary: Get a blog post
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Post
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Post"
+        "404":
+          description: Not found
+    patch:
+      operationId: updatePost
+      tags: [posts]
+      summary: Update a blog post
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostUpdate"
+      responses:
+        "200":
+          description: Updated post
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Post"
+    delete:
+      operationId: deletePost
+      tags: [posts]
+      summary: Delete a blog post
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      responses:
+        "204":
+          description: Deleted
+
+  /posts/slug/{slug}:
+    get:
+      operationId: getPostBySlug
+      tags: [posts]
+      summary: Get a blog post by slug
+      parameters:
+        - in: path
+          name: slug
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Post
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Post"
+        "404":
+          description: Not found
+
+  # ── Courses ───────────────────────────────────────────────────────────────
+  /courses:
+    get:
+      operationId: listCourses
+      tags: [courses]
+      summary: List courses
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum: [open, closed, upcoming]
+        - in: query
+          name: featured
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: List of courses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Course"
+    post:
+      operationId: createCourse
+      tags: [courses]
+      summary: Create a course
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CourseInput"
+      responses:
+        "201":
+          description: Created course
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Course"
+
+  /courses/featured:
+    get:
+      operationId: getFeaturedCourses
+      tags: [courses]
+      summary: Get featured courses
+      responses:
+        "200":
+          description: Featured courses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Course"
+
+  /courses/{id}:
+    get:
+      operationId: getCourse
+      tags: [courses]
+      summary: Get a course
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Course
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Course"
+        "404":
+          description: Not found
+    patch:
+      operationId: updateCourse
+      tags: [courses]
+      summary: Update a course
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CourseUpdate"
+      responses:
+        "200":
+          description: Updated course
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Course"
+    delete:
+      operationId: deleteCourse
+      tags: [courses]
+      summary: Delete a course
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      responses:
+        "204":
+          description: Deleted
+
+  # ── Library ───────────────────────────────────────────────────────────────
+  /library:
+    get:
+      operationId: listLibraryItems
+      tags: [library]
+      summary: List library items
+      parameters:
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum: [pdf, book, audio, video, article]
+        - in: query
+          name: category
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of library items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LibraryItem"
+    post:
+      operationId: createLibraryItem
+      tags: [library]
+      summary: Create a library item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LibraryItemInput"
+      responses:
+        "201":
+          description: Created library item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LibraryItem"
+
+  /library/{id}:
+    get:
+      operationId: getLibraryItem
+      tags: [library]
+      summary: Get a library item
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Library item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LibraryItem"
+        "404":
+          description: Not found
+    patch:
+      operationId: updateLibraryItem
+      tags: [library]
+      summary: Update a library item
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LibraryItemUpdate"
+      responses:
+        "200":
+          description: Updated library item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LibraryItem"
+    delete:
+      operationId: deleteLibraryItem
+      tags: [library]
+      summary: Delete a library item
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      responses:
+        "204":
+          description: Deleted
+
+  # ── Gallery ───────────────────────────────────────────────────────────────
+  /gallery/albums:
+    get:
+      operationId: listAlbums
+      tags: [gallery]
+      summary: List gallery albums
+      responses:
+        "200":
+          description: List of albums
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Album"
+    post:
+      operationId: createAlbum
+      tags: [gallery]
+      summary: Create a gallery album
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AlbumInput"
+      responses:
+        "201":
+          description: Created album
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Album"
+
+  /gallery/albums/{id}:
+    get:
+      operationId: getAlbum
+      tags: [gallery]
+      summary: Get a gallery album with images
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Album with images
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlbumWithImages"
+        "404":
+          description: Not found
+    patch:
+      operationId: updateAlbum
+      tags: [gallery]
+      summary: Update a gallery album
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AlbumUpdate"
+      responses:
+        "200":
+          description: Updated album
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Album"
+    delete:
+      operationId: deleteAlbum
+      tags: [gallery]
+      summary: Delete an album
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      responses:
+        "204":
+          description: Deleted
+
+  /gallery/images:
+    post:
+      operationId: createGalleryImage
+      tags: [gallery]
+      summary: Add an image to a gallery album
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GalleryImageInput"
+      responses:
+        "201":
+          description: Created gallery image
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GalleryImage"
+
+  /gallery/images/{id}:
+    patch:
+      operationId: updateGalleryImage
+      tags: [gallery]
+      summary: Update a gallery image
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GalleryImageUpdate"
+      responses:
+        "200":
+          description: Updated gallery image
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GalleryImage"
+    delete:
+      operationId: deleteGalleryImage
+      tags: [gallery]
+      summary: Delete a gallery image
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      responses:
+        "204":
+          description: Deleted
+
+  # ── Timeline ──────────────────────────────────────────────────────────────
+  /timeline:
+    get:
+      operationId: listTimelineEvents
+      tags: [timeline]
+      summary: List history timeline events
+      responses:
+        "200":
+          description: Timeline events in order
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TimelineEvent"
+    post:
+      operationId: createTimelineEvent
+      tags: [timeline]
+      summary: Create a timeline event
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TimelineEventInput"
+      responses:
+        "201":
+          description: Created event
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TimelineEvent"
+
+  /timeline/{id}:
+    patch:
+      operationId: updateTimelineEvent
+      tags: [timeline]
+      summary: Update a timeline event
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TimelineEventUpdate"
+      responses:
+        "200":
+          description: Updated event
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TimelineEvent"
+    delete:
+      operationId: deleteTimelineEvent
+      tags: [timeline]
+      summary: Delete a timeline event
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      responses:
+        "204":
+          description: Deleted
+
+  # ── Testimonials ──────────────────────────────────────────────────────────
+  /testimonials:
+    get:
+      operationId: listTestimonials
+      tags: [testimonials]
+      summary: List testimonials
+      parameters:
+        - in: query
+          name: approved
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: List of testimonials
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Testimonial"
+    post:
+      operationId: createTestimonial
+      tags: [testimonials]
+      summary: Submit a testimonial (pending approval)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestimonialInput"
+      responses:
+        "201":
+          description: Testimonial submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Testimonial"
+
+  /testimonials/{id}:
+    patch:
+      operationId: updateTestimonial
+      tags: [testimonials]
+      summary: Update/approve a testimonial
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestimonialUpdate"
+      responses:
+        "200":
+          description: Updated testimonial
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Testimonial"
+    delete:
+      operationId: deleteTestimonial
+      tags: [testimonials]
+      summary: Delete a testimonial
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      responses:
+        "204":
+          description: Deleted
+
+  # ── Comments ──────────────────────────────────────────────────────────────
+  /comments:
+    get:
+      operationId: listComments
+      tags: [comments]
+      summary: List comments
+      parameters:
+        - in: query
+          name: postId
+          schema:
+            type: number
+        - in: query
+          name: postType
+          schema:
+            type: string
+            enum: [blog, apometria, institutional]
+        - in: query
+          name: approved
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: List of comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Comment"
+    post:
+      operationId: createComment
+      tags: [comments]
+      summary: Submit a comment (pending approval)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommentInput"
+      responses:
+        "201":
+          description: Comment submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+
+  /comments/{id}:
+    patch:
+      operationId: updateComment
+      tags: [comments]
+      summary: Approve/edit/reply to comment
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommentUpdate"
+      responses:
+        "200":
+          description: Updated comment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+    delete:
+      operationId: deleteComment
+      tags: [comments]
+      summary: Delete a comment
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      responses:
+        "204":
+          description: Deleted
+
+  # ── FAQ ───────────────────────────────────────────────────────────────────
+  /faq:
+    get:
+      operationId: listFaqItems
+      tags: [faq]
+      summary: List FAQ items
+      parameters:
+        - in: query
+          name: category
+          schema:
+            type: string
+      responses:
+        "200":
+          description: FAQ items in order
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FaqItem"
+    post:
+      operationId: createFaqItem
+      tags: [faq]
+      summary: Create a FAQ item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FaqItemInput"
+      responses:
+        "201":
+          description: Created FAQ item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FaqItem"
+
+  /faq/{id}:
+    patch:
+      operationId: updateFaqItem
+      tags: [faq]
+      summary: Update a FAQ item
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FaqItemUpdate"
+      responses:
+        "200":
+          description: Updated FAQ item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FaqItem"
+    delete:
+      operationId: deleteFaqItem
+      tags: [faq]
+      summary: Delete a FAQ item
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      responses:
+        "204":
+          description: Deleted
+
+  # ── Site Settings ─────────────────────────────────────────────────────────
+  /settings:
+    get:
+      operationId: listSettings
+      tags: [settings]
+      summary: Get all site settings
+      responses:
+        "200":
+          description: All settings as key-value pairs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Setting"
+
+  /settings/{key}:
+    get:
+      operationId: getSetting
+      tags: [settings]
+      summary: Get a setting by key
+      parameters:
+        - in: path
+          name: key
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Setting
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Setting"
+        "404":
+          description: Not found
+    put:
+      operationId: upsertSetting
+      tags: [settings]
+      summary: Create or update a setting
+      parameters:
+        - in: path
+          name: key
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SettingInput"
+      responses:
+        "200":
+          description: Upserted setting
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Setting"
+
 components:
   schemas:
     HealthStatus:
       type: object
+      required: [status]
       properties:
         status:
           type: string
-      required:
-        - status
 
+    DashboardStats:
+      type: object
+      required: [totalPosts, totalCourses, totalImages, pendingComments, pendingTestimonials, totalAlbums, totalLibraryItems]
+      properties:
+        totalPosts:
+          type: number
+        publishedPosts:
+          type: number
+        totalCourses:
+          type: number
+        totalImages:
+          type: number
+        totalAlbums:
+          type: number
+        totalLibraryItems:
+          type: number
+        pendingComments:
+          type: number
+        pendingTestimonials:
+          type: number
+
+    Post:
+      type: object
+      required: [id, title, slug, status, createdAt, updatedAt]
+      properties:
+        id:
+          type: number
+        title:
+          type: string
+        subtitle:
+          type: ["string", "null"]
+        slug:
+          type: string
+        coverUrl:
+          type: ["string", "null"]
+        content:
+          type: ["string", "null"]
+        authorName:
+          type: ["string", "null"]
+        category:
+          type: ["string", "null"]
+        tags:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [draft, published, scheduled]
+        featured:
+          type: boolean
+        scheduledAt:
+          type: ["string", "null"]
+        seoTitle:
+          type: ["string", "null"]
+        seoDescription:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+
+    PostInput:
+      type: object
+      required: [title, slug]
+      properties:
+        title:
+          type: string
+          minLength: 1
+        subtitle:
+          type: string
+        slug:
+          type: string
+          minLength: 1
+        coverUrl:
+          type: string
+        content:
+          type: string
+        authorName:
+          type: string
+        category:
+          type: string
+        tags:
+          type: string
+        status:
+          type: string
+          enum: [draft, published, scheduled]
+        featured:
+          type: boolean
+        scheduledAt:
+          type: string
+        seoTitle:
+          type: string
+        seoDescription:
+          type: string
+
+    PostUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+        subtitle:
+          type: string
+        slug:
+          type: string
+        coverUrl:
+          type: string
+        content:
+          type: string
+        authorName:
+          type: string
+        category:
+          type: string
+        tags:
+          type: string
+        status:
+          type: string
+          enum: [draft, published, scheduled]
+        featured:
+          type: boolean
+        scheduledAt:
+          type: string
+        seoTitle:
+          type: string
+        seoDescription:
+          type: string
+
+    Course:
+      type: object
+      required: [id, name, status, createdAt, updatedAt]
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        slug:
+          type: ["string", "null"]
+        imageUrl:
+          type: ["string", "null"]
+        description:
+          type: ["string", "null"]
+        audience:
+          type: ["string", "null"]
+        duration:
+          type: ["string", "null"]
+        instructor:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [open, closed, upcoming]
+        featured:
+          type: boolean
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+
+    CourseInput:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          minLength: 1
+        slug:
+          type: string
+        imageUrl:
+          type: string
+        description:
+          type: string
+        audience:
+          type: string
+        duration:
+          type: string
+        instructor:
+          type: string
+        status:
+          type: string
+          enum: [open, closed, upcoming]
+        featured:
+          type: boolean
+
+    CourseUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        slug:
+          type: string
+        imageUrl:
+          type: string
+        description:
+          type: string
+        audience:
+          type: string
+        duration:
+          type: string
+        instructor:
+          type: string
+        status:
+          type: string
+          enum: [open, closed, upcoming]
+        featured:
+          type: boolean
+
+    LibraryItem:
+      type: object
+      required: [id, title, type, createdAt, updatedAt]
+      properties:
+        id:
+          type: number
+        title:
+          type: string
+        type:
+          type: string
+          enum: [pdf, book, audio, video, article]
+        description:
+          type: ["string", "null"]
+        fileUrl:
+          type: ["string", "null"]
+        category:
+          type: ["string", "null"]
+        featured:
+          type: boolean
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+
+    LibraryItemInput:
+      type: object
+      required: [title, type]
+      properties:
+        title:
+          type: string
+          minLength: 1
+        type:
+          type: string
+          enum: [pdf, book, audio, video, article]
+        description:
+          type: string
+        fileUrl:
+          type: string
+        category:
+          type: string
+        featured:
+          type: boolean
+
+    LibraryItemUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+        type:
+          type: string
+          enum: [pdf, book, audio, video, article]
+        description:
+          type: string
+        fileUrl:
+          type: string
+        category:
+          type: string
+        featured:
+          type: boolean
+
+    Album:
+      type: object
+      required: [id, name, createdAt, updatedAt]
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        description:
+          type: ["string", "null"]
+        coverUrl:
+          type: ["string", "null"]
+        imageCount:
+          type: number
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+
+    AlbumWithImages:
+      type: object
+      required: [id, name, images, createdAt, updatedAt]
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        description:
+          type: ["string", "null"]
+        coverUrl:
+          type: ["string", "null"]
+        images:
+          type: array
+          items:
+            $ref: "#/components/schemas/GalleryImage"
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+
+    AlbumInput:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          minLength: 1
+        description:
+          type: string
+        coverUrl:
+          type: string
+
+    AlbumUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        description:
+          type: string
+        coverUrl:
+          type: string
+
+    GalleryImage:
+      type: object
+      required: [id, albumId, imageUrl, sortOrder, createdAt]
+      properties:
+        id:
+          type: number
+        albumId:
+          type: number
+        imageUrl:
+          type: string
+        caption:
+          type: ["string", "null"]
+        sortOrder:
+          type: number
+        createdAt:
+          type: string
+
+    GalleryImageInput:
+      type: object
+      required: [albumId, imageUrl]
+      properties:
+        albumId:
+          type: number
+        imageUrl:
+          type: string
+        caption:
+          type: string
+        sortOrder:
+          type: number
+
+    GalleryImageUpdate:
+      type: object
+      properties:
+        caption:
+          type: string
+        sortOrder:
+          type: number
+        imageUrl:
+          type: string
+
+    TimelineEvent:
+      type: object
+      required: [id, year, title, text, sortOrder, createdAt]
+      properties:
+        id:
+          type: number
+        year:
+          type: string
+        title:
+          type: string
+        text:
+          type: string
+        imageUrl:
+          type: ["string", "null"]
+        sortOrder:
+          type: number
+        createdAt:
+          type: string
+
+    TimelineEventInput:
+      type: object
+      required: [year, title, text]
+      properties:
+        year:
+          type: string
+          minLength: 1
+        title:
+          type: string
+          minLength: 1
+        text:
+          type: string
+          minLength: 1
+        imageUrl:
+          type: string
+        sortOrder:
+          type: number
+
+    TimelineEventUpdate:
+      type: object
+      properties:
+        year:
+          type: string
+        title:
+          type: string
+        text:
+          type: string
+        imageUrl:
+          type: string
+        sortOrder:
+          type: number
+
+    Testimonial:
+      type: object
+      required: [id, name, text, approved, createdAt]
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        city:
+          type: ["string", "null"]
+        photoUrl:
+          type: ["string", "null"]
+        text:
+          type: string
+        approved:
+          type: boolean
+        createdAt:
+          type: string
+
+    TestimonialInput:
+      type: object
+      required: [name, text]
+      properties:
+        name:
+          type: string
+          minLength: 1
+        city:
+          type: string
+        photoUrl:
+          type: string
+        text:
+          type: string
+          minLength: 1
+
+    TestimonialUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        city:
+          type: string
+        photoUrl:
+          type: string
+        text:
+          type: string
+        approved:
+          type: boolean
+
+    Comment:
+      type: object
+      required: [id, postType, name, email, content, approved, createdAt]
+      properties:
+        id:
+          type: number
+        postId:
+          type: ["number", "null"]
+        postType:
+          type: string
+          enum: [blog, apometria, institutional]
+        name:
+          type: string
+        email:
+          type: string
+        content:
+          type: string
+        approved:
+          type: boolean
+        adminReply:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    CommentInput:
+      type: object
+      required: [postType, name, email, content]
+      properties:
+        postId:
+          type: number
+        postType:
+          type: string
+          enum: [blog, apometria, institutional]
+        name:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          minLength: 1
+        content:
+          type: string
+          minLength: 1
+
+    CommentUpdate:
+      type: object
+      properties:
+        approved:
+          type: boolean
+        content:
+          type: string
+        adminReply:
+          type: string
+
+    FaqItem:
+      type: object
+      required: [id, question, answer, sortOrder, createdAt]
+      properties:
+        id:
+          type: number
+        question:
+          type: string
+        answer:
+          type: string
+        category:
+          type: ["string", "null"]
+        sortOrder:
+          type: number
+        createdAt:
+          type: string
+
+    FaqItemInput:
+      type: object
+      required: [question, answer]
+      properties:
+        question:
+          type: string
+          minLength: 1
+        answer:
+          type: string
+          minLength: 1
+        category:
+          type: string
+        sortOrder:
+          type: number
+
+    FaqItemUpdate:
+      type: object
+      properties:
+        question:
+          type: string
+        answer:
+          type: string
+        category:
+          type: string
+        sortOrder:
+          type: number
+
+    Setting:
+      type: object
+      required: [key, value, updatedAt]
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        updatedAt:
+          type: string
+
+    SettingInput:
+      type: object
+      required: [value]
+      properties:
+        value:
+          type: string

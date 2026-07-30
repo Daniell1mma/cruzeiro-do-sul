@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Fraternidade Cruzeiro do Sul"
+version = "1.0.0"
+id = "artifacts/cruzeiro-do-sul"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24088
+
+[services.development]
+run = "pnpm --filter @workspace/cruzeiro-do-sul run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/cruzeiro-do-sul", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/cruzeiro-do-sul/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24088"
+BASE_PATH = "/"

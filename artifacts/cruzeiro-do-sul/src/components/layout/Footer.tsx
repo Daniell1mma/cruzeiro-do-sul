@@ -1,0 +1,109 @@
+import { Link } from "wouter";
+import { Mail, MapPin, Phone, Instagram, Facebook } from "lucide-react";
+import { useListSettings } from "@workspace/api-client-react";
+
+export function Footer() {
+  const { data: settings } = useListSettings();
+
+  const getSetting = (key: string) => settings?.find(s => s.key === key)?.value || "";
+
+  const address = getSetting("address") || "Rua Exemplo, 123 - Guarulhos/SP";
+  const email = getSetting("email") || "contato@cruzeirodosul.org";
+  const phone = getSetting("phone") || "(11) 99999-9999";
+  const instagram = getSetting("instagram") || "#";
+  const facebook = getSetting("facebook") || "#";
+
+  return (
+    <footer className="bg-primary text-primary-foreground pt-16 pb-8">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+          
+          {/* Brand */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary font-serif font-bold text-xl">
+                F
+              </div>
+              <div className="flex flex-col">
+                <span className="font-serif font-bold text-white leading-none text-lg">Cruzeiro do Sul</span>
+                <span className="text-[10px] text-white/80 uppercase tracking-widest">Fraternidade</span>
+              </div>
+            </div>
+            <p className="text-primary-foreground/80 text-sm leading-relaxed">
+              Um espaço de paz, acolhimento e cura espiritual através da Apometria. Nossa missão é auxiliar no despertar da consciência e no equilíbrio do ser.
+            </p>
+            <div className="flex items-center gap-4 pt-2">
+              <a href={instagram} target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors">
+                <Instagram size={20} />
+              </a>
+              <a href={facebook} target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors">
+                <Facebook size={20} />
+              </a>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="font-serif font-bold text-lg mb-6 relative inline-block">
+              Links Rápidos
+              <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-secondary"></span>
+            </h3>
+            <ul className="space-y-3 text-sm text-primary-foreground/80">
+              <li><Link href="/" className="hover:text-white transition-colors">Início</Link></li>
+              <li><Link href="/quem-somos" className="hover:text-white transition-colors">Quem Somos</Link></li>
+              <li><Link href="/apometria" className="hover:text-white transition-colors">A Apometria</Link></li>
+              <li><Link href="/cursos" className="hover:text-white transition-colors">Nossos Cursos</Link></li>
+              <li><Link href="/atendimento" className="hover:text-white transition-colors">Atendimento</Link></li>
+            </ul>
+          </div>
+
+          {/* Content */}
+          <div>
+            <h3 className="font-serif font-bold text-lg mb-6 relative inline-block">
+              Conteúdo
+              <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-secondary"></span>
+            </h3>
+            <ul className="space-y-3 text-sm text-primary-foreground/80">
+              <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
+              <li><Link href="/biblioteca" className="hover:text-white transition-colors">Biblioteca</Link></li>
+              <li><Link href="/galeria" className="hover:text-white transition-colors">Galeria de Fotos</Link></li>
+              <li><Link href="/faq" className="hover:text-white transition-colors">Dúvidas Frequentes</Link></li>
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h3 className="font-serif font-bold text-lg mb-6 relative inline-block">
+              Contato
+              <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-secondary"></span>
+            </h3>
+            <ul className="space-y-4 text-sm text-primary-foreground/80">
+              <li className="flex items-start gap-3">
+                <MapPin size={18} className="shrink-0 mt-0.5 text-secondary" />
+                <span>{address}</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone size={18} className="shrink-0 text-secondary" />
+                <span>{phone}</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail size={18} className="shrink-0 text-secondary" />
+                <span>{email}</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div className="border-t border-white/10 pt-8 mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-primary-foreground/60">
+          <p>&copy; {new Date().getFullYear()} Fraternidade Cruzeiro do Sul. Todos os direitos reservados.</p>
+          <div className="flex gap-4">
+            <Link href="/privacidade" className="hover:text-white transition-colors">Política de Privacidade</Link>
+            <Link href="/termos" className="hover:text-white transition-colors">Termos de Uso</Link>
+            <Link href="/admin" className="hover:text-white transition-colors">Acesso Restrito</Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
