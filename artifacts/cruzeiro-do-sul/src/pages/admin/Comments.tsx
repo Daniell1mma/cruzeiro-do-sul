@@ -26,7 +26,7 @@ export function Comments() {
   const invalidate = () => queryClient.invalidateQueries({ queryKey: getListCommentsQueryKey() });
 
   const openEdit = (c: Comment) => {
-    setText(c.text ?? "");
+    setText(c.content ?? "");
     setReplyText(c.adminReply ?? "");
     setApproved(c.approved ?? false);
     setModal({ open: true, comment: c, tab: "edit" });
@@ -36,7 +36,7 @@ export function Comments() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!modal.comment) return;
-    updateComment.mutate({ id: modal.comment.id, data: { text, adminReply: replyText || undefined, approved } }, {
+    updateComment.mutate({ id: modal.comment.id, data: { content: text, adminReply: replyText || undefined, approved } }, {
       onSuccess: () => { toast({ title: "Comentário atualizado" }); invalidate(); closeModal(); },
       onError:   () => toast({ title: "Erro ao salvar", variant: "destructive" }),
     });
@@ -81,14 +81,14 @@ export function Comments() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-3 mb-2 flex-wrap">
-                      <span className="font-bold text-foreground">{c.authorName || 'Anônimo'}</span>
-                      {c.authorEmail && <span className="text-xs text-muted-foreground">{c.authorEmail}</span>}
+                      <span className="font-bold text-foreground">{c.name || 'Anônimo'}</span>
+                      {c.email && <span className="text-xs text-muted-foreground">{c.email}</span>}
                       {c.postType && <span className="text-xs bg-muted px-2 py-0.5 rounded-full text-muted-foreground capitalize">{c.postType}</span>}
                       {c.approved
                         ? <span className="inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded bg-green-100 text-green-700">Aprovado</span>
                         : <span className="inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-700">Pendente</span>}
                     </div>
-                    <p className="text-sm text-foreground/80">{c.text}</p>
+                    <p className="text-sm text-foreground/80">{c.content}</p>
 
                     {c.adminReply && (
                       <div className="mt-3 pl-4 border-l-2 border-primary/30 bg-muted/30 rounded-r-lg p-3">

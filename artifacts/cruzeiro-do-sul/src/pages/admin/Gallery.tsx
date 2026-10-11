@@ -66,7 +66,7 @@ export function Gallery() {
   const handleImageSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!imageModal.albumId) return;
-    createImage.mutate({ albumId: imageModal.albumId, data: { albumId: imageModal.albumId, imageUrl: imageForm.imageUrl, caption: imageForm.caption } }, {
+    createImage.mutate({ data: { albumId: imageModal.albumId, imageUrl: imageForm.imageUrl, caption: imageForm.caption } }, {
       onSuccess: () => { toast({ title: "Foto adicionada" }); invalidate(); closeImageModal(); },
       onError:   () => toast({ title: "Erro ao adicionar", variant: "destructive" }),
     });
@@ -82,7 +82,7 @@ export function Gallery() {
 
   const handleDeleteImage = (albumId: number, imageId: number) => {
     if (!confirm("Excluir esta foto?")) return;
-    deleteImage.mutate({ albumId, imageId }, {
+    deleteImage.mutate({ id: imageId }, {
       onSuccess: () => { toast({ title: "Foto excluída" }); invalidate(); },
       onError:   () => toast({ title: "Erro ao excluir", variant: "destructive" }),
     });

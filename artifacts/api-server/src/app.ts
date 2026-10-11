@@ -2,6 +2,8 @@ import express, { type Express } from "express";
 import cors from "cors";
 import session from "express-session";
 import pinoHttp from "pino-http";
+import path from "node:path";
+import fs from "node:fs";
 import router from "./routes";
 import { logger } from "./lib/logger";
 
@@ -37,9 +39,13 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const sessionSecret = process.env["SESSION_SECRET"];
-if (!sessionSecret) {
-  throw new Error("SESSION_SECRET environment variable is required");
+const sessionSecret =
+  process.env["SESSION_SECRET"] || "cruzeiro-do-sul-dev-secret-key-change-in-prod";
+
+if (!process.env["SESSION_SECRET"] && process.env["NODE_ENV"] === "production") {
+  logger.warn(
+    "SESSION_SECRET is using default development secret. Please set SESSION_SECRET in production.",
+  );
 }
 
 app.use(
@@ -57,5 +63,27 @@ app.use(
 );
 
 app.use("/api", router);
+
+// Suporte para servir o frontend compilado em produção (Fullstack Server)
+const possibleFrontendPaths = [
+  path.resolve(process.cwd(), "artifacts/cruzeiro-do-sul/dist/public"),
+  path.resolve(process.cwd(), "dist/public"),
+  typeof __dirname !== "undefined"
+    ? path.resolve(__dirname, "../../cruzeiro-do-sul/dist/public")
+    : null,
+].filter((p): p is string => Boolean(p && fs.existsSync(p)));
+
+const staticPath = possibleFrontendPaths[0] ?? null;
+
+if (staticPath) {
+  logger.info({ staticPath }, "Serving static frontend build");
+  app.use(express.static(staticPath));
+  app.use((req, res, next) => {
+    if ((req.method === "GET" || req.method === "HEAD") && !req.path.startsWith("/api")) {
+      return res.sendFile(path.join(staticPath, "index.html"));
+    }
+    next();
+  });
+}
 
 export default app;

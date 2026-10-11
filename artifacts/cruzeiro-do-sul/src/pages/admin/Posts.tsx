@@ -70,7 +70,7 @@ export function Posts() {
   };
 
   const statusBadge = (status: string) => {
-    const map: Record<string, { label: string; cls: string; icon: JSX.Element }> = {
+    const map: Record<string, { label: string; cls: string; icon: React.ReactNode }> = {
       published: { label: "Publicado", cls: "bg-green-100 text-green-700", icon: <FileCheck size={12} /> },
       draft:     { label: "Rascunho",  cls: "bg-gray-100 text-gray-600",   icon: <FileEdit size={12} /> },
       scheduled: { label: "Agendado",  cls: "bg-blue-100 text-blue-700",   icon: <Clock size={12} /> },

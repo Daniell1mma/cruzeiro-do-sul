@@ -21,7 +21,7 @@ const typeOpts = [
   { value: "article", label: "Artigo / Link" },
 ];
 
-const typeIcon: Record<string, JSX.Element> = {
+const typeIcon: Record<string, React.ReactNode> = {
   pdf:     <FileText  size={16} className="text-red-500" />,
   audio:   <Headphones size={16} className="text-purple-500" />,
   video:   <Video     size={16} className="text-blue-500" />,
