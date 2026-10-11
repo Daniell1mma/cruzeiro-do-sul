@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "site": "fraternidade-cruzeiro-sul",
+    "public": "artifacts/cruzeiro-do-sul/dist/public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
