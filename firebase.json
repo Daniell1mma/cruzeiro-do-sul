@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "site": "fraternidade-cruzeiro-sul",
     "public": "artifacts/cruzeiro-do-sul/dist/public",
     "ignore": [
       "firebase.json",

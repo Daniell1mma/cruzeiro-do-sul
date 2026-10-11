@@ -55,4 +55,5 @@ Thumbs.db
 *.pem
 *.key
 pnpm-debug.log*
+.firebase/
 
