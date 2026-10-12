@@ -24,6 +24,14 @@
   - URL de Produção com SSL e CDN: [https://cruzeiro-do-sul-sp.web.app](https://cruzeiro-do-sul-sp.web.app)
   - Validação via HTTP: **HTTP 200 OK** verificado em `/`, `/apometria`, `/cursos`, `/a-fraternidade`.
 
+- **Correção da Tela Branca (Resolução Definitiva):**
+  - **Causa Raiz Identificada:** No Firebase Hosting (hospedagem estática), o rewrite `** -> /index.html` fazia com que chamadas de API (`/api/settings`, etc.) retornassem documento HTML com status 200. O cliente de API parseava como string, e os componentes invocavam métodos de array (`settings?.find`, `map`, `reduce`) diretamente sobre a string ou sobre dados indefinidos, disparando exceção não tratada `n?.find is not a function` que impedia a renderização do React.
+  - **Medidas Adotadas:**
+    1. `lib/api-client-react/src/custom-fetch.ts`: Tratamento para rejeitar respostas HTML em endpoints de API com `ApiError`.
+    2. Componentes públicos (`Fraternidade`, `Contact`, `Attendance`, `Home`, `Courses`, `Blog`, `BlogPost`, `Faq`, `Gallery`, `Library`, `History`, `Apometria`, `Footer`, `FloatingWhatsApp`): Inclusão de checagens defensivas com `Array.isArray(...)` e valores de fallback para todas as propriedades de configuração e listas.
+    3. `App.tsx`: Criação de `ErrorBoundary` global com fallback amigável em caso de erros inesperados e ajuste de `routerBase`.
+    4. Validação visual e de console executada via Microsoft Edge headless: confirmação de carregamento completo do cabeçalho, hero section, botões de ação e rodapé sem qualquer erro de console.
+
 - **Servidor Local Fullstack:**
   - Processo ativo em background na porta `5000` (`node artifacts/api-server/dist/index.mjs`) entregando a API REST e o SPA React.
 

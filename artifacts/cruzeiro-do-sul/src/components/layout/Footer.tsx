@@ -4,7 +4,8 @@ import { useListSettings } from "@workspace/api-client-react";
 
 export function Footer() {
   const { data: settings } = useListSettings();
-  const getSetting = (key: string) => settings?.find(s => s.key === key)?.value || "";
+  const getSetting = (key: string) =>
+    (Array.isArray(settings) ? settings.find((s) => s.key === key)?.value : "") || "";
 
   const address  = getSetting("address")   || "R. Barbacena, 75 - Jardim Bom Clima, Guarulhos/SP";
   const email    = getSetting("email")     || "contato@cruzeirodosul.org";

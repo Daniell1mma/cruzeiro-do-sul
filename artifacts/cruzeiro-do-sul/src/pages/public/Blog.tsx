@@ -29,7 +29,7 @@ export function Blog() {
             <div className="flex justify-center py-20">
               <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div>
             </div>
-          ) : !posts || posts.length === 0 ? (
+          ) : !Array.isArray(posts) || posts.length === 0 ? (
             <div className="text-center py-16 bg-muted/50 rounded-3xl border border-border">
               <h3 className="text-xl font-serif font-bold mb-2">Nenhum artigo encontrado</h3>
               <p className="text-muted-foreground">Em breve teremos novos conteúdos.</p>

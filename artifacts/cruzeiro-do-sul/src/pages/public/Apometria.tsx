@@ -52,7 +52,7 @@ export function Apometria() {
             </p>
           </div>
 
-          {faqItems && faqItems.length > 0 && (
+          {Array.isArray(faqItems) && faqItems.length > 0 && (
             <div className="mt-12 md:mt-16 pt-12 md:pt-16 border-t border-border">
               <h2 className="text-2xl md:text-3xl font-serif font-bold text-center mb-8 md:mb-10">
                 Dúvidas Frequentes sobre Apometria

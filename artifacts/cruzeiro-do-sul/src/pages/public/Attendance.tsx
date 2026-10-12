@@ -4,7 +4,7 @@ import { CheckCircle2, AlertCircle, Clock, HeartHandshake, ExternalLink } from "
 
 export function Attendance() {
   const { data: settings } = useListSettings();
-  const formUrl = settings?.find(s => s.key === "attendance_form_url")?.value || "#";
+  const formUrl = (Array.isArray(settings) ? settings.find(s => s.key === "attendance_form_url")?.value : "") || "#";
 
   return (
     <PublicLayout>

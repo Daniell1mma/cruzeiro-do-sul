@@ -143,7 +143,7 @@ export function Home() {
       </section>
 
       {/* Featured Courses */}
-      {courses && courses.length > 0 && (
+      {Array.isArray(courses) && courses.length > 0 && (
         <section className="py-24 bg-white">
           <div className="container px-4 md:px-6 mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
@@ -185,7 +185,7 @@ export function Home() {
       )}
 
       {/* Testimonials */}
-      {testimonials && testimonials.length > 0 && (
+      {Array.isArray(testimonials) && testimonials.length > 0 && (
         <section className="py-24 bg-primary text-primary-foreground relative overflow-hidden">
           <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-secondary/20 rounded-full blur-3xl"></div>
@@ -222,7 +222,7 @@ export function Home() {
       )}
 
       {/* FAQ Section */}
-      {faqItems && faqItems.length > 0 && (
+      {Array.isArray(faqItems) && faqItems.length > 0 && (
         <section className="py-24 bg-white">
           <div className="container px-4 md:px-6 mx-auto max-w-3xl">
             <div className="text-center mb-14 space-y-4">

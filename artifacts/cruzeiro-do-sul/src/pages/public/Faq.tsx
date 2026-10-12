@@ -20,7 +20,7 @@ export function Faq() {
   }
 
   // Group FAQs by category
-  const groupedFaqs = faqItems?.reduce((acc, item) => {
+  const groupedFaqs = (Array.isArray(faqItems) ? faqItems : []).reduce((acc, item) => {
     const cat = item.category || 'Geral';
     if (!acc[cat]) acc[cat] = [];
     acc[cat].push(item);

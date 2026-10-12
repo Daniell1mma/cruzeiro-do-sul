@@ -151,7 +151,7 @@ function CommentsSection({ postId }: { postId: number }) {
         </p>
 
         {/* Approved comments list */}
-        {comments && comments.length > 0 ? (
+        {Array.isArray(comments) && comments.length > 0 ? (
           <div className="space-y-6 mb-14">
             {comments.map((comment) => (
               <div key={comment.id} className="bg-muted rounded-2xl p-6">

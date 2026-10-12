@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 export function Contact() {
   const { data: settings } = useListSettings();
 
-  const getSetting = (key: string) => settings?.find(s => s.key === key)?.value || "";
+  const getSetting = (key: string) => Array.isArray(settings) ? (settings.find(s => s.key === key)?.value || "") : "";
 
   const address = getSetting("address") || "Rua Exemplo, 123 - Centro, Guarulhos/SP";
   const email = getSetting("email") || "contato@cruzeirodosul.org";

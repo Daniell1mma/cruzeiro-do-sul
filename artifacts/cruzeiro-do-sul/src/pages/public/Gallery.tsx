@@ -27,7 +27,7 @@ export function Gallery() {
             <div className="flex justify-center py-20">
               <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div>
             </div>
-          ) : !albums || albums.length === 0 ? (
+          ) : !Array.isArray(albums) || albums.length === 0 ? (
             <div className="text-center py-16 bg-muted/50 rounded-3xl border border-border">
               <ImageIcon size={40} className="mx-auto text-muted-foreground mb-4" />
               <h3 className="text-xl font-serif font-bold mb-2">Nenhum álbum publicado</h3>

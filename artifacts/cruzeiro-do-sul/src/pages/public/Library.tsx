@@ -66,7 +66,7 @@ export function Library() {
             <div className="flex justify-center py-20">
               <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div>
             </div>
-          ) : !items || items.length === 0 ? (
+          ) : !Array.isArray(items) || items.length === 0 ? (
             <div className="text-center py-16 bg-muted/50 rounded-3xl border border-border max-w-2xl mx-auto">
               <h3 className="text-xl font-serif font-bold mb-2">Nenhum material encontrado</h3>
               <p className="text-muted-foreground">Tente selecionar outra categoria.</p>

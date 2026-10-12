@@ -2,7 +2,9 @@ import { useListSettings } from "@workspace/api-client-react";
 
 export function FloatingWhatsApp() {
   const { data: settings } = useListSettings();
-  const whatsapp = settings?.find(s => s.key === "whatsapp")?.value;
+  const whatsapp = Array.isArray(settings)
+    ? settings.find((s) => s.key === "whatsapp")?.value
+    : undefined;
 
   if (!whatsapp) return null;
 

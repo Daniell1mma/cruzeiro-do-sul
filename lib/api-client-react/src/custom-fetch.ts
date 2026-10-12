@@ -308,6 +308,10 @@ async function parseSuccessBody(
 
     case "text": {
       const text = await response.text();
+      const trimmed = text.trim();
+      if (trimmed.startsWith("<!DOCTYPE") || trimmed.startsWith("<html")) {
+        throw new ApiError(response, "Expected API response but received HTML document", requestInfo);
+      }
       return text === "" ? null : text;
     }
 

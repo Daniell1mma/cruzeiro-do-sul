@@ -7,7 +7,7 @@ export function Fraternidade() {
   const { data: settings, isLoading: loadingSettings } = useListSettings();
 
   const getSetting = (key: string, fallback = "") => {
-    return settings?.find((s) => s.key === key)?.value ?? fallback;
+    return Array.isArray(settings) ? (settings.find((s) => s.key === key)?.value ?? fallback) : fallback;
   };
 
   const mission = getSetting(
@@ -123,7 +123,7 @@ export function Fraternidade() {
             <div className="flex justify-center py-20">
               <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div>
             </div>
-          ) : !events || events.length === 0 ? (
+          ) : !Array.isArray(events) || events.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-muted-foreground">História em construção.</p>
             </div>
