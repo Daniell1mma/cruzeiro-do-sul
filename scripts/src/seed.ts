@@ -50,15 +50,15 @@ async function runSeed() {
 
     // 2. Configurações Institucionais Padrão
     const defaultSettings: Record<string, string> = {
-      site_name: "Fraternidade Cruzeiro do Sul",
-      site_description: "Centro espiritualista de Apometria e acolhimento fraterno em Guarulhos/SP.",
-      address: "Guarulhos, São Paulo - SP",
-      phone: "(11) 99999-9999",
-      whatsapp: "5511999999999",
-      email: "contato@cruzeirodosul.org.br",
-      instagram: "https://instagram.com/fraternidadecruzeirodosul",
-      facebook: "https://facebook.com/fraternidadecruzeirodosul",
-      attendance_form_url: "https://forms.google.com",
+      site_name: "Fraternidade Cruzeiro do Sul de Apometria",
+      site_description: "Cura espiritual, desdobramento e caridade. Trabalho voluntário e gratuito em Guarulhos/SP.",
+      address: "Rua Barbacena, 101 B (antigo 75) - Jd. Bom Clima — Guarulhos, SP",
+      phone: "(11) 94944-6881",
+      whatsapp: "5511949446881",
+      email: "fraternidadecruzeirodosulguaru@gmail.com",
+      instagram: "https://facebook.com/ApometriaGuarulhos",
+      facebook: "https://facebook.com/ApometriaGuarulhos",
+      attendance_form_url: "https://forms.gle/cPm5uMeJW74AvjNo8",
       google_maps_embed: "",
     };
 

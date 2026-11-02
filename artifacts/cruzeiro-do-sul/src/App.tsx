@@ -89,9 +89,10 @@ function Router() {
       {/* Public Routes */}
       <Route path="/" component={Home} />
       <Route path="/a-fraternidade" component={Fraternidade} />
+      <Route path="/historia" component={History} />
       {/* Legacy redirects */}
       <Route path="/quem-somos">{() => { window.location.replace('/a-fraternidade'); return null; }}</Route>
-      <Route path="/nossa-historia">{() => { window.location.replace('/a-fraternidade'); return null; }}</Route>
+      <Route path="/nossa-historia">{() => { window.location.replace('/historia'); return null; }}</Route>
       <Route path="/apometria" component={Apometria} />
       <Route path="/cursos" component={Courses} />
       <Route path="/biblioteca" component={Library} />
@@ -99,6 +100,7 @@ function Router() {
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/galeria" component={Gallery} />
       <Route path="/atendimento" component={Attendance} />
+      <Route path="/agendamentos" component={Attendance} />
       <Route path="/faq" component={Faq} />
       <Route path="/contato" component={Contact} />
 

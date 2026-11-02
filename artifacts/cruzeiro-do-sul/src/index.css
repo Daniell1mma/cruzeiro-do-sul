@@ -51,8 +51,8 @@
   --color-sidebar-accent-border: var(--sidebar-accent-border);
   --color-sidebar-ring: hsl(var(--sidebar-ring));
 
-  --font-sans: 'Plus Jakarta Sans', sans-serif;
-  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Jost', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
   --radius-sm: calc(var(--radius) - 4px);
@@ -68,51 +68,51 @@
   --elevate-1: rgba(0, 0, 0, 0.03);
   --elevate-2: rgba(0, 0, 0, 0.08);
 
-  /* Core Palette */
-  --background: 0 0% 100%; /* #FFFFFF */
-  --foreground: 0 0% 20%; /* #333333 */
+  /* Reference Palette: #07145C primary, #0A176B secondary, #2563EB accent */
+  --background: 220 20% 99%; /* #FCFCFD */
+  --foreground: 230 45% 15%; /* #141C38 */
   
-  --border: 216 33% 97%; /* #F5F7FA */
-  --input: 216 33% 90%; 
-  --ring: 214 70% 39%; /* Primary Blue */
+  --border: 220 18% 90%; /* #E2E8F0 */
+  --input: 220 18% 88%; 
+  --ring: 230 86% 19%; /* #07145C */
 
   --card: 0 0% 100%;
-  --card-foreground: 0 0% 20%;
-  --card-border: 216 33% 97%;
+  --card-foreground: 230 45% 15%;
+  --card-border: 220 18% 90%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 20%;
-  --popover-border: 216 33% 97%;
+  --popover-foreground: 230 45% 15%;
+  --popover-border: 220 18% 90%;
 
-  /* Primary: Blue */
-  --primary: 214 70% 39%; /* #1E5AA8 */
+  /* Primary: Deep Navy (#07145C) */
+  --primary: 230 86% 19%;
   --primary-foreground: 0 0% 100%;
 
-  /* Secondary: Green */
-  --secondary: 149 47% 47%; /* #3FAF75 */
+  /* Secondary: Rich Blue (#0A176B) */
+  --secondary: 232 83% 23%;
   --secondary-foreground: 0 0% 100%;
 
-  /* Muted: Separator / Light Gray */
-  --muted: 216 33% 97%; /* #F5F7FA */
-  --muted-foreground: 0 0% 40%;
+  /* Muted: Soft Cool Gray */
+  --muted: 220 20% 96%;
+  --muted-foreground: 220 15% 45%;
 
-  /* Accent: Support Blue */
-  --accent: 209 100% 93%; /* #DCEEFF */
-  --accent-foreground: 214 70% 39%;
+  /* Accent: Vibrant Royal Blue (#2563EB) */
+  --accent: 221 83% 53%;
+  --accent-foreground: 0 0% 100%;
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
 
-  --sidebar: 216 33% 97%;
-  --sidebar-foreground: 0 0% 20%;
-  --sidebar-border: 216 33% 90%;
-  --sidebar-primary: 214 70% 39%;
+  --sidebar: 220 20% 97%;
+  --sidebar-foreground: 230 45% 15%;
+  --sidebar-border: 220 18% 90%;
+  --sidebar-primary: 230 86% 19%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 209 100% 93%;
-  --sidebar-accent-foreground: 214 70% 39%;
-  --sidebar-ring: 214 70% 39%;
+  --sidebar-accent: 221 83% 53%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-ring: 230 86% 19%;
 
-  --radius: 0.5rem;
+  --radius: 0.25rem;
 
   --sidebar-primary-border: hsl(from hsl(var(--sidebar-primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
   --sidebar-accent-border: hsl(from hsl(var(--sidebar-accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
@@ -124,19 +124,18 @@
 }
 
 .dark {
-  /* Enforce Light mode only by keeping dark identical or defaulting to light theme */
-  --background: 0 0% 100%;
-  --foreground: 0 0% 20%;
-  --border: 216 33% 97%;
-  --input: 216 33% 90%;
-  --ring: 214 70% 39%;
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 20%;
-  --card-border: 216 33% 97%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 20%;
-  --popover-border: 216 33% 97%;
-  --primary: 214 70% 39%;
+  --background: 230 86% 19%;
+  --foreground: 0 0% 100%;
+  --border: 220 20% 28%;
+  --input: 220 20% 28%;
+  --ring: 221 83% 53%;
+  --card: 232 83% 23%;
+  --card-foreground: 0 0% 100%;
+  --card-border: 220 20% 28%;
+  --popover: 232 83% 23%;
+  --popover-foreground: 0 0% 100%;
+  --popover-border: 220 20% 28%;
+  --primary: 232 83% 23%;
   --primary-foreground: 0 0% 100%;
   --secondary: 149 47% 47%;
   --secondary-foreground: 0 0% 100%;
@@ -196,7 +195,23 @@
   }
   .border.hover-elevate:not(.no-hover-interaction-elevate)::after,
   .border.active-elevate:not(.no-active-interaction-elevate)::after,
-  .border.hover-elevate-2:not(.no-hover-interaction-elevate)::after,
-  .border.active-elevate-2:not(.no-active-interaction-elevate)::after,
   .border.hover-elevate:not(.no-hover-interaction-elevate)::after { inset: -1px; }
+
+  .eyebrow {
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+
+  .rule-link {
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.35rem;
+    transition: opacity 0.2s ease, border-color 0.2s ease;
+    display: inline-block;
+    position: relative;
+  }
+  .rule-link:hover {
+    opacity: 0.75;
+  }
 }

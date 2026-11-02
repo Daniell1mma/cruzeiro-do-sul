@@ -2,14 +2,13 @@ import { useListSettings } from "@workspace/api-client-react";
 
 export function FloatingWhatsApp() {
   const { data: settings } = useListSettings();
-  const whatsapp = Array.isArray(settings)
+  const whatsapp = (Array.isArray(settings)
     ? settings.find((s) => s.key === "whatsapp")?.value
-    : undefined;
+    : undefined) || "5511949446881";
 
-  if (!whatsapp) return null;
-
-  const number = whatsapp.replace(/\D/g, "");
-  const url = `https://wa.me/55${number}`;
+  const cleanDigits = whatsapp.replace(/\D/g, "");
+  const number = cleanDigits.startsWith("55") ? cleanDigits : `55${cleanDigits}`;
+  const url = `https://wa.me/${number}`;
 
   return (
     <a

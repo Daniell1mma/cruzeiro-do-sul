@@ -61,18 +61,31 @@ export function Fraternidade() {
           ) : (
             <div className="prose prose-lg prose-headings:font-serif prose-headings:text-foreground prose-a:text-primary max-w-none">
               <img
-                src="/about.jpg"
+                src="/assets-reference/portas-abertas.png"
                 alt="Fraternidade Cruzeiro do Sul"
-                className="w-full rounded-2xl shadow-md mb-12 aspect-[21/9] object-cover"
+                className="w-full rounded-sm shadow-md mb-12 aspect-[21/9] object-cover border border-border"
               />
 
-              <h2 className="text-3xl font-bold">Nossa Missão</h2>
+              <div className="bg-muted/50 p-6 md:p-8 rounded-sm border border-border mb-12 not-prose">
+                <p className="eyebrow text-muted-foreground mb-2">Quem Somos</p>
+                <h2 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-4">
+                  Fraternidade Cruzeiro do Sul de Apometria de Guarulhos
+                </h2>
+                <p className="text-foreground/80 leading-relaxed text-base md:text-lg mb-3">
+                  A Fraternidade Cruzeiro do Sul nasceu de um propósito de estudo, aprendizado e serviço, voltado ao desenvolvimento integral do ser e à busca por caminhos complementares de cuidado e equilíbrio.
+                </p>
+                <p className="text-foreground/80 leading-relaxed text-base md:text-lg">
+                  Somos uma Sociedade Beneficente, sem fins lucrativos, políticos ou ideológicos, que tem como finalidade estudar e aprofundar o desenvolvimento mental e físico do ser, além de oferecer tratamentos energéticos alternativos e complementares à saúde física, mental, emocional e espiritual, por meio da terapia vibracional (Medicina Vibracional).
+                </p>
+              </div>
+
+              <h2 className="text-3xl font-bold font-serif">Nossa Missão</h2>
               <p>{mission}</p>
 
-              <h2 className="text-3xl font-bold mt-12">Nossa Visão</h2>
+              <h2 className="text-3xl font-bold font-serif mt-12">Nossa Visão</h2>
               <p>{vision}</p>
 
-              <h2 className="text-3xl font-bold mt-12">Nossos Valores</h2>
+              <h2 className="text-3xl font-bold font-serif mt-12">Nossos Princípios Fundamentais</h2>
               <div className="not-prose grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
                 {valuesList.map((value, i) => {
                   const parts = value.split(":");
@@ -81,9 +94,9 @@ export function Fraternidade() {
                   return (
                     <div
                       key={i}
-                      className="flex items-start gap-4 bg-accent/30 rounded-2xl p-5 border border-border/40"
+                      className="flex items-start gap-4 bg-muted/40 rounded-sm p-5 border border-border"
                     >
-                      <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary flex-shrink-0 mt-0.5">
+                      <div className="w-10 h-10 bg-primary/10 rounded-sm flex items-center justify-center text-primary flex-shrink-0 mt-0.5">
                         {valueIcons[i % valueIcons.length]}
                       </div>
                       <div>
