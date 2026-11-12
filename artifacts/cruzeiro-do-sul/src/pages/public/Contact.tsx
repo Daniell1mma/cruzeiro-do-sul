@@ -170,7 +170,7 @@ export function Contact() {
 
                 <button
                   type="submit"
-                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3.5 text-xs font-bold uppercase tracking-widest transition-all mt-4 flex items-center justify-center gap-2"
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3.5 text-xs font-bold uppercase tracking-widest transition-all mt-4 flex items-center justify-center gap-2 min-h-[46px] active:scale-[0.98] shadow-sm"
                 >
                   <Send size={14} /> Enviar Mensagem
                 </button>

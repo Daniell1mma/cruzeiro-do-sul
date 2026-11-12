@@ -214,4 +214,14 @@
   .rule-link:hover {
     opacity: 0.75;
   }
+
+  /* Accessible touch interactions and mobile polish */
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
 }
+

@@ -3,8 +3,27 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { useListFaqItems } from "@workspace/api-client-react";
 import { Link } from "wouter";
 
+const DEFAULT_APOMETRIA_FAQS = [
+  {
+    id: 1,
+    question: "O que acontece durante o desdobramento na sessão?",
+    answer: "O paciente permanece confortavelmente deitado e consciente. A equipe de médiuns e operadores realiza o desdobramento dos corpos sutis através de comandos mentais e pulsos magnéticos, atuando na raiz energética das queixas."
+  },
+  {
+    id: 2,
+    question: "Quantas sessões de Apometria são necessárias?",
+    answer: "Cada caso é individual. Com frequência, uma a três sessões proporcionam o reequilíbrio bioenergético pretendido. Ao término da sessão, a equipe fraterna orienta se há recomendação de retorno."
+  },
+  {
+    id: 3,
+    question: "A Apometria tem vínculo com alguma religião específica?",
+    answer: "Não. A Apometria é uma técnica terapêutica bioenergética ecumênica. Respeitamos todos os credos e acolhemos pessoas de qualquer crença — ou sem crença — sob a égide da caridade pura e desinteressada."
+  }
+];
+
 export function Apometria() {
-  const { data: faqItems } = useListFaqItems({ category: "apometria" });
+  const { data: rawFaqItems } = useListFaqItems({ category: "apometria" });
+  const faqItems = (Array.isArray(rawFaqItems) && rawFaqItems.length > 0) ? rawFaqItems : DEFAULT_APOMETRIA_FAQS;
 
   return (
     <PublicLayout>
@@ -114,7 +133,7 @@ export function Apometria() {
             <div className="pt-12 text-center">
               <Link
                 href="/atendimento"
-                className="inline-flex items-center gap-2 bg-primary px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all rounded-none"
+                className="inline-flex items-center gap-2 bg-primary px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all rounded-none min-h-[48px] active:scale-[0.98] shadow-sm"
               >
                 Agendar Atendimento Fraterno
               </Link>

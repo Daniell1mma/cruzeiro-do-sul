@@ -118,7 +118,7 @@ export function History() {
               <div className="text-center pt-4">
                 <Link
                   href="/atendimento"
-                  className="inline-flex items-center gap-2 bg-primary px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all rounded-none"
+                  className="inline-flex items-center gap-2 bg-primary px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all rounded-none min-h-[48px] active:scale-[0.98] shadow-sm"
                 >
                   Agendar Atendimento
                 </Link>

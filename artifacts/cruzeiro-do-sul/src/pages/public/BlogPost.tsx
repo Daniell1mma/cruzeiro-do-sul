@@ -6,11 +6,16 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { useState } from "react";
 
+import { DEFAULT_POSTS } from "@/data/defaultPosts";
+
 export function BlogPost() {
   const { slug } = useParams();
   const { data: post, isLoading, error } = useGetPostBySlug(slug as string);
 
-  if (isLoading) {
+  const fallbackPost = DEFAULT_POSTS.find((p) => p.slug === slug);
+  const activePost = post || fallbackPost;
+
+  if (isLoading && !activePost) {
     return (
       <PublicLayout>
         <div className="min-h-[70vh] flex items-center justify-center">
@@ -20,7 +25,7 @@ export function BlogPost() {
     );
   }
 
-  if (error || !post) {
+  if (!activePost) {
     return (
       <PublicLayout>
         <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4">
@@ -32,41 +37,43 @@ export function BlogPost() {
     );
   }
 
+  const postData = activePost;
+
   return (
     <PublicLayout>
       <article className="pb-24">
         {/* Header */}
-        <header className="pt-24 pb-16 bg-muted px-4">
+        <header className="pt-16 pb-12 sm:pt-20 sm:pb-16 bg-muted px-4">
           <div className="container mx-auto max-w-4xl">
             <Link href="/blog" className="inline-flex items-center text-sm font-bold text-muted-foreground hover:text-primary mb-8 transition-colors">
               <ArrowLeft size={16} className="mr-2" /> Voltar para o Blog
             </Link>
             
-            {post.category && (
-              <div className="inline-block bg-accent text-primary px-3 py-1 rounded-full text-xs font-bold mb-6">
-                {post.category}
+            {postData.category && (
+              <div className="inline-block bg-primary/10 text-primary px-3 py-1 rounded-sm text-xs font-bold uppercase tracking-wider mb-6">
+                {postData.category}
               </div>
             )}
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground leading-tight mb-6">
-              {post.title}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground leading-tight mb-6">
+              {postData.title}
             </h1>
             
-            {post.subtitle && (
-              <p className="text-xl md:text-2xl text-foreground/70 mb-8 font-serif italic">
-                {post.subtitle}
+            {postData.subtitle && (
+              <p className="text-lg sm:text-xl md:text-2xl text-foreground/70 mb-8 font-serif italic">
+                {postData.subtitle}
               </p>
             )}
             
             <div className="flex items-center gap-6 text-sm text-foreground/60 border-t border-border/50 pt-6">
               <div className="flex items-center gap-2">
                 <Calendar size={16} />
-                <time>{format(new Date(post.createdAt), "dd 'de' MMMM, yyyy", { locale: ptBR })}</time>
+                <time>{format(new Date(postData.createdAt), "dd 'de' MMMM, yyyy", { locale: ptBR })}</time>
               </div>
-              {post.authorName && (
+              {postData.authorName && (
                 <div className="flex items-center gap-2">
                   <User size={16} />
-                  <span>Por <strong>{post.authorName}</strong></span>
+                  <span>Por <strong>{postData.authorName}</strong></span>
                 </div>
               )}
             </div>
@@ -74,12 +81,12 @@ export function BlogPost() {
         </header>
 
         {/* Cover */}
-        {post.coverUrl && (
+        {postData.coverUrl && (
           <div className="container mx-auto px-4 max-w-5xl -mt-10 mb-16 relative z-10">
             <img 
-              src={post.coverUrl} 
-              alt={post.title} 
-              className="w-full aspect-[21/9] object-cover rounded-3xl shadow-xl"
+              src={postData.coverUrl} 
+              alt={postData.title} 
+              className="w-full aspect-[21/9] object-cover rounded-sm border border-border shadow-md"
             />
           </div>
         )}
@@ -87,14 +94,14 @@ export function BlogPost() {
         {/* Content */}
         <div className="container mx-auto px-4 max-w-3xl mt-16">
           <div 
-            className="prose prose-lg prose-headings:font-serif prose-headings:text-foreground prose-a:text-primary max-w-none"
-            dangerouslySetInnerHTML={{ __html: post.content || '' }}
+            className="prose prose-lg prose-headings:font-serif prose-headings:text-foreground prose-a:text-primary max-w-none text-foreground/85 leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: postData.content || '' }}
           />
           
-          {post.tags && (
+          {postData.tags && (
             <div className="mt-12 pt-8 border-t border-border flex gap-2 flex-wrap">
-              {post.tags.split(',').map(tag => (
-                <span key={tag.trim()} className="bg-muted text-muted-foreground px-3 py-1 rounded-full text-xs">
+              {postData.tags.split(',').map(tag => (
+                <span key={tag.trim()} className="bg-muted text-muted-foreground px-3 py-1 rounded-sm text-xs font-medium">
                   #{tag.trim()}
                 </span>
               ))}
@@ -103,7 +110,7 @@ export function BlogPost() {
         </div>
 
         {/* Comments Section */}
-        <CommentsSection postId={post.id} />
+        <CommentsSection postId={postData.id} />
       </article>
     </PublicLayout>
   );

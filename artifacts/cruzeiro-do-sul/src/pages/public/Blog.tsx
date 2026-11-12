@@ -1,23 +1,29 @@
 import { PublicLayout } from "@/components/layout/PublicLayout";
 import { useListPosts } from "@workspace/api-client-react";
-import { Calendar, User, ArrowRight } from "lucide-react";
+import { Calendar, User, ArrowRight, BookOpen } from "lucide-react";
 import { Link } from "wouter";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { DEFAULT_POSTS } from "@/data/defaultPosts";
 
 export function Blog() {
   const { data: posts, isLoading } = useListPosts({ status: "published" });
+
+  const postsToDisplay = (Array.isArray(posts) && posts.length > 0) ? posts : DEFAULT_POSTS;
 
   return (
     <PublicLayout>
       <section className="bg-muted pt-14 pb-12 md:pt-20 md:pb-16">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center space-y-4 md:space-y-6">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-foreground">
+            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm text-primary mb-3">
+              <BookOpen size={28} />
+            </div>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-foreground">
               Mensagens e Reflexões
             </h1>
-            <p className="text-lg md:text-xl text-foreground/80 leading-relaxed">
-              Artigos, mensagens edificantes e estudos para alimentar o seu espírito.
+            <p className="text-base sm:text-lg md:text-xl text-foreground/80 leading-relaxed">
+              Artigos, mensagens edificantes e estudos bioenergéticos para alimentar o seu espírito.
             </p>
           </div>
         </div>
@@ -29,20 +35,20 @@ export function Blog() {
             <div className="flex justify-center py-20">
               <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div>
             </div>
-          ) : !Array.isArray(posts) || posts.length === 0 ? (
-            <div className="text-center py-16 bg-muted/50 rounded-3xl border border-border">
+          ) : postsToDisplay.length === 0 ? (
+            <div className="text-center py-16 bg-muted/50 rounded-sm border border-border">
               <h3 className="text-xl font-serif font-bold mb-2">Nenhum artigo encontrado</h3>
               <p className="text-muted-foreground">Em breve teremos novos conteúdos.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 md:gap-10">
-              {posts.map((post) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              {postsToDisplay.map((post) => (
                 <Link
                   key={post.id}
                   href={`/blog/${post.slug}`}
-                  className="group flex flex-col bg-white rounded-2xl md:rounded-3xl overflow-hidden hover-elevate transition-all border border-border/50"
+                  className="group flex flex-col bg-card rounded-sm overflow-hidden border border-border shadow-sm hover:shadow-md transition-all active:scale-[0.99]"
                 >
-                  <div className="aspect-[16/9] sm:aspect-[4/3] bg-muted relative overflow-hidden rounded-2xl md:rounded-3xl">
+                  <div className="aspect-[16/9] sm:aspect-[4/3] bg-muted relative overflow-hidden">
                     {post.coverUrl ? (
                       <img
                         src={post.coverUrl}

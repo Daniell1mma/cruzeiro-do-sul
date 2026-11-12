@@ -20,9 +20,9 @@ export function About() {
         <div className="container mx-auto px-4 md:px-6 max-w-4xl">
           <div className="prose prose-lg prose-headings:font-serif prose-headings:text-foreground prose-a:text-primary max-w-none">
             <img 
-              src="/about.jpg" 
+              src="/assets-reference/portas-abertas.png" 
               alt="Fraternidade Cruzeiro do Sul" 
-              className="w-full rounded-2xl shadow-md mb-12 aspect-[21/9] object-cover" 
+              className="w-full rounded-sm border border-border shadow-md mb-12 aspect-[21/9] object-cover" 
             />
             
             <h2 className="text-3xl font-bold">Nossa Missão</h2>

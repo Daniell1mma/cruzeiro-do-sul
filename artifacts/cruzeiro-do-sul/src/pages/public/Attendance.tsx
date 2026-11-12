@@ -49,7 +49,7 @@ export function Attendance() {
                 href={formUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-primary px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all shadow-md rounded-none"
+                className="inline-flex items-center gap-2 bg-primary px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all shadow-md rounded-none min-h-[48px] active:scale-[0.98]"
               >
                 Agendar Atendimento
               </a>

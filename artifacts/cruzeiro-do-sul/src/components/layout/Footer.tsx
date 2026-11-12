@@ -48,18 +48,18 @@ export function Footer() {
           {/* Navegação */}
           <div>
             <p className="eyebrow opacity-60">Navegação</p>
-            <div className="mt-3 flex flex-col gap-2 text-sm opacity-90">
-              <Link href="/" className="hover:underline">Início</Link>
-              <Link href="/a-fraternidade" className="hover:underline">A Fraternidade</Link>
-              <Link href="/apometria" className="hover:underline">Apometria</Link>
-              <Link href="/atendimento" className="hover:underline font-semibold">Atendimento</Link>
-              <Link href="/cursos" className="hover:underline">Cursos</Link>
-              <Link href="/blog" className="hover:underline">Blog</Link>
-              <Link href="/biblioteca" className="hover:underline">Biblioteca</Link>
-              <Link href="/galeria" className="hover:underline">Galeria</Link>
-              <Link href="/faq" className="hover:underline">FAQ</Link>
-              <Link href="/contato" className="hover:underline">Contato</Link>
-              <Link href="/admin/login" className="mt-2 text-[10px] uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">
+            <div className="mt-3 flex flex-col gap-1 text-sm opacity-90">
+              <Link href="/" className="py-1 hover:underline hover:text-white transition-colors">Início</Link>
+              <Link href="/a-fraternidade" className="py-1 hover:underline hover:text-white transition-colors">A Fraternidade</Link>
+              <Link href="/apometria" className="py-1 hover:underline hover:text-white transition-colors">Apometria</Link>
+              <Link href="/atendimento" className="py-1 hover:underline hover:text-white transition-colors font-semibold">Atendimento</Link>
+              <Link href="/cursos" className="py-1 hover:underline hover:text-white transition-colors">Cursos</Link>
+              <Link href="/blog" className="py-1 hover:underline hover:text-white transition-colors">Blog</Link>
+              <Link href="/biblioteca" className="py-1 hover:underline hover:text-white transition-colors">Biblioteca</Link>
+              <Link href="/galeria" className="py-1 hover:underline hover:text-white transition-colors">Galeria</Link>
+              <Link href="/faq" className="py-1 hover:underline hover:text-white transition-colors">FAQ</Link>
+              <Link href="/contato" className="py-1 hover:underline hover:text-white transition-colors">Contato</Link>
+              <Link href="/admin/login" className="mt-2 py-1 text-[11px] uppercase tracking-widest opacity-60 hover:opacity-100 hover:underline transition-opacity">
                 Área Administrativa
               </Link>
             </div>

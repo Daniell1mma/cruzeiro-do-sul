@@ -36,10 +36,62 @@ const coordinators = [
   { name: "Sergio", role: "Coordenação", image: "/assets-reference/sergio.png" },
 ];
 
+const DEFAULT_TESTIMONIALS = [
+  {
+    id: 1,
+    name: "Mariana S.",
+    city: "Guarulhos / SP",
+    text: "Cheguei à Fraternidade com muita angústia e dores inexplicáveis. O acolhimento fraterno e a sessão de apometria trouxeram uma paz de espírito que eu não sentia há anos."
+  },
+  {
+    id: 2,
+    name: "Carlos Eduardo M.",
+    city: "São Paulo / SP",
+    text: "Ambiente de imenso respeito, disciplina e amor. A seriedade dos operadores e o respeito à ética do Evangelho me impressionaram profundamente. Gratidão infinita."
+  },
+  {
+    id: 3,
+    name: "Aparecida R.",
+    city: "Guarulhos / SP",
+    text: "Fui atendida presencialmente e a transformação na minha vida e na harmonia da minha família foi imediata. É um verdadeiro pronto-socorro da alma."
+  }
+];
+
+const DEFAULT_HOME_FAQS = [
+  {
+    id: 1,
+    question: "Qualquer pessoa pode ser atendida na Fraternidade?",
+    answer: "Sim. Nossos atendimentos são abertos a todos que buscam equilíbrio físico, emocional e espiritual, mediante agendamento prévio. Não há distinção de crença, credo ou condição social."
+  },
+  {
+    id: 2,
+    question: "Existe algum custo ou taxa para o atendimento de Apometria?",
+    answer: "Não. Todos os atendimentos são 100% gratuitos. A Fraternidade é uma instituição beneficente guiada pela caridade e pelo lema crístico 'Dai de graça o que de graça recebestes'."
+  },
+  {
+    id: 3,
+    question: "A Apometria substitui o tratamento médico tradicional?",
+    answer: "Não. A Apometria é uma terapia bioenergética complementar que atua nos corpos sutis. O assistido deve manter integralmente seus tratamentos médicos e prescrições clínicas."
+  },
+  {
+    id: 4,
+    question: "Como funciona o agendamento?",
+    answer: "Os agendamentos são disponibilizados semanalmente através do nosso formulário online às segundas-feiras às 12h ou pelo WhatsApp oficial (11) 94944-6881. Não há pronto-atendimento sem agendamento."
+  },
+  {
+    id: 5,
+    question: "Onde ocorrem as sessões presenciais?",
+    answer: "Na sede do espaço Luz e Expansão da Consciência, localizada na Rua Barbacena, 101 B (antigo 75), Jd. Bom Clima, em Guarulhos/SP, às segundas-feiras às 19h."
+  }
+];
+
 export function Home() {
   const { data: courses } = useGetFeaturedCourses();
-  const { data: testimonials } = useListTestimonials({ approved: true });
-  const { data: faqItems } = useListFaqItems();
+  const { data: rawTestimonials } = useListTestimonials({ approved: true });
+  const { data: rawFaqItems } = useListFaqItems();
+
+  const testimonials = (Array.isArray(rawTestimonials) && rawTestimonials.length > 0) ? rawTestimonials : DEFAULT_TESTIMONIALS;
+  const faqItems = (Array.isArray(rawFaqItems) && rawFaqItems.length > 0) ? rawFaqItems : DEFAULT_HOME_FAQS;
 
   return (
     <PublicLayout>
@@ -130,7 +182,7 @@ export function Home() {
               </Link>
               <Link
                 href="/atendimento"
-                className="inline-flex items-center gap-2 bg-primary px-6 py-3 text-xs font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all rounded-none"
+                className="inline-flex items-center gap-2 bg-primary px-6 py-3 text-xs font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all rounded-none min-h-[44px] active:scale-[0.98] shadow-sm"
               >
                 Agendar Atendimento
               </Link>
@@ -158,7 +210,7 @@ export function Home() {
             href="https://forms.gle/cPm5uMeJW74AvjNo8"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-primary px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all mt-8 border border-white/20 shadow-lg rounded-none"
+            className="inline-flex items-center gap-2 bg-primary px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all mt-8 border border-white/20 shadow-lg rounded-none min-h-[48px] active:scale-[0.98]"
           >
             Agendar Atendimento
           </a>

@@ -3,13 +3,48 @@ import { useListCourses } from "@workspace/api-client-react";
 import { Clock, Users, ArrowRight, User } from "lucide-react";
 import { Link } from "wouter";
 
+const DEFAULT_COURSES = [
+  {
+    id: 1,
+    name: "Formação Básica em Apometria",
+    description: "Estudo teórico e prático dos fundamentos da Apometria, leis bioenergéticas formuladas pelo Dr. Lacerda, anatomia dos corpos sutis e ética na assistência.",
+    status: "upcoming",
+    duration: "44 aulas teóricas e práticas",
+    audience: "Aberto a todos os interessados (maiores de 18 anos)",
+    instructor: "Corpo Docente da Fraternidade",
+    imageUrl: "/assets-reference/hero.png"
+  },
+  {
+    id: 2,
+    name: "Capacitação de Operadores e Médiuns de Sustentação",
+    description: "Aprofundamento em técnicas de desdobramento anímico, polarização de impulsos mentais, tratamentos espirituais e condução segura na mesa apométrica.",
+    status: "upcoming",
+    duration: "Módulos práticos supervisionados",
+    audience: "Trabalhadores e concluintes do módulo básico",
+    instructor: "Coordenação Geral e Pedagógica",
+    imageUrl: "/assets-reference/session-inside.png"
+  },
+  {
+    id: 3,
+    name: "Medicina Vibracional e Física Quântica Aplicada",
+    description: "Estudos complementares sobre a interface entre mecânica quântica, campos mórficos, ressonância vibracional e o poder curativo do amor incondicional.",
+    status: "upcoming",
+    duration: "Ciclos de palestras e seminários",
+    audience: "Trabalhadores da Fraternidade e terapeutas",
+    instructor: "José Rubens Gonçalves e convidados",
+    imageUrl: "/assets-reference/portas-abertas.png"
+  }
+];
+
 export function Courses() {
   const { data: courses, isLoading } = useListCourses();
+
+  const coursesToDisplay = (Array.isArray(courses) && courses.length > 0) ? courses : DEFAULT_COURSES;
 
   const getStatusConfig = (status: string) => {
     switch (status) {
       case "open":     return { label: "Inscrições Abertas", color: "bg-green-100 text-green-800 border-green-200" };
-      case "upcoming": return { label: "Em Breve",           color: "bg-blue-100 text-blue-800 border-blue-200" };
+      case "upcoming": return { label: "Consulte Próxima Turma", color: "bg-blue-100 text-blue-800 border-blue-200" };
       case "closed":   return { label: "Encerrado",          color: "bg-gray-100 text-gray-800 border-gray-200" };
       default:         return { label: status,               color: "bg-gray-100 text-gray-800" };
     }
@@ -32,20 +67,21 @@ export function Courses() {
             A fraternidade oferece cursos de apometria presenciais e on-line, dentro do programa temos:
           </p>
 
-          {/* If there are courses in DB */}
+          {/* Courses Grid */}
           {isLoading ? (
             <div className="flex justify-center py-12">
               <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div>
             </div>
-          ) : Array.isArray(courses) && courses.length > 0 ? (
+          ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
-              {courses.map((course) => {
+              {coursesToDisplay.map((course) => {
                 const status = getStatusConfig(course.status);
+                const encodedMsg = encodeURIComponent(`Olá! Tenho interesse no curso: ${course.name}`);
                 return (
                   <div key={course.id} className="group flex flex-col bg-card border border-border rounded-sm overflow-hidden shadow-sm hover:shadow-md transition-all">
                     <div className="aspect-video relative overflow-hidden bg-muted">
                       <img
-                        src={course.imageUrl || "/course1.jpg"}
+                        src={course.imageUrl || "/assets-reference/hero.png"}
                         alt={course.name}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
@@ -83,19 +119,21 @@ export function Courses() {
                         )}
                       </div>
 
-                      <Link
-                        href="/contato"
-                        className="mt-auto w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground py-3 text-xs font-bold uppercase tracking-widest hover:bg-primary/90 transition-colors"
+                      <a
+                        href={`https://wa.me/5511949446881?text=${encodedMsg}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-auto w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground py-3.5 text-xs font-bold uppercase tracking-widest hover:bg-primary/90 transition-all min-h-[44px] active:scale-[0.98] shadow-xs"
                       >
                         Tenho Interesse
                         <ArrowRight size={14} />
-                      </Link>
+                      </a>
                     </div>
                   </div>
                 );
               })}
             </div>
-          ) : null}
+          )}
 
           {/* Reference Notice Box */}
           <div className="bg-secondary/15 p-8 sm:p-10 border border-border text-center rounded-sm mt-12">

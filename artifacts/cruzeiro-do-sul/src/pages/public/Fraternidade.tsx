@@ -2,9 +2,42 @@ import { PublicLayout } from "@/components/layout/PublicLayout";
 import { useListTimelineEvents, useListSettings } from "@workspace/api-client-react";
 import { Heart, Eye, Star } from "lucide-react";
 
+const DEFAULT_TIMELINE_EVENTS = [
+  {
+    id: 1,
+    year: "2004",
+    title: "O Início com o Prof. Francisco Alberto da Eira",
+    text: "Em março de 2004, o Professor Francisco Alberto da Eira, precursor da Apometria em São Paulo, realizou a palestra 'O que é Apometria', marcando o início da formação dos 11 membros fundadores e do primeiro curso de 44 aulas.",
+    imageUrl: "/assets-reference/hero.png"
+  },
+  {
+    id: 2,
+    year: "2010",
+    title: "Consolidação dos Atendimentos Fraternos",
+    text: "Estruturação dos atendimentos bioenergéticos gratuitos com foco na caridade e no alívio de desordens físicas, psíquicas e espirituais sob as diretrizes do Evangelho e da ética apométrica.",
+    imageUrl: "/assets-reference/session-inside.png"
+  },
+  {
+    id: 3,
+    year: "2018",
+    title: "Expansão Pedagógica e Formação Contínua",
+    text: "Coordenação pedagógica desenvolvendo materiais de estudo, atualizações à luz da medicina vibracional e formação de novas turmas de trabalhadores voluntários.",
+    imageUrl: "/assets-reference/portas-abertas.png"
+  },
+  {
+    id: 4,
+    year: "2025 / 2026",
+    title: "21 Anos de Amor, Cura e Merecimento",
+    text: "Comemoração de mais de duas décadas de dedicação fraterna, atendimentos gratuitos e acolhimento incondicional à comunidade na sede Luz e Expansão da Consciência.",
+    imageUrl: ""
+  }
+];
+
 export function Fraternidade() {
   const { data: events, isLoading: loadingTimeline } = useListTimelineEvents();
   const { data: settings, isLoading: loadingSettings } = useListSettings();
+
+  const timelineEvents = (Array.isArray(events) && events.length > 0) ? events : DEFAULT_TIMELINE_EVENTS;
 
   const getSetting = (key: string, fallback = "") => {
     return Array.isArray(settings) ? (settings.find((s) => s.key === key)?.value ?? fallback) : fallback;
@@ -29,21 +62,21 @@ export function Fraternidade() {
     .filter(Boolean);
 
   const valueIcons = [
-    <Heart className="w-5 h-5" />,
-    <Star className="w-5 h-5" />,
-    <Eye className="w-5 h-5" />,
+    <Heart key="heart" className="w-5 h-5" />,
+    <Star key="star" className="w-5 h-5" />,
+    <Eye key="eye" className="w-5 h-5" />,
   ];
 
   return (
     <PublicLayout>
       {/* Hero */}
-      <section className="bg-muted pt-20 pb-16">
+      <section className="bg-muted pt-14 pb-12 md:pt-20 md:pb-16">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="max-w-3xl mx-auto text-center space-y-6">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground">
+          <div className="max-w-3xl mx-auto text-center space-y-4 md:space-y-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-foreground">
               A Fraternidade
             </h1>
-            <p className="text-xl text-foreground/80 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-foreground/80 leading-relaxed">
               Conheça quem somos, nossa missão, nossos valores e a jornada de
               amor que nos trouxe até aqui.
             </p>
@@ -52,7 +85,7 @@ export function Fraternidade() {
       </section>
 
       {/* Quem Somos */}
-      <section className="py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4 md:px-6 max-w-4xl">
           {loadingSettings ? (
             <div className="flex justify-center py-12">
@@ -120,14 +153,15 @@ export function Fraternidade() {
       <div className="bg-muted h-2 w-full" />
 
       {/* Nossa História — Timeline */}
-      <section className="py-20 bg-muted">
+      <section className="py-16 md:py-24 bg-muted">
         <div className="container mx-auto px-4 md:px-6 max-w-4xl">
           <div className="text-center mb-16 space-y-4">
+            <p className="eyebrow text-muted-foreground">Mais de Duas Décadas</p>
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground">
               Nossa História
             </h2>
-            <p className="text-xl text-foreground/70">
-              Uma jornada de amor, dedicação e serviço ao próximo.
+            <p className="text-lg sm:text-xl text-foreground/70 max-w-2xl mx-auto">
+              Uma jornada de amor, dedicação voluntária e acolhimento espiritual iniciada em 2004.
             </p>
             <div className="w-16 h-1 bg-secondary rounded-full mx-auto"></div>
           </div>
@@ -136,51 +170,48 @@ export function Fraternidade() {
             <div className="flex justify-center py-20">
               <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div>
             </div>
-          ) : !Array.isArray(events) || events.length === 0 ? (
-            <div className="text-center py-20">
-              <p className="text-muted-foreground">História em construção.</p>
-            </div>
           ) : (
             <div className="relative">
               {/* Timeline Line */}
               <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border transform md:-translate-x-1/2"></div>
 
-              <div className="space-y-16">
-                {events.map((event, index) => {
+              <div className="space-y-12 md:space-y-16">
+                {timelineEvents.map((event, index) => {
                   const isEven = index % 2 === 0;
                   return (
                     <div
                       key={event.id}
-                      className="relative flex flex-col md:flex-row items-center gap-8 md:gap-16"
+                      className="relative flex flex-col md:flex-row items-center gap-6 md:gap-12"
                     >
                       {/* Dot */}
-                      <div className="absolute left-4 md:left-1/2 w-8 h-8 bg-secondary rounded-full border-4 border-white shadow-sm transform -translate-x-[15px] md:-translate-x-1/2 flex items-center justify-center z-10">
-                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      <div className="absolute left-4 md:left-1/2 w-8 h-8 bg-primary rounded-full border-4 border-white shadow-md transform -translate-x-[15px] md:-translate-x-1/2 flex items-center justify-center z-10">
+                        <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
                       </div>
 
                       {/* Content */}
                       <div
                         className={`w-full md:w-1/2 pl-12 md:pl-0 ${
                           isEven
-                            ? "md:pr-16 md:text-right"
-                            : "md:order-2 md:pl-16"
+                            ? "md:pr-12 md:text-right"
+                            : "md:order-2 md:pl-12"
                         }`}
                       >
-                        <div className="bg-white border border-border p-6 md:p-8 rounded-3xl shadow-sm hover-elevate transition-all">
-                          <span className="inline-block bg-primary/10 text-primary font-bold px-3 py-1 rounded-full text-sm mb-4">
+                        <div className="bg-white border border-border p-6 md:p-8 rounded-sm shadow-sm hover:shadow-md transition-all">
+                          <span className="inline-block bg-primary/10 text-primary font-bold px-3 py-1 rounded-sm text-xs uppercase tracking-wider mb-3">
                             {event.year}
                           </span>
-                          <h3 className="text-2xl font-serif font-bold mb-4">
+                          <h3 className="text-xl md:text-2xl font-serif font-bold mb-3 text-foreground">
                             {event.title}
                           </h3>
-                          <p className="text-foreground/70 leading-relaxed">
+                          <p className="text-foreground/75 leading-relaxed text-sm sm:text-base">
                             {event.text}
                           </p>
                           {event.imageUrl && (
                             <img
                               src={event.imageUrl}
                               alt={event.title}
-                              className="mt-6 w-full rounded-xl aspect-video object-cover"
+                              className="mt-4 w-full rounded-sm aspect-video object-cover border border-border"
+                              loading="lazy"
                             />
                           )}
                         </div>
@@ -193,6 +224,26 @@ export function Fraternidade() {
                     </div>
                   );
                 })}
+              </div>
+
+              {/* Complete history and attendance CTA */}
+              <div className="mt-16 text-center space-y-4 pt-8">
+                <div>
+                  <a
+                    href="/historia"
+                    className="eyebrow rule-link text-primary font-bold text-sm inline-block"
+                  >
+                    Ler a história institucional completa dos 21 anos &rarr;
+                  </a>
+                </div>
+                <div>
+                  <a
+                    href="/atendimento"
+                    className="inline-flex items-center gap-2 bg-primary px-8 py-3.5 text-xs sm:text-sm font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all rounded-none min-h-[44px] active:scale-[0.98] shadow-sm"
+                  >
+                    Agendar Atendimento
+                  </a>
+                </div>
               </div>
             </div>
           )}
