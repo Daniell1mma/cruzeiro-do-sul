@@ -19,7 +19,7 @@ export const DEFAULT_POSTS: StaticPost[] = [
     subtitle: "Conheça os fundamentos bioenergéticos do desdobramento dos corpos sutis e as leis formuladas pelo Dr. José Lacerda de Azevedo.",
     category: "Fundamentos",
     authorName: "Fraternidade Cruzeiro do Sul",
-    coverUrl: "/assets-reference/hero.png",
+    coverUrl: "/assets-reference/hero.webp",
     createdAt: "2025-01-15T10:00:00Z",
     tags: "Apometria, Desdobramento, Bioenergia, Estudo",
     content: `
@@ -45,7 +45,7 @@ export const DEFAULT_POSTS: StaticPost[] = [
     subtitle: "Recomendações essenciais de alimentação, equilíbrio mental e vestimenta para otimizar sua sintonia e recuperação.",
     category: "Orientações",
     authorName: "Equipe de Atendimento",
-    coverUrl: "/assets-reference/session-inside.png",
+    coverUrl: "/assets-reference/session-inside.webp",
     createdAt: "2025-02-10T14:30:00Z",
     tags: "Atendimento, Preparação, Saúde, Espiritualidade",
     content: `
@@ -68,7 +68,7 @@ export const DEFAULT_POSTS: StaticPost[] = [
     subtitle: "A trajetória da Fraternidade Cruzeiro do Sul desde o marco inicial com o Prof. Francisco Alberto da Eira em 2004.",
     category: "Institucional",
     authorName: "Coordenação Geral",
-    coverUrl: "/assets-reference/portas-abertas.png",
+    coverUrl: "/assets-reference/portas-abertas.webp",
     createdAt: "2025-10-17T09:00:00Z",
     tags: "História, 21 Anos, Francisco da Eira, Guarulhos",
     content: `

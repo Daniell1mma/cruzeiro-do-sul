@@ -1,7 +1,8 @@
 import { PublicLayout } from "@/components/layout/PublicLayout";
-import { useListLibraryItems } from "@workspace/api-client-react";
+import { useListLibraryItems, ListLibraryItemsType } from "@workspace/api-client-react";
 import { FileText, Headphones, Video, Book, Download, ExternalLink } from "lucide-react";
 import { useState } from "react";
+import { useSeo } from "@/hooks/useSeo";
 
 const TYPE_CONFIG = {
   pdf:     { label: "Apostilas", icon: <FileText  size={22} />, color: "text-red-500 bg-red-50" },
@@ -59,9 +60,14 @@ const DEFAULT_LIBRARY_ITEMS = [
 ];
 
 export function Library() {
+  useSeo({
+    title: "Biblioteca e Materiais de Estudo",
+    description: "Apostilas, livros clássicos de Apometria do Dr. José Lacerda de Azevedo, artigos e áudios de harmonização.",
+    canonicalPath: "/biblioteca",
+  });
+
   const [filter, setFilter] = useState<ItemType>("all");
-  // @ts-ignore
-  const { data: items, isLoading } = useListLibraryItems(filter !== "all" ? { type: filter as any } : undefined);
+  const { data: items, isLoading } = useListLibraryItems(filter !== "all" ? { type: filter as ListLibraryItemsType } : undefined);
 
   const rawList = (Array.isArray(items) && items.length > 0) ? items : DEFAULT_LIBRARY_ITEMS;
   const filteredItems = filter !== "all" ? rawList.filter((it: any) => it.type === filter) : rawList;

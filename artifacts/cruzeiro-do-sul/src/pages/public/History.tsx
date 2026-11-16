@@ -1,7 +1,14 @@
 import { PublicLayout } from "@/components/layout/PublicLayout";
 import { Link } from "wouter";
+import { useSeo } from "@/hooks/useSeo";
 
 export function History() {
+  useSeo({
+    title: "Nossa História e Fundação",
+    description: "Conheça a trajetória da Fraternidade Cruzeiro do Sul desde março de 2004 com o Prof. Francisco Alberto da Eira e os 11 membros fundadores.",
+    canonicalPath: "/historia",
+  });
+
   return (
     <PublicLayout>
       {/* Header */}

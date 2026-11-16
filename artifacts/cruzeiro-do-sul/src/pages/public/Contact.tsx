@@ -2,8 +2,15 @@ import { PublicLayout } from "@/components/layout/PublicLayout";
 import { useListSettings } from "@workspace/api-client-react";
 import { useState } from "react";
 import { Send, CheckCircle2 } from "lucide-react";
+import { useSeo } from "@/hooks/useSeo";
 
 export function Contact() {
+  useSeo({
+    title: "Contato e Localização",
+    description: "Endereço da sede em Guarulhos/SP, mapa de acesso, e-mail e atendimento pelo WhatsApp oficial.",
+    canonicalPath: "/contato",
+  });
+
   const { data: settings } = useListSettings();
 
   const getSetting = (key: string) => Array.isArray(settings) ? (settings.find(s => s.key === key)?.value || "") : "";
@@ -13,7 +20,18 @@ export function Contact() {
   const phone = getSetting("phone") || "(11) 94944-6881";
   const facebook = getSetting("facebook") || "facebook.com/ApometriaGuarulhos";
 
-  const [formSent, setFormSent] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [submittedLink, setSubmittedLink] = useState<string | null>(null);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const cleanPhone = phone.replace(/\D/g, "");
+    const targetPhone = cleanPhone.startsWith("55") ? cleanPhone : `55${cleanPhone}`;
+    const text = `*Contato via Site — Fraternidade Cruzeiro do Sul*\n\n*Nome:* ${formData.name}\n*E-mail:* ${formData.email}\n*Mensagem:* ${formData.message}`;
+    const waUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(text)}`;
+    setSubmittedLink(waUrl);
+    window.open(waUrl, "_blank", "noopener,noreferrer");
+  };
 
   return (
     <PublicLayout>
@@ -115,28 +133,48 @@ export function Contact() {
               Tem alguma dúvida sobre os trabalhos da Fraternidade? Preencha os campos abaixo.
             </p>
 
-            {formSent ? (
-              <div className="bg-primary/10 border border-primary/20 p-6 text-center rounded-sm">
-                <CheckCircle2 className="w-10 h-10 text-primary mx-auto mb-3" />
-                <p className="font-bold text-foreground text-lg mb-1">Mensagem enviada com sucesso!</p>
-                <p className="text-sm text-muted-foreground">Entraremos em contato com você em breve.</p>
+            {submittedLink ? (
+              <div className="bg-primary/10 border border-primary/20 p-6 sm:p-8 text-center rounded-sm space-y-4">
+                <CheckCircle2 className="w-12 h-12 text-primary mx-auto mb-2" />
+                <h4 className="font-bold text-foreground text-lg sm:text-xl">
+                  Mensagem direcionada para o WhatsApp!
+                </h4>
+                <p className="text-sm text-foreground/80 leading-relaxed max-w-md mx-auto">
+                  Sua mensagem foi estruturada e encaminhada para o atendimento da Fraternidade no WhatsApp oficial.
+                </p>
+                <div className="pt-2 flex flex-col sm:flex-row gap-3 justify-center items-center">
+                  <a
+                    href={submittedLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white px-6 py-3 text-xs font-bold uppercase tracking-wider rounded-sm transition-all shadow-sm"
+                  >
+                    Conversar no WhatsApp
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSubmittedLink(null);
+                      setFormData({ name: "", email: "", message: "" });
+                    }}
+                    className="text-xs text-muted-foreground hover:text-primary underline px-4 py-2"
+                  >
+                    Enviar outra mensagem
+                  </button>
+                </div>
               </div>
             ) : (
-              <form
-                className="space-y-4"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setFormSent(true);
-                }}
-              >
+              <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
                   <label htmlFor="name" className="block text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1.5">
-                    Nome Completo
+                    Nome Completo <span className="text-primary">*</span>
                   </label>
                   <input
                     type="text"
                     id="name"
                     required
+                    value={formData.name}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
                     className="w-full h-11 px-3.5 border border-border bg-background text-foreground text-sm focus:outline-none focus:border-primary"
                     placeholder="Seu nome"
                   />
@@ -144,12 +182,14 @@ export function Contact() {
 
                 <div>
                   <label htmlFor="email" className="block text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1.5">
-                    Seu E-mail
+                    Seu E-mail <span className="text-primary">*</span>
                   </label>
                   <input
                     type="email"
                     id="email"
                     required
+                    value={formData.email}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
                     className="w-full h-11 px-3.5 border border-border bg-background text-foreground text-sm focus:outline-none focus:border-primary"
                     placeholder="seu@email.com"
                   />
@@ -157,12 +197,14 @@ export function Contact() {
 
                 <div>
                   <label htmlFor="message" className="block text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1.5">
-                    Mensagem
+                    Mensagem <span className="text-primary">*</span>
                   </label>
                   <textarea
                     id="message"
                     required
                     rows={4}
+                    value={formData.message}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))}
                     className="w-full p-3.5 border border-border bg-background text-foreground text-sm focus:outline-none focus:border-primary resize-none"
                     placeholder="Como podemos ajudar?"
                   ></textarea>
@@ -172,7 +214,7 @@ export function Contact() {
                   type="submit"
                   className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3.5 text-xs font-bold uppercase tracking-widest transition-all mt-4 flex items-center justify-center gap-2 min-h-[46px] active:scale-[0.98] shadow-sm"
                 >
-                  <Send size={14} /> Enviar Mensagem
+                  <Send size={14} /> Enviar Mensagem via WhatsApp
                 </button>
               </form>
             )}

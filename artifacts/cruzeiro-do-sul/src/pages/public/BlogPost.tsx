@@ -7,6 +7,7 @@ import { ptBR } from "date-fns/locale";
 import { useState } from "react";
 
 import { DEFAULT_POSTS } from "@/data/defaultPosts";
+import { useSeo } from "@/hooks/useSeo";
 
 export function BlogPost() {
   const { slug } = useParams();
@@ -14,6 +15,12 @@ export function BlogPost() {
 
   const fallbackPost = DEFAULT_POSTS.find((p) => p.slug === slug);
   const activePost = post || fallbackPost;
+
+  useSeo({
+    title: activePost ? activePost.title : "Artigo",
+    description: activePost ? activePost.subtitle || activePost.title : undefined,
+    canonicalPath: slug ? `/blog/${slug}` : "/blog",
+  });
 
   if (isLoading && !activePost) {
     return (
@@ -210,11 +217,12 @@ function CommentsSection({ postId }: { postId: number }) {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
+                  <label htmlFor="comment-name" className="block text-sm font-medium text-foreground mb-2">
                     Nome <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
+                    id="comment-name"
                     name="name"
                     value={form.name}
                     onChange={handleChange}
@@ -223,11 +231,12 @@ function CommentsSection({ postId }: { postId: number }) {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
+                  <label htmlFor="comment-email" className="block text-sm font-medium text-foreground mb-2">
                     E-mail <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="email"
+                    id="comment-email"
                     name="email"
                     value={form.email}
                     onChange={handleChange}
@@ -237,10 +246,11 @@ function CommentsSection({ postId }: { postId: number }) {
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
+                <label htmlFor="comment-content" className="block text-sm font-medium text-foreground mb-2">
                   Comentário <span className="text-red-500">*</span>
                 </label>
                 <textarea
+                  id="comment-content"
                   name="content"
                   value={form.content}
                   onChange={handleChange}

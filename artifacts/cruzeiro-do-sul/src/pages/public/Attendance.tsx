@@ -1,5 +1,6 @@
 import { PublicLayout } from "@/components/layout/PublicLayout";
 import { useListSettings } from "@workspace/api-client-react";
+import { useSeo } from "@/hooks/useSeo";
 
 const prepRules = [
   { n: "01", text: "Alimentação leve no dia;", isWarning: false },
@@ -12,6 +13,12 @@ const prepRules = [
 ];
 
 export function Attendance() {
+  useSeo({
+    title: "Agendamento e Atendimento Fraterno",
+    description: "Orientações para o atendimento apométrico gratuito, horários, vestimentas adequadas e agendamento prévio.",
+    canonicalPath: "/atendimento",
+  });
+
   const { data: settings } = useListSettings();
   const formUrl = (Array.isArray(settings) ? settings.find(s => s.key === "attendance_form_url")?.value : "") || "https://forms.gle/cPm5uMeJW74AvjNo8";
 

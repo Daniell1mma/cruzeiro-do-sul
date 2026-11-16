@@ -4,6 +4,7 @@ import { useListFaqItems } from "@workspace/api-client-react";
 import { HelpCircle, MessageSquare, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
+import { useSeo } from "@/hooks/useSeo";
 
 const DEFAULT_FAQS = [
   {
@@ -68,11 +69,24 @@ const DEFAULT_FAQS = [
   }
 ];
 
+type FaqItemDisplay = {
+  id: number;
+  category?: string | null;
+  question: string;
+  answer: string;
+};
+
 export function Faq() {
+  useSeo({
+    title: "Dúvidas Frequentes (FAQ)",
+    description: "Perguntas frequentes sobre o que é Apometria, gratuidade dos atendimentos fraternos, preparação e agendamento prévio.",
+    canonicalPath: "/faq",
+  });
+
   const { data: faqItems, isLoading } = useListFaqItems();
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  const itemsToUse = (Array.isArray(faqItems) && faqItems.length > 0) ? faqItems : DEFAULT_FAQS;
+  const itemsToUse: FaqItemDisplay[] = (Array.isArray(faqItems) && faqItems.length > 0) ? faqItems : DEFAULT_FAQS;
 
   // Extract unique categories
   const categories = ["all", ...Array.from(new Set(itemsToUse.map(item => item.category || "Geral")))];
@@ -83,12 +97,12 @@ export function Faq() {
     : itemsToUse.filter(item => (item.category || "Geral") === selectedCategory);
 
   // Group filtered FAQs by category
-  const groupedFaqs = filteredItems.reduce((acc, item) => {
+  const groupedFaqs = filteredItems.reduce<Record<string, FaqItemDisplay[]>>((acc, item) => {
     const cat = item.category || 'Geral';
     if (!acc[cat]) acc[cat] = [];
     acc[cat].push(item);
     return acc;
-  }, {} as Record<string, typeof itemsToUse>);
+  }, {});
 
   return (
     <PublicLayout>

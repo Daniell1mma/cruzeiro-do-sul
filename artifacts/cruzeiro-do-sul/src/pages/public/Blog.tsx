@@ -5,8 +5,15 @@ import { Link } from "wouter";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { DEFAULT_POSTS } from "@/data/defaultPosts";
+import { useSeo } from "@/hooks/useSeo";
 
 export function Blog() {
+  useSeo({
+    title: "Blog — Mensagens e Reflexões",
+    description: "Artigos, mensagens edificantes e estudos bioenergéticos sobre Apometria para alimentar o seu espírito.",
+    canonicalPath: "/blog",
+  });
+
   const { data: posts, isLoading } = useListPosts({ status: "published" });
 
   const postsToDisplay = (Array.isArray(posts) && posts.length > 0) ? posts : DEFAULT_POSTS;

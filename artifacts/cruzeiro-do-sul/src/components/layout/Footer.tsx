@@ -54,6 +54,7 @@ export function Footer() {
               <Link href="/apometria" className="py-1 hover:underline hover:text-white transition-colors">Apometria</Link>
               <Link href="/atendimento" className="py-1 hover:underline hover:text-white transition-colors font-semibold">Atendimento</Link>
               <Link href="/cursos" className="py-1 hover:underline hover:text-white transition-colors">Cursos</Link>
+              <Link href="/depoimentos" className="py-1 hover:underline hover:text-white transition-colors">Depoimentos</Link>
               <Link href="/blog" className="py-1 hover:underline hover:text-white transition-colors">Blog</Link>
               <Link href="/biblioteca" className="py-1 hover:underline hover:text-white transition-colors">Biblioteca</Link>
               <Link href="/galeria" className="py-1 hover:underline hover:text-white transition-colors">Galeria</Link>

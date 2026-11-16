@@ -2,6 +2,7 @@ import { PublicLayout } from "@/components/layout/PublicLayout";
 import { useListCourses } from "@workspace/api-client-react";
 import { Clock, Users, ArrowRight, User } from "lucide-react";
 import { Link } from "wouter";
+import { useSeo } from "@/hooks/useSeo";
 
 const DEFAULT_COURSES = [
   {
@@ -12,7 +13,7 @@ const DEFAULT_COURSES = [
     duration: "44 aulas teóricas e práticas",
     audience: "Aberto a todos os interessados (maiores de 18 anos)",
     instructor: "Corpo Docente da Fraternidade",
-    imageUrl: "/assets-reference/hero.png"
+    imageUrl: "/assets-reference/hero.webp"
   },
   {
     id: 2,
@@ -22,7 +23,7 @@ const DEFAULT_COURSES = [
     duration: "Módulos práticos supervisionados",
     audience: "Trabalhadores e concluintes do módulo básico",
     instructor: "Coordenação Geral e Pedagógica",
-    imageUrl: "/assets-reference/session-inside.png"
+    imageUrl: "/assets-reference/session-inside.webp"
   },
   {
     id: 3,
@@ -32,11 +33,17 @@ const DEFAULT_COURSES = [
     duration: "Ciclos de palestras e seminários",
     audience: "Trabalhadores da Fraternidade e terapeutas",
     instructor: "José Rubens Gonçalves e convidados",
-    imageUrl: "/assets-reference/portas-abertas.png"
+    imageUrl: "/assets-reference/portas-abertas.webp"
   }
 ];
 
 export function Courses() {
+  useSeo({
+    title: "Cursos e Formação em Apometria",
+    description: "Cursos teóricos e práticos de Apometria e medicina vibracional ministrados pelo corpo docente da Fraternidade Cruzeiro do Sul.",
+    canonicalPath: "/cursos",
+  });
+
   const { data: courses, isLoading } = useListCourses();
 
   const coursesToDisplay = (Array.isArray(courses) && courses.length > 0) ? courses : DEFAULT_COURSES;
@@ -81,7 +88,7 @@ export function Courses() {
                   <div key={course.id} className="group flex flex-col bg-card border border-border rounded-sm overflow-hidden shadow-sm hover:shadow-md transition-all">
                     <div className="aspect-video relative overflow-hidden bg-muted">
                       <img
-                        src={course.imageUrl || "/assets-reference/hero.png"}
+                        src={course.imageUrl || "/assets-reference/hero.webp"}
                         alt={course.name}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />

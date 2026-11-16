@@ -2,6 +2,7 @@ import { PublicLayout } from "@/components/layout/PublicLayout";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useListFaqItems } from "@workspace/api-client-react";
 import { Link } from "wouter";
+import { useSeo } from "@/hooks/useSeo";
 
 const DEFAULT_APOMETRIA_FAQS = [
   {
@@ -22,6 +23,12 @@ const DEFAULT_APOMETRIA_FAQS = [
 ];
 
 export function Apometria() {
+  useSeo({
+    title: "O que é Apometria?",
+    description: "Entenda a técnica bioenergética de desdobramento anímico desenvolvida pelo Dr. José Lacerda de Azevedo e as 13 Leis da Apometria.",
+    canonicalPath: "/apometria",
+  });
+
   const { data: rawFaqItems } = useListFaqItems({ category: "apometria" });
   const faqItems = (Array.isArray(rawFaqItems) && rawFaqItems.length > 0) ? rawFaqItems : DEFAULT_APOMETRIA_FAQS;
 

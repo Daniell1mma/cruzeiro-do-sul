@@ -20,6 +20,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Apenas checa a sessão se o usuário estiver acessando rotas administrativas (/admin)
+    if (typeof window !== "undefined" && !window.location.pathname.startsWith("/admin")) {
+      setIsLoading(false);
+      return;
+    }
+
     fetch("/api/auth/me", { credentials: "include" })
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => setUser(data ?? null))

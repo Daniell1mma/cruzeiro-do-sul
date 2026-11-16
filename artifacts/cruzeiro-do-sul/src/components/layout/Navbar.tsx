@@ -7,6 +7,7 @@ const navLinks = [
   { name: "A Fraternidade", path: "/a-fraternidade" },
   { name: "Apometria", path: "/apometria" },
   { name: "Cursos", path: "/cursos" },
+  { name: "Depoimentos", path: "/depoimentos" },
   { name: "Blog", path: "/blog" },
   { name: "Biblioteca", path: "/biblioteca" },
   { name: "Galeria", path: "/galeria" },
@@ -40,7 +41,7 @@ export function Navbar() {
             href="/admin/login"
             aria-label="Área Administrativa"
             title="Área Administrativa"
-            className="absolute right-2 sm:right-4 md:right-6 inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-bold uppercase tracking-wider text-primary-foreground/80 hover:text-white transition-opacity p-1 min-w-[28px] min-h-[28px] justify-center"
+            className="absolute right-2 sm:right-4 md:right-6 inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-bold uppercase tracking-wider text-primary-foreground/80 hover:text-white transition-opacity p-1.5 min-w-[36px] min-h-[36px] justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-xs"
           >
             <Lock size={13} />
             <span className="hidden md:inline">Admin</span>
@@ -57,11 +58,16 @@ export function Navbar() {
               className="flex items-center gap-2 sm:gap-3 font-serif text-xs sm:text-sm font-bold tracking-[0.1em] sm:tracking-[0.12em] uppercase leading-tight text-foreground hover:opacity-90 transition-opacity shrink-0"
             >
               <img
-                src="/logo.png"
+                src="/logo.webp"
                 alt="Logo Fraternidade Cruzeiro do Sul"
                 className="h-11 sm:h-14 md:h-16 w-auto object-contain"
                 onError={(e) => {
-                  (e.currentTarget as HTMLElement).style.display = 'none';
+                  const target = e.currentTarget as HTMLImageElement;
+                  if (target.src.endsWith(".webp")) {
+                    target.src = "/logo.png";
+                  } else {
+                    target.style.display = 'none';
+                  }
                 }}
               />
               <span className="flex flex-col text-[#07145C]">
@@ -77,7 +83,7 @@ export function Navbar() {
                 <Link
                   key={link.path}
                   href={link.path}
-                  className={`eyebrow flex items-center h-8 border-l border-border px-3 2xl:px-4 text-[11px] transition-colors hover:text-primary ${
+                  className={`eyebrow flex items-center h-8 border-l border-border px-3 2xl:px-4 text-xs transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${
                     location === link.path
                       ? "text-primary font-bold bg-primary/5"
                       : "text-foreground/80"
@@ -132,7 +138,7 @@ export function Navbar() {
         {/* Drawer header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-border bg-muted/40">
           <div className="flex items-center gap-2.5">
-            <img src="/logo.png" alt="Logo" className="h-10 w-auto" />
+            <img src="/logo.webp" alt="Logo" className="h-10 w-auto" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logo.png"; }} />
             <div className="flex flex-col">
               <span className="font-serif font-bold text-primary text-sm leading-tight">
                 Cruzeiro do Sul

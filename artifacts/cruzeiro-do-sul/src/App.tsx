@@ -2,38 +2,41 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
-import { Route, Switch, Router as WouterRouter } from 'wouter';
+import { Route, Switch, Router as WouterRouter, Redirect } from 'wouter';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 
-// Public Pages
-import { Home } from '@/pages/public/Home';
-import { About } from '@/pages/public/About';
-import { History } from '@/pages/public/History';
-import { Fraternidade } from '@/pages/public/Fraternidade';
-import { Apometria } from '@/pages/public/Apometria';
-import { Courses } from '@/pages/public/Courses';
-import { Library } from '@/pages/public/Library';
-import { Blog } from '@/pages/public/Blog';
-import { BlogPost } from '@/pages/public/BlogPost';
-import { Gallery } from '@/pages/public/Gallery';
-import { Attendance } from '@/pages/public/Attendance';
-import { Faq } from '@/pages/public/Faq';
-import { Contact } from '@/pages/public/Contact';
+import { Component, type ErrorInfo, type ReactNode, lazy, Suspense } from 'react';
 
-// Admin Pages
-import { AdminLogin } from '@/pages/admin/Login';
-import { Dashboard } from '@/pages/admin/Dashboard';
-import { Posts } from '@/pages/admin/Posts';
-import { Courses as AdminCourses } from '@/pages/admin/Courses';
-import { Library as AdminLibrary } from '@/pages/admin/Library';
-import { Gallery as AdminGallery } from '@/pages/admin/Gallery';
-import { Timeline } from '@/pages/admin/Timeline';
-import { Testimonials } from '@/pages/admin/Testimonials';
-import { Comments } from '@/pages/admin/Comments';
-import { Faq as AdminFaq } from '@/pages/admin/Faq';
-import { Component, type ErrorInfo, type ReactNode } from 'react';
-import { Settings } from '@/pages/admin/Settings';
+// Eagerly loaded for instant First Contentful Paint
+import { Home } from '@/pages/public/Home';
+
+// Public Pages (Code-split para navegação modular e leve)
+const Fraternidade = lazy(() => import('@/pages/public/Fraternidade').then(m => ({ default: m.Fraternidade })));
+const History = lazy(() => import('@/pages/public/History').then(m => ({ default: m.History })));
+const Apometria = lazy(() => import('@/pages/public/Apometria').then(m => ({ default: m.Apometria })));
+const Courses = lazy(() => import('@/pages/public/Courses').then(m => ({ default: m.Courses })));
+const Library = lazy(() => import('@/pages/public/Library').then(m => ({ default: m.Library })));
+const Blog = lazy(() => import('@/pages/public/Blog').then(m => ({ default: m.Blog })));
+const BlogPost = lazy(() => import('@/pages/public/BlogPost').then(m => ({ default: m.BlogPost })));
+const Gallery = lazy(() => import('@/pages/public/Gallery').then(m => ({ default: m.Gallery })));
+const Attendance = lazy(() => import('@/pages/public/Attendance').then(m => ({ default: m.Attendance })));
+const Faq = lazy(() => import('@/pages/public/Faq').then(m => ({ default: m.Faq })));
+const Contact = lazy(() => import('@/pages/public/Contact').then(m => ({ default: m.Contact })));
+const PublicTestimonials = lazy(() => import('@/pages/public/Testimonials').then(m => ({ default: m.Testimonials })));
+
+// Admin Pages (Code-split para isolar 100% da área administrativa)
+const AdminLogin = lazy(() => import('@/pages/admin/Login').then(m => ({ default: m.AdminLogin })));
+const Dashboard = lazy(() => import('@/pages/admin/Dashboard').then(m => ({ default: m.Dashboard })));
+const Posts = lazy(() => import('@/pages/admin/Posts').then(m => ({ default: m.Posts })));
+const AdminCourses = lazy(() => import('@/pages/admin/Courses').then(m => ({ default: m.Courses })));
+const AdminLibrary = lazy(() => import('@/pages/admin/Library').then(m => ({ default: m.Library })));
+const AdminGallery = lazy(() => import('@/pages/admin/Gallery').then(m => ({ default: m.Gallery })));
+const Timeline = lazy(() => import('@/pages/admin/Timeline').then(m => ({ default: m.Timeline })));
+const Testimonials = lazy(() => import('@/pages/admin/Testimonials').then(m => ({ default: m.Testimonials })));
+const Comments = lazy(() => import('@/pages/admin/Comments').then(m => ({ default: m.Comments })));
+const AdminFaq = lazy(() => import('@/pages/admin/Faq').then(m => ({ default: m.Faq })));
+const Settings = lazy(() => import('@/pages/admin/Settings').then(m => ({ default: m.Settings })));
 
 class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean; error: Error | null }> {
   constructor(props: { children: ReactNode }) {
@@ -79,48 +82,69 @@ const queryClient = new QueryClient({
   },
 });
 
-function AdminRoute({ component }: { component: React.ComponentType }) {
-  return <ProtectedRoute component={component} />;
+function AdminRoute({ component: Component }: { component: React.ComponentType }) {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-muted/30">
+          <div className="w-8 h-8 rounded-full border-4 border-primary border-t-transparent animate-spin" />
+        </div>
+      }
+    >
+      <ProtectedRoute component={Component} />
+    </Suspense>
+  );
+}
+
+function PageLoader() {
+  return (
+    <div className="min-h-[50vh] flex items-center justify-center">
+      <div className="w-8 h-8 rounded-full border-4 border-primary border-t-transparent animate-spin" />
+    </div>
+  );
 }
 
 function Router() {
   return (
-    <Switch>
-      {/* Public Routes */}
-      <Route path="/" component={Home} />
-      <Route path="/a-fraternidade" component={Fraternidade} />
-      <Route path="/historia" component={History} />
-      {/* Legacy redirects */}
-      <Route path="/quem-somos">{() => { window.location.replace('/a-fraternidade'); return null; }}</Route>
-      <Route path="/nossa-historia">{() => { window.location.replace('/historia'); return null; }}</Route>
-      <Route path="/apometria" component={Apometria} />
-      <Route path="/cursos" component={Courses} />
-      <Route path="/biblioteca" component={Library} />
-      <Route path="/blog" component={Blog} />
-      <Route path="/blog/:slug" component={BlogPost} />
-      <Route path="/galeria" component={Gallery} />
-      <Route path="/atendimento" component={Attendance} />
-      <Route path="/agendamentos" component={Attendance} />
-      <Route path="/faq" component={Faq} />
-      <Route path="/contato" component={Contact} />
+    <Suspense fallback={<PageLoader />}>
+      <Switch>
+        {/* Public Routes */}
+        <Route path="/" component={Home} />
+        <Route path="/a-fraternidade" component={Fraternidade} />
+        <Route path="/historia" component={History} />
+        {/* Legacy redirects */}
+        <Route path="/quem-somos">{() => <Redirect to="/a-fraternidade" replace />}</Route>
+        <Route path="/nossa-historia">{() => <Redirect to="/historia" replace />}</Route>
+        <Route path="/apometria" component={Apometria} />
+        <Route path="/cursos" component={Courses} />
+        <Route path="/depoimentos" component={PublicTestimonials} />
+        <Route path="/biblioteca" component={Library} />
+        <Route path="/blog" component={Blog} />
+        <Route path="/blog/:slug" component={BlogPost} />
+        <Route path="/galeria" component={Gallery} />
+        <Route path="/atendimento" component={Attendance} />
+        <Route path="/agendamentos" component={Attendance} />
+        <Route path="/faq" component={Faq} />
+        <Route path="/contato" component={Contact} />
 
-      {/* Admin Login (unprotected) */}
-      <Route path="/admin/login" component={AdminLogin} />
+        {/* Admin Login (unprotected, lazy) */}
+        <Route path="/admin/login">{() => <AdminLogin />}</Route>
 
-      {/* Admin Routes (protected) */}
-      <Route path="/admin">{() => <AdminRoute component={Dashboard} />}</Route>
-      <Route path="/admin/posts">{() => <AdminRoute component={Posts} />}</Route>
-      <Route path="/admin/courses">{() => <AdminRoute component={AdminCourses} />}</Route>
-      <Route path="/admin/library">{() => <AdminRoute component={AdminLibrary} />}</Route>
-      <Route path="/admin/gallery">{() => <AdminRoute component={AdminGallery} />}</Route>
-      <Route path="/admin/timeline">{() => <AdminRoute component={Timeline} />}</Route>
-      <Route path="/admin/testimonials">{() => <AdminRoute component={Testimonials} />}</Route>
-      <Route path="/admin/comments">{() => <AdminRoute component={Comments} />}</Route>
-      <Route path="/admin/faq">{() => <AdminRoute component={AdminFaq} />}</Route>
-      <Route path="/admin/settings">{() => <AdminRoute component={Settings} />}</Route>
+        {/* Admin Routes (protected) */}
+        <Route path="/admin">{() => <AdminRoute component={Dashboard} />}</Route>
+        <Route path="/admin/posts">{() => <AdminRoute component={Posts} />}</Route>
+        <Route path="/admin/courses">{() => <AdminRoute component={AdminCourses} />}</Route>
+        <Route path="/admin/library">{() => <AdminRoute component={AdminLibrary} />}</Route>
+        <Route path="/admin/gallery">{() => <AdminRoute component={AdminGallery} />}</Route>
+        <Route path="/admin/timeline">{() => <AdminRoute component={Timeline} />}</Route>
+        <Route path="/admin/testimonials">{() => <AdminRoute component={Testimonials} />}</Route>
+        <Route path="/admin/comments">{() => <AdminRoute component={Comments} />}</Route>
+        <Route path="/admin/faq">{() => <AdminRoute component={AdminFaq} />}</Route>
+        <Route path="/admin/settings">{() => <AdminRoute component={Settings} />}</Route>
 
-      <Route component={NotFound} />
-    </Switch>
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
   );
 }
 

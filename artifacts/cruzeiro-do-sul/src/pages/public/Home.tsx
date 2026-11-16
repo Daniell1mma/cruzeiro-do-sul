@@ -1,6 +1,7 @@
 import { PublicLayout } from "@/components/layout/PublicLayout";
 import { Link } from "wouter";
 import { ArrowRight, Star, HelpCircle } from "lucide-react";
+import { useSeo } from "@/hooks/useSeo";
 import { 
   useGetFeaturedCourses, 
   useListTestimonials,
@@ -27,13 +28,13 @@ const pillars = [
 ];
 
 const coordinators = [
-  { name: "Rubens", role: "Coordenação Geral", image: "/assets-reference/rubens.png" },
-  { name: "Marcilene", role: "Coordenação Financeira", image: "/assets-reference/marcilene.png" },
-  { name: "Elton", role: "Coordenação", image: "/assets-reference/elton.png" },
-  { name: "Denise", role: "Coordenação", image: "/assets-reference/denise.png" },
-  { name: "Cristiane", role: "Coordenação", image: "/assets-reference/cristiane.png" },
-  { name: "Walquiria", role: "Coordenação", image: "/assets-reference/walquiria.png" },
-  { name: "Sergio", role: "Coordenação", image: "/assets-reference/sergio.png" },
+  { name: "Rubens", role: "Coordenação Geral", image: "/assets-reference/rubens.webp" },
+  { name: "Marcilene", role: "Coordenação Financeira", image: "/assets-reference/marcilene.webp" },
+  { name: "Elton", role: "Coordenação", image: "/assets-reference/elton.webp" },
+  { name: "Denise", role: "Coordenação", image: "/assets-reference/denise.webp" },
+  { name: "Cristiane", role: "Coordenação", image: "/assets-reference/cristiane.webp" },
+  { name: "Walquiria", role: "Coordenação", image: "/assets-reference/walquiria.webp" },
+  { name: "Sergio", role: "Coordenação", image: "/assets-reference/sergio.webp" },
 ];
 
 const DEFAULT_TESTIMONIALS = [
@@ -86,6 +87,12 @@ const DEFAULT_HOME_FAQS = [
 ];
 
 export function Home() {
+  useSeo({
+    title: "Fraternidade Cruzeiro do Sul de Apometria — Cura espiritual e desdobramento",
+    description: "Cura espiritual, desdobramento dos corpos sutis e caridade. Trabalho voluntário e gratuito em Guarulhos/SP.",
+    canonicalPath: "/",
+  });
+
   const { data: courses } = useGetFeaturedCourses();
   const { data: rawTestimonials } = useListTestimonials({ approved: true });
   const { data: rawFaqItems } = useListFaqItems();
@@ -98,15 +105,18 @@ export function Home() {
       {/* Hero Visual Section */}
       <section className="relative">
         <img
-          src="/assets-reference/hero.png"
+          src="/assets-reference/hero.webp"
           alt="Sessão de cura espiritual com imposição de mãos e alinhamento de chakras"
           className="h-[60vh] md:h-[70vh] w-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent flex items-end">
-          <div className="mx-auto max-w-[1400px] w-full px-5 py-8 md:px-10 text-white">
-            <span className="eyebrow bg-primary/80 backdrop-blur-sm px-3 py-1.5 inline-block text-[11px] tracking-[0.2em]">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex items-end">
+          <div className="mx-auto max-w-[1400px] w-full px-5 py-8 md:py-12 md:px-10 text-white">
+            <span className="eyebrow bg-primary/90 text-white backdrop-blur-xs px-3 py-1.5 inline-block text-[11px] tracking-[0.2em] uppercase font-bold mb-3">
               Fraternidade Cruzeiro do Sul de Apometria
             </span>
+            <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl font-bold leading-tight max-w-2xl text-white drop-shadow-md">
+              Cura espiritual, caridade e desdobramento dos corpos sutis
+            </h1>
           </div>
         </div>
       </section>
@@ -116,9 +126,9 @@ export function Home() {
         <div className="grid gap-10 md:grid-cols-12 items-start">
           <div className="md:col-span-5 space-y-4">
             <p className="eyebrow text-muted-foreground">Quem somos</p>
-            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] text-foreground font-bold">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] text-foreground font-bold">
               Uma fraternidade de trabalhadores a serviço do bem, da cura e do amor
-            </h1>
+            </h2>
           </div>
           <div className="md:col-span-6 md:col-start-7 space-y-6">
             <p className="text-base sm:text-lg leading-relaxed text-muted-foreground">
@@ -140,7 +150,8 @@ export function Home() {
       </section>
 
       {/* Pillars Section (Navy Blue 3-Column Band) */}
-      <section className="border-y border-border bg-secondary text-secondary-foreground">
+      <section className="border-y border-border bg-secondary text-secondary-foreground" aria-labelledby="pillars-heading">
+        <h2 id="pillars-heading" className="sr-only">Pilares da Fraternidade</h2>
         <div className="mx-auto grid max-w-[1400px] gap-0 px-5 md:grid-cols-3 md:px-10">
           {pillars.map((item) => (
             <article
@@ -162,7 +173,7 @@ export function Home() {
         <div className="grid items-center gap-12 md:grid-cols-2">
           <div className="max-w-md mx-auto md:mx-0 w-full">
             <img
-              src="/assets-reference/session-inside.png"
+              src="/assets-reference/session-inside.webp"
               alt="Mãos aplicando passe energético"
               className="w-full object-cover rounded-sm shadow-md border border-border"
               loading="lazy"
@@ -194,7 +205,7 @@ export function Home() {
       {/* As Portas Estão Abertas (Full-Width Call to Action Banner) */}
       <section className="relative">
         <img
-          src="/assets-reference/portas-abertas.png"
+          src="/assets-reference/portas-abertas.webp"
           alt="Trabalhadores em oração e sintonia na fraternidade"
           className="h-[55vh] md:h-[65vh] w-full object-cover object-center"
           loading="lazy"
@@ -289,9 +300,14 @@ export function Home() {
       {Array.isArray(testimonials) && testimonials.length > 0 && (
         <section className="py-20 bg-[#07145C] text-primary-foreground relative overflow-hidden">
           <div className="container relative z-10 px-4 md:px-6 mx-auto max-w-[1400px]">
-            <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-              <p className="eyebrow text-accent-foreground/80">Relatos e Vivências</p>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-white">Depoimentos</h2>
+            <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-14 gap-6">
+              <div className="text-center md:text-left max-w-2xl space-y-3">
+                <p className="eyebrow text-accent-foreground/80">Relatos e Vivências</p>
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-white">Depoimentos e Relatos</h2>
+              </div>
+              <Link href="/depoimentos" className="eyebrow text-white hover:text-white/80 transition-opacity border-b border-white/40 pb-1 text-xs">
+                Ver todos os relatos &rarr;
+              </Link>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

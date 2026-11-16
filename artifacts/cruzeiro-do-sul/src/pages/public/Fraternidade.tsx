@@ -1,6 +1,7 @@
 import { PublicLayout } from "@/components/layout/PublicLayout";
 import { useListTimelineEvents, useListSettings } from "@workspace/api-client-react";
 import { Heart, Eye, Star } from "lucide-react";
+import { useSeo } from "@/hooks/useSeo";
 
 const DEFAULT_TIMELINE_EVENTS = [
   {
@@ -8,21 +9,21 @@ const DEFAULT_TIMELINE_EVENTS = [
     year: "2004",
     title: "O Início com o Prof. Francisco Alberto da Eira",
     text: "Em março de 2004, o Professor Francisco Alberto da Eira, precursor da Apometria em São Paulo, realizou a palestra 'O que é Apometria', marcando o início da formação dos 11 membros fundadores e do primeiro curso de 44 aulas.",
-    imageUrl: "/assets-reference/hero.png"
+    imageUrl: "/assets-reference/hero.webp"
   },
   {
     id: 2,
     year: "2010",
     title: "Consolidação dos Atendimentos Fraternos",
     text: "Estruturação dos atendimentos bioenergéticos gratuitos com foco na caridade e no alívio de desordens físicas, psíquicas e espirituais sob as diretrizes do Evangelho e da ética apométrica.",
-    imageUrl: "/assets-reference/session-inside.png"
+    imageUrl: "/assets-reference/session-inside.webp"
   },
   {
     id: 3,
     year: "2018",
     title: "Expansão Pedagógica e Formação Contínua",
     text: "Coordenação pedagógica desenvolvendo materiais de estudo, atualizações à luz da medicina vibracional e formação de novas turmas de trabalhadores voluntários.",
-    imageUrl: "/assets-reference/portas-abertas.png"
+    imageUrl: "/assets-reference/portas-abertas.webp"
   },
   {
     id: 4,
@@ -34,6 +35,12 @@ const DEFAULT_TIMELINE_EVENTS = [
 ];
 
 export function Fraternidade() {
+  useSeo({
+    title: "A Fraternidade",
+    description: "Conheça quem somos, nossa missão, nossos valores e nossa trajetória a serviço do bem, da caridade e da cura espiritual.",
+    canonicalPath: "/a-fraternidade",
+  });
+
   const { data: events, isLoading: loadingTimeline } = useListTimelineEvents();
   const { data: settings, isLoading: loadingSettings } = useListSettings();
 
@@ -94,7 +101,7 @@ export function Fraternidade() {
           ) : (
             <div className="prose prose-lg prose-headings:font-serif prose-headings:text-foreground prose-a:text-primary max-w-none">
               <img
-                src="/assets-reference/portas-abertas.png"
+                src="/assets-reference/portas-abertas.webp"
                 alt="Fraternidade Cruzeiro do Sul"
                 className="w-full rounded-sm shadow-md mb-12 aspect-[21/9] object-cover border border-border"
               />

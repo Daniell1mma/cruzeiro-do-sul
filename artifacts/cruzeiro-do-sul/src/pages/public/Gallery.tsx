@@ -2,6 +2,7 @@ import { PublicLayout } from "@/components/layout/PublicLayout";
 import { useListAlbums } from "@workspace/api-client-react";
 import { Image as ImageIcon, X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useSeo } from "@/hooks/useSeo";
 
 interface GalleryPhoto {
   id: string | number;
@@ -16,90 +17,94 @@ const DEFAULT_PHOTOS: GalleryPhoto[] = [
     id: "photo-1",
     title: "Sessão de Apometria e Cura Vibracional",
     category: "Atendimentos",
-    imageUrl: "/assets-reference/hero.png",
+    imageUrl: "/assets-reference/hero.webp",
     description: "Trabalhos de imposição de mãos, equilíbrio bioenergético e desdobramento dos corpos sutis.",
   },
   {
     id: "photo-2",
     title: "Sede Luz e Expansão da Consciência",
     category: "Sede",
-    imageUrl: "/assets-reference/portas-abertas.png",
+    imageUrl: "/assets-reference/portas-abertas.webp",
     description: "Nossa sede acolhedora na Rua Barbacena, 101 B, Jd. Bom Clima - Guarulhos/SP.",
   },
   {
     id: "photo-3",
     title: "Harmonia e Silêncio na Sala de Atendimento",
     category: "Atendimentos",
-    imageUrl: "/assets-reference/session-inside.png",
+    imageUrl: "/assets-reference/session-inside.webp",
     description: "Ambiente preparado energeticamente para acolher os assistidos nas noites de segunda-feira.",
   },
   {
     id: "photo-4",
     title: "Rubens - Coordenação Geral",
     category: "Coordenação",
-    imageUrl: "/assets-reference/rubens.png",
+    imageUrl: "/assets-reference/rubens.webp",
     description: "Coordenação geral dos trabalhos e desenvolvimento pedagógico da Fraternidade.",
   },
   {
     id: "photo-5",
     title: "Marcilene - Coordenação Financeira",
     category: "Coordenação",
-    imageUrl: "/assets-reference/marcilene.png",
+    imageUrl: "/assets-reference/marcilene.webp",
     description: "Zelo administrativo e apoio contínuo aos voluntários e assistidos.",
   },
   {
     id: "photo-6",
     title: "Elton - Coordenação",
     category: "Coordenação",
-    imageUrl: "/assets-reference/elton.png",
+    imageUrl: "/assets-reference/elton.webp",
     description: "Operador apométrico e acolhimento nas sessões presenciais.",
   },
   {
     id: "photo-7",
     title: "Denise - Coordenação",
     category: "Coordenação",
-    imageUrl: "/assets-reference/denise.png",
+    imageUrl: "/assets-reference/denise.webp",
     description: "Orientação e suporte aos atendidos e familiares.",
   },
   {
     id: "photo-8",
     title: "Cristiane - Coordenação",
     category: "Coordenação",
-    imageUrl: "/assets-reference/cristiane.png",
+    imageUrl: "/assets-reference/cristiane.webp",
     description: "Trabalho dedicado na sintonia e passes energéticos.",
   },
   {
     id: "photo-9",
     title: "Walquiria - Coordenação",
     category: "Coordenação",
-    imageUrl: "/assets-reference/walquiria.png",
+    imageUrl: "/assets-reference/walquiria.webp",
     description: "Apoio fraterno e harmonia espiritual nos trabalhos de assistência.",
   },
   {
     id: "photo-10",
     title: "Sergio - Coordenação",
     category: "Coordenação",
-    imageUrl: "/assets-reference/sergio.png",
+    imageUrl: "/assets-reference/sergio.webp",
     description: "Coordenação e disciplina nos trabalhos de desdobramento apométrico.",
   },
 ];
 
 export function Gallery() {
+  useSeo({
+    title: "Galeria de Fotos",
+    description: "Conheça as instalações da Fraternidade, nossa sede Luz e Expansão da Consciência e nossa equipe de coordenadores.",
+    canonicalPath: "/galeria",
+  });
+
   const { data: albums, isLoading } = useListAlbums();
   const [filter, setFilter] = useState<string>("all");
   const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
 
   // Combine DB albums (if any) or fallback to default institutional photos
   const photos: GalleryPhoto[] = (Array.isArray(albums) && albums.length > 0)
-    ? albums.flatMap((album) =>
-        (album.images || [{ id: album.id, imageUrl: album.coverUrl || "", caption: album.description }]).map((img: any) => ({
-          id: `${album.id}-${img.id}`,
-          title: album.name,
-          category: "Atendimentos" as const,
-          imageUrl: img.imageUrl || album.coverUrl || "/assets-reference/portas-abertas.png",
-          description: img.caption || album.description || "",
-        }))
-      )
+    ? albums.map((album) => ({
+        id: String(album.id),
+        title: album.name,
+        category: "Atendimentos" as const,
+        imageUrl: album.coverUrl || "/assets-reference/portas-abertas.webp",
+        description: album.description || "",
+      }))
     : DEFAULT_PHOTOS;
 
   const filteredPhotos = filter === "all" ? photos : photos.filter((p) => p.category === filter);
