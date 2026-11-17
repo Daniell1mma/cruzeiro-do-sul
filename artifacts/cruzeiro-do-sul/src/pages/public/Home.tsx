@@ -111,11 +111,8 @@ export function Home() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex items-end">
           <div className="mx-auto max-w-[1400px] w-full px-5 py-8 md:py-12 md:px-10 text-white">
-            <span className="eyebrow bg-primary/90 text-white backdrop-blur-xs px-3 py-1.5 inline-block text-[11px] tracking-[0.2em] uppercase font-bold mb-3">
+            <h1 className="eyebrow bg-primary/90 text-white backdrop-blur-xs px-3 py-1.5 inline-block text-[11px] tracking-[0.2em] uppercase font-bold">
               Fraternidade Cruzeiro do Sul de Apometria
-            </span>
-            <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl font-bold leading-tight max-w-2xl text-white drop-shadow-md">
-              Cura espiritual, caridade e desdobramento dos corpos sutis
             </h1>
           </div>
         </div>
