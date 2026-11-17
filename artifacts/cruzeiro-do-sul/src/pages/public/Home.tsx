@@ -236,19 +236,21 @@ export function Home() {
         
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           {coordinators.map((c) => (
-            <div key={c.name} className="group relative aspect-[3/4] overflow-hidden bg-secondary rounded-sm shadow-sm">
-              <img
-                src={c.image}
-                alt={`${c.name} - ${c.role}`}
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
-                onError={(e) => {
-                  (e.currentTarget as HTMLElement).style.display = 'none';
-                }}
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-[#07145C]/90 p-3 text-white backdrop-blur-sm border-t border-white/10">
-                <p className="font-serif text-sm sm:text-base font-bold leading-tight">{c.name}</p>
-                <p className="text-[10px] eyebrow mt-1 opacity-80 uppercase tracking-wider text-accent-foreground">
+            <div key={c.name} className="group flex flex-col overflow-hidden bg-card rounded-sm shadow-sm border border-border/60 hover:shadow-md transition-shadow">
+              <div className="relative aspect-[3/4] overflow-hidden bg-secondary">
+                <img
+                  src={c.image}
+                  alt={`${c.name} - ${c.role}`}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLElement).style.display = 'none';
+                  }}
+                />
+              </div>
+              <div className="bg-[#07145C] p-2.5 sm:p-3 text-white text-center flex-1 flex flex-col justify-center border-t border-white/10">
+                <p className="font-serif text-sm sm:text-base font-bold leading-tight text-white">{c.name}</p>
+                <p className="text-[10px] eyebrow mt-1 opacity-90 uppercase tracking-wider text-accent-foreground leading-tight">
                   {c.role}
                 </p>
               </div>

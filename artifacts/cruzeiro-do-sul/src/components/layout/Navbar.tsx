@@ -34,7 +34,7 @@ export function Navbar() {
       <header className="sticky top-0 z-50 shadow-sm bg-white">
         {/* Top Announcement Bar */}
         <div className="relative bg-primary py-2 sm:py-2.5 px-3 sm:px-12 text-center flex items-center justify-center">
-          <p className="text-[10px] sm:text-xs md:text-sm font-bold text-primary-foreground uppercase tracking-wider sm:tracking-widest italic pr-8 sm:pr-12 md:pr-0 leading-tight">
+          <p className="w-full text-center text-[10px] sm:text-xs md:text-sm font-bold text-primary-foreground uppercase tracking-wider sm:tracking-widest italic px-7 sm:px-10 md:px-14 leading-tight">
             Atendimento 100% gratuito • Mediante agendamento prévio
           </p>
           <Link
