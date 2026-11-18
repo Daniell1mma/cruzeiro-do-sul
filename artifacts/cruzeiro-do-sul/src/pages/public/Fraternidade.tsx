@@ -80,10 +80,10 @@ export function Fraternidade() {
       <section className="bg-muted pt-14 pb-12 md:pt-20 md:pb-16">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center space-y-4 md:space-y-6">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-foreground">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold text-foreground">
               A Fraternidade
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-foreground/80 leading-relaxed">
+            <p className="font-serif font-medium text-lg sm:text-xl md:text-2xl text-foreground/80 leading-relaxed">
               Conheça quem somos, nossa missão, nossos valores e a jornada de
               amor que nos trouxe até aqui.
             </p>
@@ -108,7 +108,7 @@ export function Fraternidade() {
 
               <div className="bg-muted/50 p-6 md:p-8 rounded-sm border border-border mb-12 not-prose">
                 <p className="eyebrow text-muted-foreground mb-2">Quem Somos</p>
-                <h2 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-4">
+                <h2 className="font-serif text-2xl md:text-3xl font-semibold text-foreground mb-4">
                   Fraternidade Cruzeiro do Sul de Apometria de Guarulhos
                 </h2>
                 <p className="text-foreground/80 leading-relaxed text-base md:text-lg mb-3">
@@ -119,13 +119,13 @@ export function Fraternidade() {
                 </p>
               </div>
 
-              <h2 className="text-3xl font-bold font-serif">Nossa Missão</h2>
+              <h2 className="text-3xl font-semibold font-serif">Nossa Missão</h2>
               <p>{mission}</p>
 
-              <h2 className="text-3xl font-bold font-serif mt-12">Nossa Visão</h2>
+              <h2 className="text-3xl font-semibold font-serif mt-12">Nossa Visão</h2>
               <p>{vision}</p>
 
-              <h2 className="text-3xl font-bold font-serif mt-12">Nossos Princípios Fundamentais</h2>
+              <h2 className="text-3xl font-semibold font-serif mt-12">Nossos Princípios Fundamentais</h2>
               <div className="not-prose grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
                 {valuesList.map((value, i) => {
                   const parts = value.split(":");
@@ -140,9 +140,9 @@ export function Fraternidade() {
                         {valueIcons[i % valueIcons.length]}
                       </div>
                       <div>
-                        <p className="font-bold text-foreground">{title}</p>
+                        <p className="font-sans font-semibold text-foreground">{title}</p>
                         {desc && (
-                          <p className="text-sm text-foreground/70 mt-1 leading-relaxed">
+                          <p className="text-sm text-foreground/70 mt-1 leading-relaxed font-sans font-normal">
                             {desc}
                           </p>
                         )}
@@ -164,10 +164,10 @@ export function Fraternidade() {
         <div className="container mx-auto px-4 md:px-6 max-w-4xl">
           <div className="text-center mb-16 space-y-4">
             <p className="eyebrow text-muted-foreground">Mais de Duas Décadas</p>
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground">
+            <h2 className="text-3xl md:text-4xl font-serif font-semibold text-foreground">
               Nossa História
             </h2>
-            <p className="text-lg sm:text-xl text-foreground/70 max-w-2xl mx-auto">
+            <p className="font-serif font-medium text-lg sm:text-xl text-foreground/70 max-w-2xl mx-auto">
               Uma jornada de amor, dedicação voluntária e acolhimento espiritual iniciada em 2004.
             </p>
             <div className="w-16 h-1 bg-secondary rounded-full mx-auto"></div>
@@ -204,13 +204,13 @@ export function Fraternidade() {
                         }`}
                       >
                         <div className="bg-white border border-border p-6 md:p-8 rounded-sm shadow-sm hover:shadow-md transition-all">
-                          <span className="inline-block bg-primary/10 text-primary font-bold px-3 py-1 rounded-sm text-xs uppercase tracking-wider mb-3">
+                          <span className="inline-block bg-primary/10 text-primary font-sans font-semibold px-3 py-1 rounded-sm text-xs uppercase tracking-wider mb-3">
                             {event.year}
                           </span>
-                          <h3 className="text-xl md:text-2xl font-serif font-bold mb-3 text-foreground">
+                          <h3 className="text-xl md:text-2xl font-serif font-medium mb-3 text-foreground">
                             {event.title}
                           </h3>
-                          <p className="text-foreground/75 leading-relaxed text-sm sm:text-base">
+                          <p className="text-foreground/75 leading-relaxed text-sm sm:text-base font-sans font-normal">
                             {event.text}
                           </p>
                           {event.imageUrl && (
@@ -238,7 +238,7 @@ export function Fraternidade() {
                 <div>
                   <a
                     href="/historia"
-                    className="eyebrow rule-link text-primary font-bold text-sm inline-block"
+                    className="eyebrow rule-link text-primary font-semibold text-sm inline-block"
                   >
                     Ler a história institucional completa dos 21 anos &rarr;
                   </a>
@@ -246,7 +246,7 @@ export function Fraternidade() {
                 <div>
                   <a
                     href="/atendimento"
-                    className="inline-flex items-center gap-2 bg-primary px-8 py-3.5 text-xs sm:text-sm font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all rounded-none min-h-[44px] active:scale-[0.98] shadow-sm"
+                    className="inline-flex items-center gap-2 bg-primary px-8 py-3.5 font-sans text-xs sm:text-sm font-semibold uppercase tracking-wider text-primary-foreground hover:bg-primary/90 transition-all rounded-sm min-h-[44px] active:scale-[0.98] shadow-sm"
                   >
                     Agendar Atendimento
                   </a>

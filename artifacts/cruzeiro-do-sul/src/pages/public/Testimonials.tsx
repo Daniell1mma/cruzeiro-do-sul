@@ -89,7 +89,7 @@ export function Testimonials() {
               Vivências e Acolhimento
             </span>
 
-            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] text-white">
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] text-white">
               Depoimentos e Relatos Fraternos
             </h1>
 
@@ -98,7 +98,7 @@ export function Testimonials() {
             </p>
 
             {/* Quality and ethics pills */}
-            <div className="mt-8 flex flex-wrap items-center gap-3 text-xs sm:text-sm text-primary-foreground/80">
+            <div className="mt-8 flex flex-wrap items-center gap-3 text-xs sm:text-sm text-primary-foreground/80 font-sans font-medium">
               <span className="inline-flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-full border border-white/10">
                 <HeartHandshake size={15} className="text-accent-foreground" />
                 Atendimento 100% Gratuito
@@ -122,11 +122,11 @@ export function Testimonials() {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4 border-b border-border pb-6">
             <div>
               <p className="eyebrow text-muted-foreground">Vozes da Caridade</p>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-foreground mt-1">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-semibold tracking-tight text-foreground mt-1">
                 Experiências Compartilhadas
               </h2>
             </div>
-            <p className="text-xs sm:text-sm text-muted-foreground max-w-md">
+            <p className="text-xs sm:text-sm text-muted-foreground font-sans max-w-md">
               Por respeito ético e espiritual, as identidades dos assistidos são mantidas com as iniciais autorizadas para resguardo de sua privacidade.
             </p>
           </div>
@@ -157,23 +157,23 @@ export function Testimonials() {
                     </div>
 
                     {/* Testimonial body */}
-                    <blockquote className="text-foreground/85 font-sans leading-relaxed text-sm sm:text-base italic mb-6">
+                    <blockquote className="text-foreground/90 font-serif italic font-medium leading-relaxed text-base sm:text-lg mb-6">
                       &ldquo;{item.text}&rdquo;
                     </blockquote>
                   </div>
 
                   {/* Author / Metadata Footer */}
-                  <div className="border-t border-border/60 pt-4 mt-auto flex items-center justify-between gap-3">
+                  <div className="border-t border-border/60 pt-4 mt-auto flex items-center justify-between gap-3 font-sans">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-primary/10 text-primary font-serif font-bold text-base flex items-center justify-center shrink-0 border border-primary/20">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 text-primary font-serif font-semibold text-base flex items-center justify-center shrink-0 border border-primary/20">
                         {item.name.charAt(0)}
                       </div>
                       <div>
-                        <div className="font-serif font-bold text-foreground text-base leading-tight">
+                        <div className="font-sans font-semibold text-foreground text-sm sm:text-base leading-tight">
                           {item.name}
                         </div>
                         {item.city && (
-                          <div className="text-xs text-muted-foreground mt-0.5">
+                          <div className="text-xs text-muted-foreground mt-0.5 font-normal">
                             {item.city}
                           </div>
                         )}
@@ -181,7 +181,7 @@ export function Testimonials() {
                     </div>
 
                     {item.date && (
-                      <span className="text-[11px] font-medium text-muted-foreground/80 bg-muted/60 px-2 py-1 rounded-xs shrink-0">
+                      <span className="text-[11px] font-sans font-medium text-muted-foreground/80 bg-muted/60 px-2 py-1 rounded-xs shrink-0">
                         {item.date}
                       </span>
                     )}
@@ -204,7 +204,7 @@ export function Testimonials() {
 
               <div className="flex-1 text-center md:text-left">
                 <p className="eyebrow text-primary">Sua Vivência Importa</p>
-                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mt-1">
+                <h3 className="font-serif text-2xl sm:text-3xl font-medium tracking-tight text-foreground mt-1">
                   Já participou dos atendimentos na Fraternidade?
                 </h3>
                 <p className="text-sm sm:text-base text-foreground/75 font-sans mt-3 leading-relaxed">
@@ -216,7 +216,7 @@ export function Testimonials() {
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebd5b] text-white px-5 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors shadow-sm"
+                    className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebd5b] text-white px-5 py-3 text-xs sm:text-sm font-sans font-semibold uppercase tracking-wider transition-colors shadow-sm"
                   >
                     <MessageCircle size={17} />
                     Enviar Relato via WhatsApp
@@ -224,7 +224,7 @@ export function Testimonials() {
 
                   <Link
                     href="/contato"
-                    className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-5 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors"
+                    className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-5 py-3 text-xs sm:text-sm font-sans font-semibold uppercase tracking-wider transition-colors"
                   >
                     Formulário de Contato
                     <ArrowRight size={15} />
@@ -241,7 +241,7 @@ export function Testimonials() {
         <div className="container mx-auto max-w-4xl px-4 sm:px-6 md:px-10 text-center">
           <div className="p-6 bg-muted/40 border border-border/80">
             <p className="eyebrow text-muted-foreground mb-2">Esclarecimento Institucional</p>
-            <p className="text-xs sm:text-sm text-foreground/75 leading-relaxed">
+            <p className="text-xs sm:text-sm text-foreground/75 leading-relaxed font-sans">
               A Apometria é uma terapêutica complementar e bioenergética fundamentada na manipulação dos corpos sutis e na caridade cristã desinteressada. Em hipótese alguma substitui cuidados, tratamentos, medicações ou orientações médicas e psicológicas convencionais. Nosso trabalho é 100% voluntário e gratuito.
             </p>
           </div>
@@ -251,15 +251,15 @@ export function Testimonials() {
       {/* CTA Agendamento */}
       <section className="py-16 bg-primary text-primary-foreground text-center">
         <div className="container mx-auto max-w-3xl px-4 sm:px-6">
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-white mb-4">
             Necessita de Atendimento Espiritual?
           </h2>
-          <p className="text-sm sm:text-base text-primary-foreground/80 leading-relaxed mb-8">
+          <p className="text-sm sm:text-base text-primary-foreground/80 leading-relaxed mb-8 font-sans">
             Os atendimentos acontecem às segundas-feiras às 19h no Jd. Bom Clima, Guarulhos/SP. É indispensável o agendamento prévio.
           </p>
           <Link
             href="/atendimento"
-            className="inline-flex items-center justify-center bg-white text-primary hover:bg-white/90 px-8 py-3.5 text-xs sm:text-sm font-bold uppercase tracking-widest shadow-md transition-all active:scale-[0.98]"
+            className="inline-flex items-center justify-center bg-white text-primary hover:bg-white/90 px-8 py-3.5 text-xs sm:text-sm font-sans font-semibold uppercase tracking-wider shadow-md transition-all active:scale-[0.98]"
           >
             Agendar Atendimento Gratuito
           </Link>

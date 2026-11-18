@@ -27,7 +27,7 @@ export function Attendance() {
       {/* Header */}
       <header className="mx-auto max-w-[1400px] px-5 pb-8 pt-20 md:pt-24 md:px-10 text-center">
         <p className="eyebrow text-muted-foreground">Serviço gratuito</p>
-        <h1 className="mt-6 font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-foreground font-bold">
+        <h1 className="mt-6 font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-foreground font-semibold tracking-tight">
           Como se preparar para os atendimentos
         </h1>
       </header>
@@ -38,12 +38,12 @@ export function Attendance() {
           <div className="max-w-2xl w-full">
             <ul className="mt-4 border-t border-border">
               {prepRules.map((rule) => (
-                <li key={rule.n} className="flex items-start gap-6 border-b border-border py-5 text-left">
-                  <span className="eyebrow text-accent font-bold pt-0.5">{rule.n}</span>
+                <li key={rule.n} className="flex items-start gap-6 border-b border-border py-5 text-left font-sans">
+                  <span className="eyebrow text-accent font-semibold pt-0.5">{rule.n}</span>
                   <span className={`leading-relaxed text-sm sm:text-base ${
                     rule.isWarning 
-                      ? "text-foreground font-bold italic text-base sm:text-lg border-l-2 border-primary pl-3 py-1 bg-primary/5"
-                      : "text-muted-foreground"
+                      ? "text-foreground font-serif font-medium italic text-base sm:text-lg border-l-2 border-primary pl-3 py-1 bg-primary/5"
+                      : "text-muted-foreground font-sans"
                   }`}>
                     {rule.text}
                   </span>
@@ -51,16 +51,16 @@ export function Attendance() {
               ))}
             </ul>
 
-            <div className="mt-10 mb-8">
+            <div className="mt-10 mb-8 font-sans">
               <a
                 href={formUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-primary px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all shadow-md rounded-none min-h-[48px] active:scale-[0.98]"
+                className="inline-flex items-center gap-2 bg-primary px-8 py-4 text-xs sm:text-sm font-semibold uppercase tracking-wider text-primary-foreground hover:bg-primary/90 transition-all shadow-md rounded-none min-h-[48px] active:scale-[0.98]"
               >
                 Agendar Atendimento
               </a>
-              <p className="mt-3 text-xs text-muted-foreground">
+              <p className="mt-3 text-xs text-muted-foreground font-sans">
                 Atendimentos realizados às segundas-feiras, às 19h.
               </p>
             </div>
@@ -74,10 +74,10 @@ export function Attendance() {
           <div className="max-w-2xl mx-auto text-center">
             <p className="eyebrow text-accent-foreground/70 mb-6 font-semibold">Pós-Atendimento</p>
             <article>
-              <h3 className="font-serif text-3xl sm:text-4xl text-white font-bold mb-6">
+              <h3 className="font-serif text-3xl sm:text-4xl text-white font-semibold tracking-tight mb-6">
                 Orientações Gerais
               </h3>
-              <p className="text-secondary-foreground/90 leading-relaxed text-lg sm:text-xl italic font-medium">
+              <p className="text-secondary-foreground/90 leading-relaxed text-lg sm:text-xl font-serif italic font-medium">
                 Após a sessão de apometria, você receberá orientações do grupo de apoio que serão desde, orações, dietas sugeridas e curativos energéticos.
               </p>
             </article>

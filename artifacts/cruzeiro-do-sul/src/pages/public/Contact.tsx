@@ -38,7 +38,7 @@ export function Contact() {
       {/* Header */}
       <header className="mx-auto max-w-[1400px] px-5 pb-12 pt-20 md:pt-24 md:px-10 text-center md:text-left">
         <p className="eyebrow text-muted-foreground">Estamos por perto</p>
-        <h1 className="mt-6 font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-foreground font-bold">
+        <h1 className="mt-6 font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-foreground font-semibold tracking-tight">
           Contato
         </h1>
       </header>
@@ -50,34 +50,34 @@ export function Contact() {
           {/* Info Side */}
           <div className="flex flex-col gap-8">
             <div>
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-6">
+              <h2 className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-foreground mb-6">
                 Onde estamos
               </h2>
               <div className="space-y-6">
                 <div>
                   <p className="eyebrow text-muted-foreground">Nome da sede</p>
-                  <p className="text-xl sm:text-2xl font-bold font-serif text-primary mt-1">
+                  <p className="text-xl sm:text-2xl font-semibold tracking-tight font-serif text-primary mt-1">
                     Luz e Expansão da Consciência
                   </p>
                 </div>
 
                 <div>
                   <p className="eyebrow text-muted-foreground">Endereço</p>
-                  <p className="text-base sm:text-lg leading-relaxed mt-1 text-foreground whitespace-pre-line font-medium">
+                  <p className="text-base sm:text-lg leading-relaxed mt-1 text-foreground whitespace-pre-line font-medium font-sans">
                     {address}
                   </p>
                 </div>
 
                 <div>
                   <p className="eyebrow text-muted-foreground">Informação complementar</p>
-                  <p className="text-base sm:text-lg leading-relaxed mt-1 text-foreground/80">
+                  <p className="text-base sm:text-lg leading-relaxed mt-1 text-foreground/80 font-sans">
                     Atendimentos às segundas-feiras, às 19h, mediante agendamento prévio.
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="mt-4 pt-8 border-t border-border space-y-4">
+            <div className="mt-4 pt-8 border-t border-border space-y-4 font-sans">
               <div>
                 <p className="eyebrow text-muted-foreground">Telefone e WhatsApp</p>
                 <p className="mt-1 text-base sm:text-lg font-medium text-foreground">
@@ -126,17 +126,17 @@ export function Contact() {
         {/* Message Form Box */}
         <div className="mt-16 pt-16 border-t border-border max-w-2xl mx-auto">
           <div className="bg-muted/30 border border-border p-8 sm:p-10 rounded-sm">
-            <h3 className="text-2xl font-serif font-bold text-foreground mb-3 text-center">
+            <h3 className="text-2xl font-serif font-semibold tracking-tight text-foreground mb-3 text-center">
               Envie uma Mensagem
             </h3>
-            <p className="text-sm text-muted-foreground text-center mb-8">
+            <p className="text-sm text-muted-foreground text-center mb-8 font-sans">
               Tem alguma dúvida sobre os trabalhos da Fraternidade? Preencha os campos abaixo.
             </p>
 
             {submittedLink ? (
-              <div className="bg-primary/10 border border-primary/20 p-6 sm:p-8 text-center rounded-sm space-y-4">
+              <div className="bg-primary/10 border border-primary/20 p-6 sm:p-8 text-center rounded-sm space-y-4 font-sans">
                 <CheckCircle2 className="w-12 h-12 text-primary mx-auto mb-2" />
-                <h4 className="font-bold text-foreground text-lg sm:text-xl">
+                <h4 className="font-sans font-semibold text-foreground text-lg sm:text-xl">
                   Mensagem direcionada para o WhatsApp!
                 </h4>
                 <p className="text-sm text-foreground/80 leading-relaxed max-w-md mx-auto">
@@ -147,7 +147,7 @@ export function Contact() {
                     href={submittedLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white px-6 py-3 text-xs font-bold uppercase tracking-wider rounded-sm transition-all shadow-sm"
+                    className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white px-6 py-3 text-xs font-semibold uppercase tracking-wider rounded-sm transition-all shadow-sm"
                   >
                     Conversar no WhatsApp
                   </a>
@@ -157,16 +157,16 @@ export function Contact() {
                       setSubmittedLink(null);
                       setFormData({ name: "", email: "", message: "" });
                     }}
-                    className="text-xs text-muted-foreground hover:text-primary underline px-4 py-2"
+                    className="text-xs text-muted-foreground hover:text-primary underline px-4 py-2 font-medium"
                   >
                     Enviar outra mensagem
                   </button>
                 </div>
               </div>
             ) : (
-              <form className="space-y-4" onSubmit={handleSubmit}>
+              <form className="space-y-4 font-sans" onSubmit={handleSubmit}>
                 <div>
-                  <label htmlFor="name" className="block text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1.5">
+                  <label htmlFor="name" className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">
                     Nome Completo <span className="text-primary">*</span>
                   </label>
                   <input
@@ -181,7 +181,7 @@ export function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1.5">
+                  <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">
                     Seu E-mail <span className="text-primary">*</span>
                   </label>
                   <input
@@ -196,7 +196,7 @@ export function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1.5">
+                  <label htmlFor="message" className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">
                     Mensagem <span className="text-primary">*</span>
                   </label>
                   <textarea
@@ -212,7 +212,7 @@ export function Contact() {
 
                 <button
                   type="submit"
-                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3.5 text-xs font-bold uppercase tracking-widest transition-all mt-4 flex items-center justify-center gap-2 min-h-[46px] active:scale-[0.98] shadow-sm"
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3.5 text-xs font-semibold uppercase tracking-wider transition-all mt-4 flex items-center justify-center gap-2 min-h-[46px] active:scale-[0.98] shadow-sm"
                 >
                   <Send size={14} /> Enviar Mensagem via WhatsApp
                 </button>

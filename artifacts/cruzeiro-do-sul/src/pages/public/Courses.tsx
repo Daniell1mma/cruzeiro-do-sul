@@ -62,7 +62,7 @@ export function Courses() {
       {/* Header */}
       <header className="mx-auto max-w-[1400px] px-5 pb-12 pt-20 md:pt-24 md:px-10 text-center">
         <p className="eyebrow text-muted-foreground">Formação e Conhecimento</p>
-        <h1 className="mt-6 font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1] text-foreground font-bold">
+        <h1 className="mt-6 font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1] text-foreground font-semibold tracking-tight">
           Cursos
         </h1>
       </header>
@@ -70,7 +70,7 @@ export function Courses() {
       <section className="mx-auto max-w-[1400px] px-5 pb-24 md:px-10">
         <div className="max-w-4xl mx-auto border-t border-border pt-12 space-y-8">
           
-          <p className="text-lg sm:text-xl text-foreground font-medium leading-relaxed">
+          <p className="text-lg sm:text-xl md:text-2xl font-serif font-medium text-foreground/90 leading-relaxed">
             A fraternidade oferece cursos de apometria presenciais e on-line, dentro do programa temos:
           </p>
 
@@ -92,20 +92,20 @@ export function Courses() {
                         alt={course.name}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
-                      <div className={`absolute top-3 left-3 border px-2.5 py-1 text-xs font-bold backdrop-blur-md ${status.color}`}>
+                      <div className={`absolute top-3 left-3 border px-2.5 py-1 text-xs font-sans font-semibold backdrop-blur-md ${status.color}`}>
                         {status.label}
                       </div>
                     </div>
 
                     <div className="p-6 flex-1 flex flex-col">
-                      <h2 className="text-xl md:text-2xl font-serif font-bold mb-2 group-hover:text-primary transition-colors">
+                      <h2 className="text-xl md:text-2xl font-serif font-semibold mb-2 group-hover:text-primary transition-colors tracking-tight">
                         {course.name}
                       </h2>
-                      <p className="text-foreground/75 mb-5 flex-1 line-clamp-3 leading-relaxed text-sm md:text-base">
+                      <p className="text-foreground/80 mb-5 flex-1 line-clamp-3 leading-relaxed text-sm md:text-base font-sans font-normal">
                         {course.description}
                       </p>
 
-                      <div className="space-y-2 mb-6 bg-muted/40 p-3.5 text-xs text-foreground/80 border border-border/50">
+                      <div className="space-y-2 mb-6 bg-muted/40 p-3.5 text-xs text-foreground/80 border border-border/50 font-sans">
                         {course.duration && (
                           <div className="flex items-center gap-2">
                             <Clock size={14} className="text-primary shrink-0" />
@@ -130,7 +130,7 @@ export function Courses() {
                         href={`https://wa.me/5511949446881?text=${encodedMsg}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-auto w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground py-3.5 text-xs font-bold uppercase tracking-widest hover:bg-primary/90 transition-all min-h-[44px] active:scale-[0.98] shadow-xs"
+                        className="mt-auto w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground py-3.5 text-xs font-sans font-semibold uppercase tracking-wider hover:bg-primary/90 transition-all min-h-[44px] active:scale-[0.98] shadow-xs"
                       >
                         Tenho Interesse
                         <ArrowRight size={14} />
@@ -144,7 +144,7 @@ export function Courses() {
 
           {/* Reference Notice Box */}
           <div className="bg-secondary/15 p-8 sm:p-10 border border-border text-center rounded-sm mt-12">
-            <p className="text-base sm:text-lg text-foreground font-medium leading-relaxed">
+            <p className="text-base sm:text-lg text-foreground font-sans font-medium leading-relaxed">
               No momento não temos inscrições abertas, caso tenha interesse entre em contato pelo WhatsApp:
             </p>
             <div className="mt-6">
@@ -152,7 +152,7 @@ export function Courses() {
                 href="https://wa.me/5511949446881"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-primary px-8 py-3.5 text-xs sm:text-sm font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all rounded-none shadow-sm"
+                className="inline-flex items-center gap-2 bg-primary px-8 py-3.5 text-xs sm:text-sm font-sans font-semibold uppercase tracking-wider text-primary-foreground hover:bg-primary/90 transition-all rounded-none shadow-sm"
               >
                 Falar no WhatsApp (11) 94944-6881
               </a>

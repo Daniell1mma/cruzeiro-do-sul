@@ -16,7 +16,7 @@ export function Footer() {
       <div className="mx-auto max-w-[1400px] px-5 py-16 md:py-20 md:px-10">
         
         {/* Large Signature Headline */}
-        <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl leading-[1.08] text-white">
+        <h2 className="font-serif font-semibold text-3xl sm:text-4xl md:text-6xl leading-[1.08] text-white">
           Servir é o caminho.<br />
           Curar é merecimento.
         </h2>

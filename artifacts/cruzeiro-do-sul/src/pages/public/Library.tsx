@@ -77,10 +77,10 @@ export function Library() {
       <section className="bg-muted pt-14 pb-12 md:pt-20 md:pb-16">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center space-y-4 md:space-y-6">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-foreground">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-semibold tracking-tight text-foreground">
               Biblioteca
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-foreground/80 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl font-serif font-medium text-foreground/85 leading-relaxed">
               Materiais de estudo, apostilas, recomendações de leitura e áudios para auxiliar seu desenvolvimento espiritual.
             </p>
           </div>
@@ -88,12 +88,12 @@ export function Library() {
       </section>
 
       {/* Filter bar */}
-      <section className="py-4 md:py-6 border-b border-border bg-white sticky top-[68px] z-30 shadow-xs">
+      <section className="py-4 md:py-6 border-b border-border bg-white sticky top-[68px] z-30 shadow-xs font-sans">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-wrap items-center justify-center gap-2">
             <button
               onClick={() => setFilter("all")}
-              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider transition-all min-h-[38px] active:scale-95 ${
+              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-sans font-semibold uppercase tracking-wider transition-all min-h-[38px] active:scale-95 ${
                 filter === "all" ? "bg-primary text-white shadow-sm" : "bg-muted text-foreground/80 hover:bg-muted/80 hover:text-primary"
               }`}
             >
@@ -103,7 +103,7 @@ export function Library() {
               <button
                 key={key}
                 onClick={() => setFilter(key as ItemType)}
-                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider transition-all min-h-[38px] active:scale-95 ${
+                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-sans font-semibold uppercase tracking-wider transition-all min-h-[38px] active:scale-95 ${
                   filter === key ? "bg-primary text-white shadow-sm" : "bg-muted text-foreground/80 hover:bg-muted/80 hover:text-primary"
                 }`}
               >
@@ -121,8 +121,8 @@ export function Library() {
               <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div>
             </div>
           ) : filteredItems.length === 0 ? (
-            <div className="text-center py-16 bg-muted/40 rounded-sm border border-border max-w-2xl mx-auto">
-              <h3 className="text-xl font-serif font-bold mb-2">Nenhum material encontrado</h3>
+            <div className="text-center py-16 bg-muted/40 rounded-sm border border-border max-w-2xl mx-auto font-sans">
+              <h3 className="text-xl font-serif font-medium tracking-tight mb-2">Nenhum material encontrado</h3>
               <p className="text-muted-foreground">Tente selecionar outra categoria de estudo.</p>
             </div>
           ) : (
@@ -137,35 +137,35 @@ export function Library() {
                           {config.icon}
                         </div>
                         <div className="flex-1 pt-0.5">
-                          <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">
+                          <div className="text-[10px] font-sans font-semibold text-muted-foreground uppercase tracking-wider mb-1">
                             {config.label}
                           </div>
-                          <h3 className="font-serif font-bold text-base md:text-lg leading-tight group-hover:text-primary transition-colors">
+                          <h3 className="font-serif font-semibold tracking-tight text-base md:text-lg leading-tight group-hover:text-primary transition-colors">
                             {item.title}
                           </h3>
                         </div>
                       </div>
 
                       {item.description && (
-                        <p className="text-foreground/75 text-sm mb-6 leading-relaxed line-clamp-3">
+                        <p className="text-foreground/75 text-sm mb-6 leading-relaxed line-clamp-3 font-sans font-normal">
                           {item.description}
                         </p>
                       )}
                     </div>
 
-                    <div className="mt-auto pt-4 border-t border-border">
+                    <div className="mt-auto pt-4 border-t border-border font-sans">
                       {item.fileUrl ? (
                         <a
                           href={item.fileUrl}
                           target={item.fileUrl.startsWith("http") ? "_blank" : undefined}
                           rel={item.fileUrl.startsWith("http") ? "noopener noreferrer" : undefined}
-                          className="flex items-center justify-center gap-2 w-full py-3 rounded-none bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold uppercase tracking-wider transition-all min-h-[44px] active:scale-[0.98] shadow-xs"
+                          className="flex items-center justify-center gap-2 w-full py-3 rounded-none bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold uppercase tracking-wider transition-all min-h-[44px] active:scale-[0.98] shadow-xs"
                         >
                           Acessar Material
                           {item.type === "pdf" ? <Download size={14} /> : <ExternalLink size={14} />}
                         </a>
                       ) : (
-                        <div className="text-center text-xs text-muted-foreground py-3">
+                        <div className="text-center text-xs text-muted-foreground py-3 font-sans">
                           Disponível na sede
                         </div>
                       )}

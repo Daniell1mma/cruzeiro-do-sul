@@ -37,7 +37,7 @@ export function Apometria() {
       {/* Header */}
       <header className="mx-auto max-w-[1400px] px-5 pb-12 pt-20 md:pt-24 md:px-10 text-center md:text-left">
         <p className="eyebrow text-muted-foreground">Fundamentos</p>
-        <h1 className="mt-6 font-serif text-4xl sm:text-5xl md:text-6xl text-foreground font-bold leading-[1.08]">
+        <h1 className="mt-6 font-serif text-4xl sm:text-5xl md:text-6xl text-foreground font-semibold leading-[1.08]">
           O que é Apometria?
         </h1>
       </header>
@@ -45,7 +45,7 @@ export function Apometria() {
       {/* Main Content */}
       <section className="mx-auto max-w-[1400px] px-5 pb-24 md:px-10">
         <div className="border-t border-border pt-12">
-          <div className="max-w-4xl mx-auto space-y-6 text-foreground/85 text-base sm:text-lg leading-relaxed">
+          <div className="max-w-4xl mx-auto space-y-6 text-foreground/85 text-base sm:text-lg leading-relaxed font-sans font-normal">
             
             <p>
               A Apometria é apresentada pela Fraternidade Cruzeiro do Sul como uma terapia bioenergética que utiliza técnicas de desdobramento do ser humano, trabalhando a relação entre o corpo físico e os chamados corpos sutis ou espirituais.
@@ -56,16 +56,16 @@ export function Apometria() {
 
             {/* O Significado */}
             <div className="pt-8">
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4">
+              <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-foreground mb-4">
                 O significado da palavra Apometria
               </h2>
               <p>O termo Apometria tem origem grega e resulta da união de:</p>
               <ul className="mt-4 list-none space-y-2 pl-4 border-l-2 border-primary/30">
-                <li><strong className="text-primary font-bold">APO</strong> — “além de” ou “fora de”</li>
-                <li><strong className="text-primary font-bold">METRON</strong> — “medida” ou “medição”</li>
+                <li><strong className="text-primary font-semibold">APO</strong> — “além de” ou “fora de”</li>
+                <li><strong className="text-primary font-semibold">METRON</strong> — “medida” ou “medição”</li>
               </ul>
               <p className="mt-4">
-                Assim, o significado é: <strong className="text-primary">“Além da medida, além do corpo físico”</strong>.
+                Assim, o significado é: <strong className="text-primary font-semibold">“Além da medida, além do corpo físico”</strong>.
               </p>
               <p className="mt-4">
                 Dentro dessa compreensão, a Apometria consiste em um conjunto de técnicas voltadas ao trabalho com energias e ao desdobramento entre o corpo físico e os corpos sutis ou espirituais.
@@ -74,7 +74,7 @@ export function Apometria() {
 
             {/* Como surgiu */}
             <div className="pt-10">
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4">
+              <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-foreground mb-4">
                 Como surgiu a Apometria?
               </h2>
               <p>
@@ -90,7 +90,7 @@ export function Apometria() {
 
             {/* Para que é utilizada */}
             <div className="pt-10">
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4">
+              <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-foreground mb-4">
                 Para que é utilizada?
               </h2>
               <p>
@@ -103,7 +103,7 @@ export function Apometria() {
 
             {/* Apometria e espiritualidade */}
             <div className="pt-10">
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4">
+              <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-foreground mb-4">
                 Apometria e espiritualidade
               </h2>
               <p>
@@ -115,7 +115,7 @@ export function Apometria() {
               <p className="mt-6">
                 Por isso, a Fraternidade destaca duas palavras como fundamentais para o trabalho:
               </p>
-              <p className="mt-4 text-2xl sm:text-3xl font-bold tracking-widest text-primary">
+              <p className="mt-4 font-serif text-2xl sm:text-3xl font-semibold tracking-wider text-primary">
                 CONVICÇÃO E FORÇA
               </p>
               <p className="mt-4">
@@ -125,7 +125,7 @@ export function Apometria() {
 
             {/* Uma técnica a serviço do ser */}
             <div className="pt-10">
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4">
+              <h2 className="font-serif text-2xl sm:text-3xl font-semibold text-foreground mb-4">
                 Uma técnica a serviço do ser
               </h2>
               <p>
@@ -140,7 +140,7 @@ export function Apometria() {
             <div className="pt-12 text-center">
               <Link
                 href="/atendimento"
-                className="inline-flex items-center gap-2 bg-primary px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all rounded-none min-h-[48px] active:scale-[0.98] shadow-sm"
+                className="inline-flex items-center gap-2 bg-primary px-8 py-4 font-sans text-xs sm:text-sm font-semibold uppercase tracking-wider text-primary-foreground hover:bg-primary/90 transition-all rounded-sm min-h-[48px] active:scale-[0.98] shadow-sm"
               >
                 Agendar Atendimento Fraterno
               </Link>
@@ -151,16 +151,16 @@ export function Apometria() {
           {/* FAQ Accordion */}
           {Array.isArray(faqItems) && faqItems.length > 0 && (
             <div className="mt-20 pt-16 border-t border-border max-w-4xl mx-auto">
-              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-center mb-8">
+              <h2 className="text-2xl sm:text-3xl font-serif font-semibold text-center mb-8">
                 Dúvidas Frequentes sobre Apometria
               </h2>
               <Accordion type="single" collapsible className="w-full">
                 {faqItems.map((item) => (
                   <AccordionItem key={item.id} value={`item-${item.id}`}>
-                    <AccordionTrigger className="text-left font-bold text-base md:text-lg">
+                    <AccordionTrigger className="text-left font-sans font-semibold text-base md:text-lg">
                       {item.question}
                     </AccordionTrigger>
-                    <AccordionContent className="text-sm md:text-base text-foreground/80 leading-relaxed">
+                    <AccordionContent className="text-sm md:text-base text-foreground/80 leading-relaxed font-sans font-normal">
                       {item.answer}
                     </AccordionContent>
                   </AccordionItem>

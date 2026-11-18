@@ -26,10 +26,10 @@ export function Blog() {
             <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm text-primary mb-3">
               <BookOpen size={28} />
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-foreground">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold tracking-tight text-foreground">
               Mensagens e Reflexões
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-foreground/80 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl font-serif font-medium text-foreground/85 leading-relaxed">
               Artigos, mensagens edificantes e estudos bioenergéticos para alimentar o seu espírito.
             </p>
           </div>
@@ -44,8 +44,8 @@ export function Blog() {
             </div>
           ) : postsToDisplay.length === 0 ? (
             <div className="text-center py-16 bg-muted/50 rounded-sm border border-border">
-              <h3 className="text-xl font-serif font-bold mb-2">Nenhum artigo encontrado</h3>
-              <p className="text-muted-foreground">Em breve teremos novos conteúdos.</p>
+              <h3 className="text-xl font-serif font-medium mb-2">Nenhum artigo encontrado</h3>
+              <p className="text-muted-foreground font-sans">Em breve teremos novos conteúdos.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
@@ -53,7 +53,7 @@ export function Blog() {
                 <Link
                   key={post.id}
                   href={`/blog/${post.slug}`}
-                  className="group flex flex-col bg-card rounded-sm overflow-hidden border border-border shadow-sm hover:shadow-md transition-all active:scale-[0.99]"
+                  className="group flex flex-col bg-card rounded-sm border border-border shadow-sm hover:shadow-md transition-all active:scale-[0.99] overflow-hidden"
                 >
                   <div className="aspect-[16/9] sm:aspect-[4/3] bg-muted relative overflow-hidden">
                     {post.coverUrl ? (
@@ -63,19 +63,19 @@ export function Blog() {
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                     ) : (
-                      <div className="w-full h-full bg-accent flex items-center justify-center text-primary font-serif text-4xl font-bold opacity-20">
+                      <div className="w-full h-full bg-accent flex items-center justify-center text-primary font-serif text-4xl font-semibold opacity-20">
                         FCS
                       </div>
                     )}
                     {post.category && (
-                      <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-xs font-bold text-primary">
+                      <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-xs font-sans font-semibold text-primary">
                         {post.category}
                       </div>
                     )}
                   </div>
 
                   <div className="pt-5 pb-4 px-1 flex-1 flex flex-col">
-                    <div className="flex items-center flex-wrap gap-3 text-xs text-muted-foreground mb-3">
+                    <div className="flex items-center flex-wrap gap-3 text-xs text-muted-foreground mb-3 font-sans">
                       <div className="flex items-center gap-1.5">
                         <Calendar size={13} />
                         <time>{format(new Date(post.createdAt), "dd 'de' MMMM, yyyy", { locale: ptBR })}</time>
@@ -88,17 +88,17 @@ export function Blog() {
                       )}
                     </div>
 
-                    <h2 className="text-xl md:text-2xl font-serif font-bold mb-2 group-hover:text-primary transition-colors leading-tight">
+                    <h2 className="text-xl md:text-2xl font-serif font-semibold tracking-tight mb-2 group-hover:text-primary transition-colors leading-tight">
                       {post.title}
                     </h2>
 
                     {post.subtitle && (
-                      <p className="text-foreground/70 mb-5 flex-1 line-clamp-2 leading-relaxed text-sm md:text-base">
+                      <p className="text-foreground/75 mb-5 flex-1 line-clamp-2 leading-relaxed text-sm md:text-base font-sans font-normal">
                         {post.subtitle}
                       </p>
                     )}
 
-                    <div className="mt-auto flex items-center text-primary font-bold text-sm">
+                    <div className="mt-auto flex items-center text-primary font-sans font-semibold text-sm">
                       Ler artigo completo{" "}
                       <ArrowRight size={15} className="ml-2 group-hover:translate-x-1 transition-transform" />
                     </div>

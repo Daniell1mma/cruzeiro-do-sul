@@ -52,27 +52,27 @@ export function BlogPost() {
         {/* Header */}
         <header className="pt-16 pb-12 sm:pt-20 sm:pb-16 bg-muted px-4">
           <div className="container mx-auto max-w-4xl">
-            <Link href="/blog" className="inline-flex items-center text-sm font-bold text-muted-foreground hover:text-primary mb-8 transition-colors">
+            <Link href="/blog" className="inline-flex items-center text-sm font-sans font-semibold text-muted-foreground hover:text-primary mb-8 transition-colors">
               <ArrowLeft size={16} className="mr-2" /> Voltar para o Blog
             </Link>
             
             {postData.category && (
-              <div className="inline-block bg-primary/10 text-primary px-3 py-1 rounded-sm text-xs font-bold uppercase tracking-wider mb-6">
+              <div className="inline-block bg-primary/10 text-primary px-3 py-1 rounded-sm text-xs font-sans font-semibold uppercase tracking-wider mb-6">
                 {postData.category}
               </div>
             )}
             
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground leading-tight mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-semibold tracking-tight text-foreground leading-tight mb-6">
               {postData.title}
             </h1>
             
             {postData.subtitle && (
-              <p className="text-lg sm:text-xl md:text-2xl text-foreground/70 mb-8 font-serif italic">
+              <p className="text-lg sm:text-xl md:text-2xl text-foreground/75 mb-8 font-serif italic font-medium leading-relaxed">
                 {postData.subtitle}
               </p>
             )}
             
-            <div className="flex items-center gap-6 text-sm text-foreground/60 border-t border-border/50 pt-6">
+            <div className="flex items-center gap-6 text-sm text-foreground/60 border-t border-border/50 pt-6 font-sans">
               <div className="flex items-center gap-2">
                 <Calendar size={16} />
                 <time>{format(new Date(postData.createdAt), "dd 'de' MMMM, yyyy", { locale: ptBR })}</time>
@@ -80,7 +80,7 @@ export function BlogPost() {
               {postData.authorName && (
                 <div className="flex items-center gap-2">
                   <User size={16} />
-                  <span>Por <strong>{postData.authorName}</strong></span>
+                  <span>Por <strong className="font-semibold text-foreground/80">{postData.authorName}</strong></span>
                 </div>
               )}
             </div>
@@ -99,14 +99,14 @@ export function BlogPost() {
         )}
 
         {/* Content */}
-        <div className="container mx-auto px-4 max-w-3xl mt-16">
+        <div className="container mx-auto px-4 max-w-3xl mt-16 font-sans">
           <div 
-            className="prose prose-lg prose-headings:font-serif prose-headings:text-foreground prose-a:text-primary max-w-none text-foreground/85 leading-relaxed"
+            className="prose prose-lg prose-headings:font-serif prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-foreground prose-p:font-sans prose-p:font-normal prose-a:text-primary max-w-none text-foreground/85 leading-relaxed"
             dangerouslySetInnerHTML={{ __html: postData.content || '' }}
           />
           
           {postData.tags && (
-            <div className="mt-12 pt-8 border-t border-border flex gap-2 flex-wrap">
+            <div className="mt-12 pt-8 border-t border-border flex gap-2 flex-wrap font-sans">
               {postData.tags.split(',').map(tag => (
                 <span key={tag.trim()} className="bg-muted text-muted-foreground px-3 py-1 rounded-sm text-xs font-medium">
                   #{tag.trim()}
@@ -154,9 +154,9 @@ function CommentsSection({ postId }: { postId: number }) {
   };
 
   return (
-    <section className="container mx-auto px-4 max-w-3xl mt-20">
+    <section className="container mx-auto px-4 max-w-3xl mt-20 font-sans">
       <div className="border-t border-border pt-12">
-        <h2 className="text-2xl font-serif font-bold text-foreground mb-2 flex items-center gap-3">
+        <h2 className="text-2xl font-serif font-semibold tracking-tight text-foreground mb-2 flex items-center gap-3">
           <MessageCircle className="w-6 h-6 text-primary" />
           Comentários
         </h2>
@@ -171,49 +171,49 @@ function CommentsSection({ postId }: { postId: number }) {
               <div key={comment.id} className="bg-muted rounded-2xl p-6">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 bg-primary/10 rounded-full flex items-center justify-center font-bold text-primary text-sm">
+                    <div className="w-9 h-9 bg-primary/10 rounded-full flex items-center justify-center font-bold text-primary text-sm font-sans">
                       {comment.name.charAt(0).toUpperCase()}
                     </div>
-                    <span className="font-bold text-foreground">{comment.name}</span>
+                    <span className="font-semibold text-foreground font-sans">{comment.name}</span>
                   </div>
                   <time className="text-xs text-muted-foreground">
                     {format(new Date(comment.createdAt), "dd/MM/yyyy", { locale: ptBR })}
                   </time>
                 </div>
-                <p className="text-foreground/80 leading-relaxed text-sm">{comment.content}</p>
+                <p className="text-foreground/80 leading-relaxed text-sm font-sans font-normal">{comment.content}</p>
                 {comment.adminReply && (
                   <div className="mt-4 pl-4 border-l-2 border-primary/30">
-                    <p className="text-xs font-bold text-primary mb-1">Resposta da Fraternidade</p>
-                    <p className="text-foreground/70 text-sm leading-relaxed">{comment.adminReply}</p>
+                    <p className="text-xs font-semibold text-primary mb-1">Resposta da Fraternidade</p>
+                    <p className="text-foreground/70 text-sm leading-relaxed font-sans">{comment.adminReply}</p>
                   </div>
                 )}
               </div>
             ))}
           </div>
         ) : (
-          <div className="text-center py-10 text-muted-foreground text-sm mb-14">
+          <div className="text-center py-10 text-muted-foreground text-sm mb-14 font-sans">
             Nenhum comentário ainda. Seja o primeiro a compartilhar sua reflexão!
           </div>
         )}
 
         {/* Submit form */}
         {submitted ? (
-          <div className="bg-accent/40 border border-primary/20 rounded-2xl p-8 text-center">
+          <div className="bg-accent/40 border border-primary/20 rounded-2xl p-8 text-center font-sans">
             <CheckCircle className="w-10 h-10 text-primary mx-auto mb-4" />
-            <h3 className="font-bold text-lg text-foreground mb-2">Comentário enviado!</h3>
+            <h3 className="font-serif font-semibold text-lg text-foreground mb-2">Comentário enviado!</h3>
             <p className="text-sm text-muted-foreground">
               Obrigado pela sua mensagem. Ela será publicada após revisão da nossa equipe.
             </p>
             <button
               onClick={() => setSubmitted(false)}
-              className="mt-6 text-sm text-primary font-medium hover:underline"
+              className="mt-6 text-sm text-primary font-semibold hover:underline"
             >
               Enviar outro comentário
             </button>
           </div>
         ) : (
-          <div className="bg-muted/50 border border-border rounded-2xl p-8">
-            <h3 className="font-bold text-lg text-foreground mb-6">Deixe seu comentário</h3>
+          <div className="bg-muted/50 border border-border rounded-2xl p-8 font-sans">
+            <h3 className="font-serif font-semibold text-xl text-foreground mb-6">Deixe seu comentário</h3>
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
@@ -227,7 +227,7 @@ function CommentsSection({ postId }: { postId: number }) {
                     value={form.name}
                     onChange={handleChange}
                     placeholder="Seu nome"
-                    className="w-full border border-border rounded-xl px-4 py-3 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
+                    className="w-full border border-border rounded-xl px-4 py-3 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition font-sans"
                   />
                 </div>
                 <div>
@@ -241,7 +241,7 @@ function CommentsSection({ postId }: { postId: number }) {
                     value={form.email}
                     onChange={handleChange}
                     placeholder="seu@email.com"
-                    className="w-full border border-border rounded-xl px-4 py-3 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
+                    className="w-full border border-border rounded-xl px-4 py-3 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition font-sans"
                   />
                 </div>
               </div>
@@ -256,19 +256,19 @@ function CommentsSection({ postId }: { postId: number }) {
                   onChange={handleChange}
                   placeholder="Compartilhe sua reflexão sobre este artigo..."
                   rows={5}
-                  className="w-full border border-border rounded-xl px-4 py-3 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition resize-none"
+                  className="w-full border border-border rounded-xl px-4 py-3 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition resize-none font-sans"
                 />
               </div>
               {formError && (
                 <p className="text-sm text-red-500">{formError}</p>
               )}
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-muted-foreground font-sans">
                 * O e-mail não será publicado. Os comentários passam por moderação antes de aparecer.
               </p>
               <button
                 type="submit"
                 disabled={isPending}
-                className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded-xl text-sm transition disabled:opacity-60"
+                className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-semibold px-6 py-3 rounded-xl text-sm transition disabled:opacity-60 font-sans"
               >
                 <Send size={16} />
                 {isPending ? "Enviando…" : "Enviar comentário"}

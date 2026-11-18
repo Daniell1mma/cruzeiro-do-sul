@@ -123,7 +123,7 @@ export function Home() {
         <div className="grid gap-10 md:grid-cols-12 items-start">
           <div className="md:col-span-5 space-y-4">
             <p className="eyebrow text-muted-foreground">Quem somos</p>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] text-foreground font-bold">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] text-foreground font-semibold">
               Uma fraternidade de trabalhadores a serviço do bem, da cura e do amor
             </h2>
           </div>
@@ -135,7 +135,7 @@ export function Home() {
               Não somos religião. Somos uma casa de estudo, oração e serviço, aberta a qualquer pessoa, de qualquer credo a serviço do nosso Mestre JESUS.
             </p>
             <div className="pt-4 flex flex-wrap gap-4 items-center">
-              <Link href="/apometria" className="eyebrow rule-link text-primary font-bold">
+              <Link href="/apometria" className="eyebrow rule-link text-primary font-semibold">
                 Entenda a apometria &rarr;
               </Link>
               <Link href="/a-fraternidade" className="eyebrow rule-link text-muted-foreground font-medium hover:text-primary">
@@ -156,7 +156,7 @@ export function Home() {
               className="border-border/20 py-12 md:py-16 border-b md:border-b-0 md:border-l md:px-10 md:first:border-l-0 md:first:pl-0"
             >
               <p className="eyebrow text-accent-foreground/70 font-semibold">{item.n}</p>
-              <h3 className="mt-4 font-serif text-2xl sm:text-3xl text-white font-bold">{item.title}</h3>
+              <h3 className="mt-4 font-serif text-2xl sm:text-3xl text-white font-medium">{item.title}</h3>
               <p className="mt-4 text-secondary-foreground/80 leading-relaxed text-sm sm:text-base">
                 {item.desc}
               </p>
@@ -178,19 +178,19 @@ export function Home() {
           </div>
           <div className="space-y-6">
             <p className="eyebrow text-muted-foreground">Como se preparar para os atendimentos</p>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] text-foreground font-bold">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] text-foreground font-semibold">
               Dentro da sala
             </h2>
             <p className="text-base sm:text-lg leading-relaxed text-muted-foreground">
               A sessão dura cerca de quinze minutos. O atendido permanece deitado e consciente, enquanto a equipe realiza o desdobramento, o diálogo com espíritos envolvidos e a aplicação de energias reparadoras. Ao final, há um breve acolhimento e orientação.
             </p>
             <div className="pt-4 flex flex-wrap gap-4 items-center">
-              <Link href="/atendimento" className="eyebrow rule-link text-primary font-bold">
+              <Link href="/atendimento" className="eyebrow rule-link text-primary font-semibold">
                 Como funciona &rarr;
               </Link>
               <Link
                 href="/atendimento"
-                className="inline-flex items-center gap-2 bg-primary px-6 py-3 text-xs font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all rounded-none min-h-[44px] active:scale-[0.98] shadow-sm"
+                className="inline-flex items-center gap-2 bg-primary px-6 py-3 font-sans text-xs font-semibold uppercase tracking-wider text-primary-foreground hover:bg-primary/90 transition-all rounded-sm min-h-[44px] active:scale-[0.98] shadow-sm"
               >
                 Agendar Atendimento
               </Link>
@@ -208,7 +208,7 @@ export function Home() {
           loading="lazy"
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-primary/40 px-6 text-center text-primary-foreground backdrop-blur-[1px]">
-          <h2 className="max-w-3xl font-serif text-3xl sm:text-4xl md:text-6xl font-bold leading-[1.1] drop-shadow-md text-white">
+          <h2 className="max-w-3xl font-serif text-3xl sm:text-4xl md:text-6xl font-semibold leading-[1.1] drop-shadow-md text-white">
             As portas estão abertas
           </h2>
           <p className="mt-4 max-w-xl text-base sm:text-lg text-white/90">
@@ -218,7 +218,7 @@ export function Home() {
             href="https://forms.gle/cPm5uMeJW74AvjNo8"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-primary px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all mt-8 border border-white/20 shadow-lg rounded-none min-h-[48px] active:scale-[0.98]"
+            className="inline-flex items-center gap-2 bg-primary px-8 py-4 font-sans text-xs sm:text-sm font-semibold uppercase tracking-wider text-primary-foreground hover:bg-primary/90 transition-all mt-8 border border-white/20 shadow-lg rounded-sm min-h-[48px] active:scale-[0.98]"
           >
             Agendar Atendimento
           </a>
@@ -229,7 +229,7 @@ export function Home() {
       <section className="mx-auto max-w-[1400px] px-5 py-16 md:py-24 md:px-10 border-t border-border">
         <div className="mb-12 md:mb-16">
           <p className="eyebrow text-muted-foreground">Equipe</p>
-          <h2 className="mt-4 font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] text-foreground font-bold">
+          <h2 className="mt-4 font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] text-foreground font-semibold">
             Quadro de Coordenadores
           </h2>
         </div>
@@ -249,7 +249,7 @@ export function Home() {
                 />
               </div>
               <div className="bg-[#07145C] p-2.5 sm:p-3 text-white text-center flex-1 flex flex-col justify-center border-t border-white/10">
-                <p className="font-serif text-sm sm:text-base font-bold leading-tight text-white">{c.name}</p>
+                <p className="font-serif text-sm sm:text-base font-semibold leading-tight text-white">{c.name}</p>
                 <p className="text-[10px] eyebrow mt-1 opacity-90 uppercase tracking-wider text-accent-foreground leading-tight">
                   {c.role}
                 </p>
@@ -266,9 +266,9 @@ export function Home() {
             <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
               <div className="max-w-xl space-y-3">
                 <p className="eyebrow text-muted-foreground">Formação e Conhecimento</p>
-                <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground">Cursos em Destaque</h2>
+                <h2 className="text-3xl md:text-4xl font-serif font-semibold text-foreground">Cursos em Destaque</h2>
               </div>
-              <Link href="/cursos" className="eyebrow rule-link text-primary font-bold">
+              <Link href="/cursos" className="eyebrow rule-link text-primary font-semibold">
                 Ver todos os cursos &rarr;
               </Link>
             </div>
@@ -284,9 +284,9 @@ export function Home() {
                     />
                   </div>
                   <div className="p-6 flex-1 flex flex-col">
-                    <h3 className="font-serif font-bold text-xl mb-2 group-hover:text-primary transition-colors">{course.name}</h3>
+                    <h3 className="font-serif font-medium text-xl mb-2 group-hover:text-primary transition-colors">{course.name}</h3>
                     <p className="text-sm text-foreground/70 line-clamp-2 mb-4 flex-1">{course.description}</p>
-                    <span className="eyebrow text-xs text-primary font-bold mt-auto">Saiba mais &rarr;</span>
+                    <span className="eyebrow text-xs text-primary font-semibold mt-auto">Saiba mais &rarr;</span>
                   </div>
                 </Link>
               ))}
@@ -302,7 +302,7 @@ export function Home() {
             <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-14 gap-6">
               <div className="text-center md:text-left max-w-2xl space-y-3">
                 <p className="eyebrow text-accent-foreground/80">Relatos e Vivências</p>
-                <h2 className="text-3xl md:text-4xl font-serif font-bold text-white">Depoimentos e Relatos</h2>
+                <h2 className="text-3xl md:text-4xl font-serif font-semibold text-white">Depoimentos e Relatos</h2>
               </div>
               <Link href="/depoimentos" className="eyebrow text-white hover:text-white/80 transition-opacity border-b border-white/40 pb-1 text-xs">
                 Ver todos os relatos &rarr;
@@ -311,18 +311,18 @@ export function Home() {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {testimonials.slice(0, 3).map((testimonial) => (
-                <div key={testimonial.id} className="bg-white/10 backdrop-blur-md border border-white/10 p-8 flex flex-col justify-between">
+                <div key={testimonial.id} className="bg-white/10 backdrop-blur-md border border-white/10 p-8 flex flex-col justify-between rounded-sm">
                   <div>
                     <div className="flex text-amber-300 mb-4">
                       {[1,2,3,4,5].map((i) => <Star key={i} size={15} fill="currentColor" />)}
                     </div>
-                    <p className="text-white/90 italic mb-6 leading-relaxed text-sm sm:text-base">
+                    <p className="font-serif italic font-medium text-white/95 mb-6 leading-relaxed text-base sm:text-lg">
                       &quot;{testimonial.text}&quot;
                     </p>
                   </div>
                   <div className="border-t border-white/10 pt-4">
-                    <div className="font-bold text-sm text-white">{testimonial.name}</div>
-                    {testimonial.city && <div className="text-xs text-white/60">{testimonial.city}</div>}
+                    <div className="font-sans font-semibold text-sm text-white">{testimonial.name}</div>
+                    {testimonial.city && <div className="font-sans font-normal text-xs text-white/70">{testimonial.city}</div>}
                   </div>
                 </div>
               ))}
@@ -339,7 +339,7 @@ export function Home() {
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto text-primary">
                 <HelpCircle size={24} />
               </div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground">Dúvidas Frequentes</h2>
+              <h2 className="text-3xl md:text-4xl font-serif font-semibold text-foreground">Dúvidas Frequentes</h2>
               <p className="text-foreground/70 text-base">
                 Respostas para as perguntas mais comuns sobre a Fraternidade e a Apometria.
               </p>
@@ -347,10 +347,10 @@ export function Home() {
             <Accordion type="multiple" className="w-full border-t border-border">
               {faqItems.slice(0, 6).map((item) => (
                 <AccordionItem key={item.id} value={`faq-${item.id}`}>
-                  <AccordionTrigger className="text-left font-semibold text-base py-4">
+                  <AccordionTrigger className="text-left font-sans font-semibold text-base py-4">
                     {item.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-foreground/75 leading-relaxed text-sm sm:text-base pb-4">
+                  <AccordionContent className="text-foreground/75 leading-relaxed text-sm sm:text-base pb-4 font-sans font-normal">
                     {item.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -358,7 +358,7 @@ export function Home() {
             </Accordion>
             {faqItems.length > 6 && (
               <div className="text-center mt-8">
-                <Link href="/faq" className="eyebrow rule-link text-primary font-bold">
+                <Link href="/faq" className="eyebrow rule-link text-primary font-semibold">
                   Ver todas as perguntas &rarr;
                 </Link>
               </div>

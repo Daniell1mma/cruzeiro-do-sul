@@ -14,7 +14,7 @@ export function History() {
       {/* Header */}
       <header className="mx-auto max-w-[1400px] px-5 pb-12 pt-20 md:pt-24 md:px-10 text-center md:text-left">
         <p className="eyebrow text-muted-foreground">Nossa Trajetória</p>
-        <h1 className="mt-6 font-serif text-4xl sm:text-5xl md:text-6xl text-foreground font-bold leading-[1.08]">
+        <h1 className="mt-6 font-serif text-4xl sm:text-5xl md:text-6xl text-foreground font-semibold tracking-tight leading-[1.08]">
           História da Fraternidade
         </h1>
       </header>
@@ -22,10 +22,10 @@ export function History() {
       {/* Main Content */}
       <section className="mx-auto max-w-[1400px] px-5 pb-24 md:px-10">
         <div className="border-t border-border pt-12">
-          <div className="max-w-4xl mx-auto space-y-8 text-foreground/85 text-base sm:text-lg leading-relaxed">
+          <div className="max-w-4xl mx-auto space-y-8 text-foreground/85 text-base sm:text-lg leading-relaxed font-sans">
             
             <div className="space-y-4">
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-primary">
+              <h2 className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-primary">
                 Fraternidade Cruzeiro do Sul de Apometria
               </h2>
               <p>
@@ -38,7 +38,7 @@ export function History() {
 
             {/* O início */}
             <div className="pt-6 border-t border-border">
-              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4">
+              <h3 className="font-serif text-2xl sm:text-3xl font-medium tracking-tight text-foreground mb-4">
                 O início de uma caminhada
               </h3>
               <p>
@@ -53,7 +53,7 @@ export function History() {
               <p className="mt-4">
                 A iniciativa foi inspirada também pelas palavras do nobre professor:
               </p>
-              <blockquote className="border-l-4 border-primary pl-4 py-2 italic font-serif text-lg text-primary bg-muted/40 my-3">
+              <blockquote className="border-l-4 border-primary pl-4 py-2 italic font-serif font-medium text-lg text-primary bg-muted/40 my-3">
                 “Muitos foram os chamados, mas poucos os escolhidos...”
               </blockquote>
               <p>
@@ -63,7 +63,7 @@ export function History() {
 
             {/* Os primeiros 11 membros */}
             <div className="pt-6 border-t border-border">
-              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4">
+              <h3 className="font-serif text-2xl sm:text-3xl font-medium tracking-tight text-foreground mb-4">
                 Os primeiros 11 membros
               </h3>
               <p>
@@ -90,7 +90,7 @@ export function History() {
 
             {/* Duas décadas */}
             <div className="pt-6 border-t border-border">
-              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4">
+              <h3 className="font-serif text-2xl sm:text-3xl font-medium tracking-tight text-foreground mb-4">
                 Uma história construída através do trabalho
               </h3>
               <p>
@@ -103,7 +103,7 @@ export function History() {
 
             {/* Nossa continuidade */}
             <div className="pt-6 border-t border-border">
-              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-4">
+              <h3 className="font-serif text-2xl sm:text-3xl font-medium tracking-tight text-foreground mb-4">
                 Nossa continuidade
               </h3>
               <p>
@@ -114,10 +114,10 @@ export function History() {
               </p>
               
               <div className="p-6 bg-primary text-primary-foreground my-8 text-center rounded-sm">
-                <p className="font-serif text-xl sm:text-2xl font-bold italic leading-relaxed text-white">
+                <p className="font-serif text-xl sm:text-2xl font-medium italic leading-relaxed text-white">
                   &quot;O trabalho dignifica, a caridade santifica e o amor cura.&quot;
                 </p>
-                <p className="text-xs eyebrow text-white/80 mt-3">
+                <p className="text-xs eyebrow text-white/80 mt-3 font-sans">
                   Agradecemos a todos os que fazem e fizeram parte desta história, encarnados e desencarnados.
                 </p>
               </div>
@@ -125,7 +125,7 @@ export function History() {
               <div className="text-center pt-4">
                 <Link
                   href="/atendimento"
-                  className="inline-flex items-center gap-2 bg-primary px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-widest text-primary-foreground hover:bg-primary/90 transition-all rounded-none min-h-[48px] active:scale-[0.98] shadow-sm"
+                  className="inline-flex items-center gap-2 bg-primary px-8 py-4 text-xs sm:text-sm font-sans font-semibold uppercase tracking-wider text-primary-foreground hover:bg-primary/90 transition-all rounded-none min-h-[48px] active:scale-[0.98] shadow-sm"
                 >
                   Agendar Atendimento
                 </Link>

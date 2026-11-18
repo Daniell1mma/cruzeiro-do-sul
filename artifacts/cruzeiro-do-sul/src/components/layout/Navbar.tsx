@@ -34,14 +34,14 @@ export function Navbar() {
       <header className="sticky top-0 z-50 shadow-sm bg-white">
         {/* Top Announcement Bar */}
         <div className="relative bg-primary py-2 sm:py-2.5 px-3 sm:px-12 text-center flex items-center justify-center">
-          <p className="w-full text-center text-[10px] sm:text-xs md:text-sm font-bold text-primary-foreground uppercase tracking-wider sm:tracking-widest italic px-7 sm:px-10 md:px-14 leading-tight">
+          <p className="w-full text-center font-sans text-[11px] sm:text-xs md:text-sm font-semibold text-primary-foreground tracking-normal sm:tracking-wide px-7 sm:px-10 md:px-14 leading-tight">
             Atendimento 100% gratuito • Mediante agendamento prévio
           </p>
           <Link
             href="/admin/login"
             aria-label="Área Administrativa"
             title="Área Administrativa"
-            className="absolute right-2 sm:right-4 md:right-6 inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-bold uppercase tracking-wider text-primary-foreground/80 hover:text-white transition-opacity p-1.5 min-w-[36px] min-h-[36px] justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-xs"
+            className="absolute right-2 sm:right-4 md:right-6 inline-flex items-center gap-1.5 font-sans text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-primary-foreground/80 hover:text-white transition-opacity p-1.5 min-w-[36px] min-h-[36px] justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-xs"
           >
             <Lock size={13} />
             <span className="hidden md:inline">Admin</span>
@@ -71,26 +71,26 @@ export function Navbar() {
                 }}
               />
               <span className="flex flex-col text-[#07145C]">
-                <span className="font-serif text-xs sm:text-sm md:text-[15px] font-bold tracking-wide">
+                <span className="font-serif text-sm sm:text-base md:text-[17px] font-semibold tracking-tight">
                   Fraternidade Cruzeiro do Sul
                 </span>
-                <span className="text-[9px] sm:text-[10px] text-muted-foreground font-sans uppercase tracking-wider font-medium">
+                <span className="text-[10px] sm:text-[11px] text-muted-foreground font-sans font-medium tracking-normal">
                   Apometria de Guarulhos
                 </span>
               </span>
             </Link>
 
             {/* Desktop Nav Links */}
-            <nav className="hidden xl:flex items-center gap-0.5 2xl:gap-1.5 shrink-1">
+            <nav className="hidden xl:flex items-center gap-1 2xl:gap-2 shrink-1">
               {navLinks.map((link) => {
                 const isActive = location === link.path;
                 return (
                   <Link
                     key={link.path}
                     href={link.path}
-                    className={`px-2 xl:px-2.5 2xl:px-3 py-1.5 text-[11px] 2xl:text-xs font-semibold tracking-wider transition-colors rounded-sm whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                    className={`px-2 xl:px-2.5 2xl:px-3 py-1.5 font-sans text-[12px] 2xl:text-[13px] font-semibold tracking-normal transition-colors rounded-sm whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                       isActive
-                        ? "text-primary font-bold bg-primary/10"
+                        ? "text-primary font-semibold bg-primary/10"
                         : "text-foreground/80 hover:text-primary hover:bg-muted/60"
                     }`}
                   >
@@ -104,7 +104,7 @@ export function Navbar() {
             <div className="hidden xl:flex items-center shrink-0">
               <Link
                 href="/atendimento"
-                className="inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-primary-foreground px-3.5 2xl:px-5 py-2 2xl:py-2.5 text-[11px] 2xl:text-xs font-bold uppercase tracking-wider transition-all shadow-sm rounded-sm active:scale-[0.98] whitespace-nowrap"
+                className="inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-primary-foreground px-4 2xl:px-5 py-2 2xl:py-2.5 font-sans text-xs font-semibold tracking-wide transition-all shadow-sm rounded-sm active:scale-[0.98] whitespace-nowrap"
               >
                 Agendar Atendimento
               </Link>
@@ -146,10 +146,10 @@ export function Navbar() {
           <div className="flex items-center gap-2.5">
             <img src="/logo.webp" alt="Logo" className="h-10 w-auto" onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/logo.png"; }} />
             <div className="flex flex-col">
-              <span className="font-serif font-bold text-primary text-sm leading-tight">
+              <span className="font-serif font-semibold text-primary text-base leading-tight">
                 Cruzeiro do Sul
               </span>
-              <span className="text-[10px] text-muted-foreground uppercase font-sans">
+              <span className="text-[10px] text-muted-foreground font-sans font-medium">
                 Apometria Guarulhos
               </span>
             </div>
@@ -169,10 +169,10 @@ export function Navbar() {
             <Link
               key={link.path}
               href={link.path}
-              className={`flex items-center justify-between px-5 py-3.5 text-xs uppercase tracking-wider font-semibold transition-colors min-h-[46px] ${
+              className={`flex items-center justify-between px-5 py-3.5 font-sans text-sm tracking-normal font-semibold transition-colors min-h-[46px] ${
                 location === link.path
-                  ? "text-primary bg-primary/10 font-bold"
-                  : "text-foreground/80 hover:text-primary hover:bg-muted/50 active:bg-muted"
+                  ? "text-primary bg-primary/10 font-semibold"
+                  : "text-foreground/85 hover:text-primary hover:bg-muted/50 active:bg-muted"
               }`}
             >
               {link.name}
@@ -185,7 +185,7 @@ export function Navbar() {
         <div className="p-4 border-t border-border space-y-3 bg-muted/20">
           <Link
             href="/atendimento"
-            className="w-full inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-primary-foreground py-3.5 text-xs font-bold uppercase tracking-widest shadow transition-all active:scale-[0.98] min-h-[44px]"
+            className="w-full inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-primary-foreground py-3.5 font-sans text-xs font-semibold uppercase tracking-wider shadow transition-all active:scale-[0.98] min-h-[44px] rounded-sm"
           >
             Agendar Atendimento
           </Link>

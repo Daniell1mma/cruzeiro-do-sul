@@ -113,10 +113,10 @@ export function Faq() {
             <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm text-primary mb-3">
               <HelpCircle size={28} />
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-foreground">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold tracking-tight text-foreground">
               Dúvidas Frequentes
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-foreground/80 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl font-serif font-medium text-foreground/85 leading-relaxed">
               Respostas claras sobre a Fraternidade Cruzeiro do Sul, os tratamentos energéticos, agendamentos e a técnica da Apometria.
             </p>
           </div>
@@ -131,7 +131,7 @@ export function Faq() {
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider transition-all min-h-[38px] active:scale-95 ${
+                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-sans font-semibold uppercase tracking-wider transition-all min-h-[38px] active:scale-95 ${
                   selectedCategory === cat
                     ? "bg-primary text-primary-foreground shadow-sm"
                     : "bg-muted text-foreground/80 hover:bg-muted/80 hover:text-primary"
@@ -152,22 +152,22 @@ export function Faq() {
               <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div>
             </div>
           ) : Object.keys(groupedFaqs).length === 0 ? (
-            <div className="text-center py-16 bg-muted/40 rounded-2xl border border-border">
+            <div className="text-center py-16 bg-muted/40 rounded-2xl border border-border font-sans">
               <p className="text-muted-foreground">Nenhuma pergunta encontrada nesta categoria.</p>
             </div>
           ) : (
             Object.entries(groupedFaqs).map(([category, items], index) => (
               <div key={category} className={index > 0 ? "mt-12 sm:mt-16" : ""}>
-                <h2 className="text-xl sm:text-2xl font-serif font-bold mb-4 sm:mb-6 text-primary border-b border-border pb-2">
+                <h2 className="text-xl sm:text-2xl font-serif font-semibold tracking-tight mb-4 sm:mb-6 text-primary border-b border-border pb-2">
                   {category}
                 </h2>
                 <Accordion type="multiple" className="w-full divide-y divide-border border-y border-border">
                   {items.map((item) => (
                     <AccordionItem key={item.id} value={`item-${item.id}`} className="border-b-0">
-                      <AccordionTrigger className="text-left font-bold text-base sm:text-lg py-4 hover:text-primary transition-colors hover:no-underline">
+                      <AccordionTrigger className="text-left font-sans font-semibold text-base sm:text-lg py-4 hover:text-primary transition-colors hover:no-underline">
                         {item.question}
                       </AccordionTrigger>
-                      <AccordionContent className="text-sm sm:text-base text-foreground/80 leading-relaxed pb-4">
+                      <AccordionContent className="text-sm sm:text-base text-foreground/80 leading-relaxed pb-4 font-sans font-normal">
                         {item.answer}
                       </AccordionContent>
                     </AccordionItem>
@@ -180,24 +180,24 @@ export function Faq() {
           {/* CTA Box */}
           <div className="mt-16 sm:mt-20 bg-muted/40 border border-border p-6 sm:p-10 rounded-sm text-center">
             <MessageSquare className="w-10 h-10 text-primary mx-auto mb-3" />
-            <h3 className="font-serif text-2xl font-bold text-foreground mb-2">
+            <h3 className="font-serif text-2xl font-semibold tracking-tight text-foreground mb-2">
               Não encontrou a resposta que procurava?
             </h3>
-            <p className="text-muted-foreground text-sm sm:text-base max-w-xl mx-auto mb-6">
+            <p className="text-muted-foreground text-sm sm:text-base max-w-xl mx-auto mb-6 font-sans">
               Nossa equipe de voluntários está à disposição para esclarecer suas dúvidas sobre agendamentos e a Fraternidade.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 font-sans">
               <a
                 href="https://wa.me/5511949446881"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white px-6 py-3.5 text-xs font-bold uppercase tracking-widest shadow transition-all active:scale-95"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white px-6 py-3.5 text-xs font-semibold uppercase tracking-wider shadow transition-all active:scale-95"
               >
                 Falar no WhatsApp
               </a>
               <Link
                 href="/atendimento"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3.5 text-xs font-bold uppercase tracking-widest shadow transition-all active:scale-95"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3.5 text-xs font-semibold uppercase tracking-wider shadow transition-all active:scale-95"
               >
                 Agendar Atendimento <ArrowRight size={14} />
               </Link>

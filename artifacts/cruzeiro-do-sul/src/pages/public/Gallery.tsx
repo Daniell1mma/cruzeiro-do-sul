@@ -134,10 +134,10 @@ export function Gallery() {
             <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm text-primary mb-3">
               <ImageIcon size={28} />
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-foreground">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-semibold tracking-tight text-foreground">
               Galeria de Fotos
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-foreground/80 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl font-serif font-medium text-foreground/85 leading-relaxed">
               Conheça as instalações da Fraternidade, nossa equipe de coordenadores e os momentos de estudo e assistência.
             </p>
           </div>
@@ -145,7 +145,7 @@ export function Gallery() {
       </section>
 
       {/* Filter Tabs */}
-      <section className="py-4 md:py-6 border-b border-border bg-white sticky top-[68px] z-30 shadow-xs">
+      <section className="py-4 md:py-6 border-b border-border bg-white sticky top-[68px] z-30 shadow-xs font-sans">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-wrap items-center justify-center gap-2">
             {[
@@ -157,7 +157,7 @@ export function Gallery() {
               <button
                 key={tab.id}
                 onClick={() => setFilter(tab.id)}
-                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider transition-all min-h-[38px] active:scale-95 ${
+                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-sans font-semibold uppercase tracking-wider transition-all min-h-[38px] active:scale-95 ${
                   filter === tab.id
                     ? "bg-primary text-primary-foreground shadow-sm"
                     : "bg-muted text-foreground/80 hover:bg-muted/80 hover:text-primary"
@@ -178,7 +178,7 @@ export function Gallery() {
               <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div>
             </div>
           ) : filteredPhotos.length === 0 ? (
-            <div className="text-center py-16 bg-muted/40 rounded-2xl border border-border">
+            <div className="text-center py-16 bg-muted/40 rounded-2xl border border-border font-sans">
               <p className="text-muted-foreground">Nenhuma foto encontrada nesta categoria.</p>
             </div>
           ) : (
@@ -201,23 +201,23 @@ export function Gallery() {
                         <ZoomIn size={20} />
                       </span>
                     </div>
-                    <span className="absolute top-3 left-3 bg-primary/90 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-sm shadow-sm backdrop-blur-xs">
+                    <span className="absolute top-3 left-3 bg-primary/90 text-white text-[10px] font-sans font-semibold uppercase tracking-wider px-2.5 py-1 rounded-sm shadow-sm backdrop-blur-xs">
                       {photo.category}
                     </span>
                   </div>
 
                   <div className="p-5 flex-1 flex flex-col justify-between">
                     <div>
-                      <h3 className="font-serif font-bold text-lg md:text-xl text-foreground group-hover:text-primary transition-colors leading-snug">
+                      <h3 className="font-serif font-medium tracking-tight text-lg md:text-xl text-foreground group-hover:text-primary transition-colors leading-snug">
                         {photo.title}
                       </h3>
                       {photo.description && (
-                        <p className="mt-2 text-xs sm:text-sm text-foreground/70 leading-relaxed line-clamp-2">
+                        <p className="mt-2 text-xs sm:text-sm text-foreground/75 leading-relaxed line-clamp-2 font-sans font-normal">
                           {photo.description}
                         </p>
                       )}
                     </div>
-                    <div className="mt-4 pt-3 border-t border-border flex items-center justify-between text-xs font-semibold text-primary">
+                    <div className="mt-4 pt-3 border-t border-border flex items-center justify-between text-xs font-sans font-semibold text-primary">
                       <span>Clique para ampliar</span>
                       <ZoomIn size={14} />
                     </div>
@@ -281,16 +281,16 @@ export function Gallery() {
               className="max-h-[65vh] w-auto max-w-full object-contain rounded-sm shadow-2xl border border-white/10"
             />
             <div className="mt-4 text-center text-white space-y-1 px-4">
-              <span className="text-[10px] uppercase font-bold tracking-widest text-accent bg-accent/20 px-2 py-0.5 rounded">
+              <span className="text-[10px] uppercase font-sans font-semibold tracking-wider text-accent bg-accent/20 px-2 py-0.5 rounded">
                 {filteredPhotos[activePhotoIndex].category}
               </span>
-              <h4 className="font-serif text-lg sm:text-2xl font-bold">
+              <h4 className="font-serif text-lg sm:text-2xl font-medium tracking-tight">
                 {filteredPhotos[activePhotoIndex].title}
               </h4>
-              <p className="text-xs sm:text-sm text-white/80 max-w-xl">
+              <p className="text-xs sm:text-sm text-white/80 max-w-xl font-sans font-normal">
                 {filteredPhotos[activePhotoIndex].description}
               </p>
-              <p className="text-[11px] text-white/50 pt-1">
+              <p className="text-[11px] text-white/50 pt-1 font-sans">
                 Foto {activePhotoIndex + 1} de {filteredPhotos.length}
               </p>
             </div>
