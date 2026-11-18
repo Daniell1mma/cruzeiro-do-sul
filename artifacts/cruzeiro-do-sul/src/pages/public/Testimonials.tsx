@@ -1,8 +1,9 @@
 import { PublicLayout } from "@/components/layout/PublicLayout";
 import { Link } from "wouter";
-import { Star, Quote, HeartHandshake, ShieldCheck, MessageCircle, Sparkles, ArrowRight, Calendar } from "lucide-react";
+import { Star, Quote, HeartHandshake, ShieldCheck, MessageCircle, Sparkles, ArrowRight, CheckCircle, Send } from "lucide-react";
 import { useSeo } from "@/hooks/useSeo";
-import { useListTestimonials } from "@workspace/api-client-react";
+import { useListTestimonials, useCreateTestimonial } from "@workspace/api-client-react";
+import { useState } from "react";
 
 interface TestimonialItem {
   id: number | string;
@@ -13,33 +14,6 @@ interface TestimonialItem {
   verified?: boolean;
 }
 
-const HISTORICAL_TESTIMONIALS: TestimonialItem[] = [
-  {
-    id: 1,
-    name: "Mariana S.",
-    city: "Guarulhos / SP",
-    text: "Cheguei à Fraternidade com muita angústia e dores inexplicáveis. O acolhimento fraterno e a sessão de apometria trouxeram uma paz de espírito que eu não sentia há anos.",
-    date: "Assistida presencial",
-    verified: true,
-  },
-  {
-    id: 2,
-    name: "Carlos Eduardo M.",
-    city: "São Paulo / SP",
-    text: "Ambiente de imenso respeito, disciplina e amor. A seriedade dos operadores e o respeito à ética do Evangelho me impressionaram profundamente. Gratidão infinita.",
-    date: "Frequentador",
-    verified: true,
-  },
-  {
-    id: 3,
-    name: "Aparecida R.",
-    city: "Guarulhos / SP",
-    text: "Fui atendida presencialmente e a transformação na minha vida e na harmonia da minha família foi imediata. É um verdadeiro pronto-socorro da alma.",
-    date: "Assistida presencial",
-    verified: true,
-  },
-];
-
 export function Testimonials() {
   useSeo({
     title: "Depoimentos e Relatos de Assistidos — Fraternidade Cruzeiro do Sul",
@@ -48,25 +22,51 @@ export function Testimonials() {
   });
 
   const { data: dbTestimonials, isLoading } = useListTestimonials({ approved: true });
+  const { mutateAsync: createTestimonial, isPending } = useCreateTestimonial();
+
+  const [form, setForm] = useState({ name: "", email: "", city: "", text: "" });
+  const [submitted, setSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name.trim() || !form.email.trim() || !form.text.trim()) {
+      setErrorMsg("Por favor, preencha os campos obrigatórios (nome, e-mail e seu relato).");
+      return;
+    }
+    try {
+      const contactCity = form.city.trim() ? `${form.city.trim()} • ${form.email.trim()}` : form.email.trim();
+      await createTestimonial({
+        data: {
+          name: form.name.trim(),
+          city: contactCity,
+          text: form.text.trim(),
+        },
+      });
+      setSubmitted(true);
+      setForm({ name: "", email: "", city: "", text: "" });
+      setErrorMsg("");
+    } catch {
+      setErrorMsg("Ocorreu um erro ao enviar seu relato. Por favor, tente novamente.");
+    }
+  };
 
   const testimonialsList: TestimonialItem[] =
-    Array.isArray(dbTestimonials) && dbTestimonials.length > 0
-      ? dbTestimonials.map((t) => ({
-          id: t.id,
-          name: t.name,
-          city: t.city ?? undefined,
-          text: t.text,
-          date: t.createdAt
-            ? new Date(t.createdAt).toLocaleDateString("pt-BR", { month: "short", year: "numeric" })
-            : "Relato autorizado",
-          verified: true,
-        }))
-      : HISTORICAL_TESTIMONIALS;
-
-  const whatsappMessage = encodeURIComponent(
-    "Olá! Gostaria de enviar meu relato de atendimento na Fraternidade Cruzeiro do Sul para ser compartilhado na página de Depoimentos."
-  );
-  const whatsappUrl = `https://wa.me/5511949446881?text=${whatsappMessage}`;
+    Array.isArray(dbTestimonials)
+      ? dbTestimonials.map((t) => {
+          const cleanedCity = t.city?.split("•")[0].split("(")[0].trim();
+          return {
+            id: t.id,
+            name: t.name,
+            city: cleanedCity && !cleanedCity.includes("@") ? cleanedCity : undefined,
+            text: t.text,
+            date: t.createdAt
+              ? new Date(t.createdAt).toLocaleDateString("pt-BR", { month: "short", year: "numeric" })
+              : "Relato autorizado",
+            verified: true,
+          };
+        })
+      : [];
 
   return (
     <PublicLayout>
@@ -136,6 +136,18 @@ export function Testimonials() {
               <div className="w-8 h-8 rounded-full border-4 border-primary border-t-transparent animate-spin mb-4" />
               <p className="text-sm text-muted-foreground">Carregando relatos...</p>
             </div>
+          ) : testimonialsList.length === 0 ? (
+            <div className="py-16 px-6 text-center max-w-2xl mx-auto bg-card border border-border/70 rounded-sm space-y-3 font-sans">
+              <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-2">
+                <Sparkles size={24} />
+              </div>
+              <h3 className="font-serif text-xl sm:text-2xl font-semibold tracking-tight text-foreground">
+                Espaço de Acolhimento e Gratidão
+              </h3>
+              <p className="text-sm text-foreground/75 leading-relaxed">
+                Os relatos enviados passam por leitura e moderação da nossa coordenação antes de serem publicados. Seja o primeiro a compartilhar sua experiência no formulário abaixo!
+              </p>
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {testimonialsList.map((item) => (
@@ -193,45 +205,127 @@ export function Testimonials() {
         </div>
       </section>
 
-      {/* Share Your Experience / Invitation Box */}
+      {/* Share Your Experience / Submission Box */}
       <section className="py-16 bg-muted/30 border-y border-border">
         <div className="container mx-auto max-w-[1400px] px-4 sm:px-6 md:px-10">
-          <div className="max-w-4xl mx-auto bg-card border border-border p-8 sm:p-12 shadow-xs">
-            <div className="flex flex-col md:flex-row items-center gap-8">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                <MessageCircle size={36} />
+          <div className="max-w-3xl mx-auto bg-card border border-border p-8 sm:p-12 shadow-sm rounded-sm">
+            <div className="text-center mb-8">
+              <div className="w-14 h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
+                <MessageCircle size={28} />
               </div>
+              <p className="eyebrow text-primary">Sua Vivência Importa</p>
+              <h2 className="font-serif text-2xl sm:text-3xl font-semibold tracking-tight text-foreground mt-1">
+                Deixe seu Depoimento
+              </h2>
+              <p className="text-sm sm:text-base text-foreground/75 font-sans mt-2 max-w-xl mx-auto leading-relaxed">
+                Se você recebeu o acolhimento espiritual da Fraternidade Cruzeiro do Sul, seu testemunho pode confortar e orientar quem busca alívio e renovação.
+              </p>
+            </div>
 
-              <div className="flex-1 text-center md:text-left">
-                <p className="eyebrow text-primary">Sua Vivência Importa</p>
-                <h3 className="font-serif text-2xl sm:text-3xl font-medium tracking-tight text-foreground mt-1">
-                  Já participou dos atendimentos na Fraternidade?
+            {submitted ? (
+              <div className="bg-primary/5 border border-primary/20 p-8 text-center rounded-sm space-y-4 font-sans">
+                <CheckCircle className="w-12 h-12 text-primary mx-auto" />
+                <h3 className="font-serif font-semibold text-xl text-foreground">
+                  Depoimento enviado com sucesso!
                 </h3>
-                <p className="text-sm sm:text-base text-foreground/75 font-sans mt-3 leading-relaxed">
-                  Se você recebeu o acolhimento espiritual da Fraternidade Cruzeiro do Sul e gostaria de deixar seu testemunho, sua mensagem pode confortar e orientar quem está passando por momentos difíceis. Resguardamos totalmente seu sigilo e publicamos somente com consentimento expresso.
+                <p className="text-sm text-foreground/80 leading-relaxed max-w-lg mx-auto">
+                  Agradecemos imensamente pelo seu relato e generosidade fraterna. Seu depoimento foi recebido com carinho e será avaliado pela coordenação para publicação.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setSubmitted(false)}
+                  className="mt-4 text-xs font-semibold text-primary uppercase tracking-wider hover:underline"
+                >
+                  Enviar outro relato
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-5 font-sans">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <label htmlFor="name" className="block text-xs font-semibold uppercase tracking-wider text-foreground mb-1.5">
+                      Nome ou Iniciais <span className="text-primary">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      required
+                      value={form.name}
+                      onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
+                      placeholder="Ex: Mariana S."
+                      className="w-full h-11 px-3.5 border border-border bg-background text-foreground text-sm focus:outline-none focus:border-primary rounded-none"
+                    />
+                    <p className="text-[11px] text-muted-foreground mt-1">
+                      Para resguardar sua privacidade, você pode usar apenas suas iniciais.
+                    </p>
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-foreground mb-1.5">
+                      Seu E-mail <span className="text-primary">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      required
+                      value={form.email}
+                      onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
+                      placeholder="seu@email.com"
+                      className="w-full h-11 px-3.5 border border-border bg-background text-foreground text-sm focus:outline-none focus:border-primary rounded-none"
+                    />
+                    <p className="text-[11px] text-muted-foreground mt-1">
+                      Sigiloso. Usado apenas para moderação interna.
+                    </p>
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="city" className="block text-xs font-semibold uppercase tracking-wider text-foreground mb-1.5">
+                    Cidade / Estado <span className="text-muted-foreground font-normal lowercase">(opcional)</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="city"
+                    value={form.city}
+                    onChange={(e) => setForm((prev) => ({ ...prev, city: e.target.value }))}
+                    placeholder="Ex: Guarulhos / SP"
+                    className="w-full h-11 px-3.5 border border-border bg-background text-foreground text-sm focus:outline-none focus:border-primary rounded-none"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="text" className="block text-xs font-semibold uppercase tracking-wider text-foreground mb-1.5">
+                    Seu Relato / Mensagem <span className="text-primary">*</span>
+                  </label>
+                  <textarea
+                    id="text"
+                    required
+                    rows={5}
+                    value={form.text}
+                    onChange={(e) => setForm((prev) => ({ ...prev, text: e.target.value }))}
+                    placeholder="Conte como foi sua experiência, o acolhimento recebido e as transformações vivenciadas..."
+                    className="w-full p-3.5 border border-border bg-background text-foreground text-sm focus:outline-none focus:border-primary resize-none rounded-none"
+                  ></textarea>
+                </div>
+
+                {errorMsg && (
+                  <p className="text-xs text-red-500 font-medium">{errorMsg}</p>
+                )}
+
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  * Todos os depoimentos são moderados pela equipe administrativa antes da aprovação e publicação pública.
                 </p>
 
-                <div className="mt-6 flex flex-wrap items-center justify-center md:justify-start gap-4">
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebd5b] text-white px-5 py-3 text-xs sm:text-sm font-sans font-semibold uppercase tracking-wider transition-colors shadow-sm"
-                  >
-                    <MessageCircle size={17} />
-                    Enviar Relato via WhatsApp
-                  </a>
-
-                  <Link
-                    href="/contato"
-                    className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-5 py-3 text-xs sm:text-sm font-sans font-semibold uppercase tracking-wider transition-colors"
-                  >
-                    Formulário de Contato
-                    <ArrowRight size={15} />
-                  </Link>
-                </div>
-              </div>
-            </div>
+                <button
+                  type="submit"
+                  disabled={isPending}
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3.5 text-xs font-semibold uppercase tracking-wider transition-all flex items-center justify-center gap-2 min-h-[46px] active:scale-[0.98] shadow-sm disabled:opacity-60"
+                >
+                  <Send size={15} />
+                  {isPending ? "Enviando relato..." : "Enviar Depoimento para Moderação"}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </section>

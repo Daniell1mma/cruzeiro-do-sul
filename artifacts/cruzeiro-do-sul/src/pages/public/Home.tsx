@@ -37,27 +37,6 @@ const coordinators = [
   { name: "Sergio", role: "Coordenação", image: "/assets-reference/sergio.webp" },
 ];
 
-const DEFAULT_TESTIMONIALS = [
-  {
-    id: 1,
-    name: "Mariana S.",
-    city: "Guarulhos / SP",
-    text: "Cheguei à Fraternidade com muita angústia e dores inexplicáveis. O acolhimento fraterno e a sessão de apometria trouxeram uma paz de espírito que eu não sentia há anos."
-  },
-  {
-    id: 2,
-    name: "Carlos Eduardo M.",
-    city: "São Paulo / SP",
-    text: "Ambiente de imenso respeito, disciplina e amor. A seriedade dos operadores e o respeito à ética do Evangelho me impressionaram profundamente. Gratidão infinita."
-  },
-  {
-    id: 3,
-    name: "Aparecida R.",
-    city: "Guarulhos / SP",
-    text: "Fui atendida presencialmente e a transformação na minha vida e na harmonia da minha família foi imediata. É um verdadeiro pronto-socorro da alma."
-  }
-];
-
 const DEFAULT_HOME_FAQS = [
   {
     id: 1,
@@ -97,7 +76,7 @@ export function Home() {
   const { data: rawTestimonials } = useListTestimonials({ approved: true });
   const { data: rawFaqItems } = useListFaqItems();
 
-  const testimonials = (Array.isArray(rawTestimonials) && rawTestimonials.length > 0) ? rawTestimonials : DEFAULT_TESTIMONIALS;
+  const testimonials = Array.isArray(rawTestimonials) ? rawTestimonials : [];
   const faqItems = (Array.isArray(rawFaqItems) && rawFaqItems.length > 0) ? rawFaqItems : DEFAULT_HOME_FAQS;
 
   return (
@@ -322,7 +301,11 @@ export function Home() {
                   </div>
                   <div className="border-t border-white/10 pt-4">
                     <div className="font-sans font-semibold text-sm text-white">{testimonial.name}</div>
-                    {testimonial.city && <div className="font-sans font-normal text-xs text-white/70">{testimonial.city}</div>}
+                    {testimonial.city && (
+                      <div className="font-sans font-normal text-xs text-white/70">
+                        {testimonial.city.split('•')[0].split('(')[0].trim()}
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}

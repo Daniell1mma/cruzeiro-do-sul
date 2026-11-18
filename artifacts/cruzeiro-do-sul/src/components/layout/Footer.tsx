@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import { Lock } from "lucide-react";
 import { useListSettings } from "@workspace/api-client-react";
 
 export function Footer() {
@@ -93,10 +94,20 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Copyright */}
-        <p className="eyebrow mt-6 opacity-60 text-[10px] leading-relaxed">
-          &copy; {new Date().getFullYear()} <strong>FRATERNIDADE CRUZEIRO DO SUL DE APOMETRIA DE GUARULHOS</strong> — trabalho voluntário e gratuito
-        </p>
+        {/* Bottom Bar: Copyright & Admin Lock */}
+        <div className="mt-8 pt-6 border-t border-primary-foreground/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-sans">
+          <p className="eyebrow opacity-60 text-[10px] leading-relaxed text-center sm:text-left">
+            &copy; {new Date().getFullYear()} <strong>FRATERNIDADE CRUZEIRO DO SUL DE APOMETRIA DE GUARULHOS</strong> — trabalho voluntário e gratuito
+          </p>
+          <Link
+            href="/admin/login"
+            className="inline-flex items-center gap-1.5 opacity-60 hover:opacity-100 text-white transition-opacity py-1.5 px-3 rounded-xs bg-white/5 hover:bg-white/10 text-[11px] font-semibold uppercase tracking-wider shrink-0"
+            title="Acesso Administrativo"
+          >
+            <Lock size={13} />
+            <span>Área Administrativa</span>
+          </Link>
+        </div>
 
       </div>
     </footer>

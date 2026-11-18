@@ -33,19 +33,10 @@ export function Navbar() {
     <>
       <header className="sticky top-0 z-50 shadow-sm bg-white">
         {/* Top Announcement Bar */}
-        <div className="relative bg-primary py-2 sm:py-2.5 px-3 sm:px-12 text-center flex items-center justify-center">
-          <p className="w-full text-center font-sans text-[11px] sm:text-xs md:text-sm font-semibold text-primary-foreground tracking-normal sm:tracking-wide px-7 sm:px-10 md:px-14 leading-tight">
+        <div className="bg-primary py-2 sm:py-2.5 px-4 text-center flex items-center justify-center">
+          <p className="text-center font-sans text-[11px] sm:text-xs md:text-sm font-semibold text-primary-foreground tracking-normal sm:tracking-wide leading-tight">
             Atendimento 100% gratuito • Mediante agendamento prévio
           </p>
-          <Link
-            href="/admin/login"
-            aria-label="Área Administrativa"
-            title="Área Administrativa"
-            className="absolute right-2 sm:right-4 md:right-6 inline-flex items-center gap-1.5 font-sans text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-primary-foreground/80 hover:text-white transition-opacity p-1.5 min-w-[36px] min-h-[36px] justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-xs"
-          >
-            <Lock size={13} />
-            <span className="hidden md:inline">Admin</span>
-          </Link>
         </div>
 
         {/* Main Navbar */}

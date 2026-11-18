@@ -55,13 +55,6 @@ export function Contact() {
               </h2>
               <div className="space-y-6">
                 <div>
-                  <p className="eyebrow text-muted-foreground">Nome da sede</p>
-                  <p className="text-xl sm:text-2xl font-semibold tracking-tight font-serif text-primary mt-1">
-                    Luz e Expansão da Consciência
-                  </p>
-                </div>
-
-                <div>
                   <p className="eyebrow text-muted-foreground">Endereço</p>
                   <p className="text-base sm:text-lg leading-relaxed mt-1 text-foreground whitespace-pre-line font-medium font-sans">
                     {address}
