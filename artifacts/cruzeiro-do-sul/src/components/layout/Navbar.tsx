@@ -50,17 +50,17 @@ export function Navbar() {
 
         {/* Main Navbar */}
         <div className="bg-background border-b border-border">
-          <div className="mx-auto flex max-w-[1400px] items-center justify-between px-3 sm:px-4 py-3 sm:py-4 md:px-8">
+          <div className="mx-auto flex max-w-[1400px] items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 md:px-6 2xl:px-8">
             
             {/* Logo */}
             <Link
               href="/"
-              className="flex items-center gap-2 sm:gap-3 font-serif text-xs sm:text-sm font-bold tracking-[0.1em] sm:tracking-[0.12em] uppercase leading-tight text-foreground hover:opacity-90 transition-opacity shrink-0"
+              className="flex items-center gap-2.5 sm:gap-3 leading-tight text-foreground hover:opacity-90 transition-opacity shrink-0"
             >
               <img
                 src="/logo.webp"
                 alt="Logo Fraternidade Cruzeiro do Sul"
-                className="h-11 sm:h-14 md:h-16 w-auto object-contain"
+                className="h-10 sm:h-12 md:h-13 w-auto object-contain"
                 onError={(e) => {
                   const target = e.currentTarget as HTMLImageElement;
                   if (target.src.endsWith(".webp")) {
@@ -71,34 +71,40 @@ export function Navbar() {
                 }}
               />
               <span className="flex flex-col text-[#07145C]">
-                <span className="tracking-widest text-[11px] sm:text-xs md:text-sm font-bold">Fraternidade</span>
-                <span className="text-[9px] sm:text-[11px] md:text-xs text-muted-foreground font-sans uppercase font-medium">Cruzeiro do Sul de</span>
-                <span className="text-[10px] sm:text-xs md:text-sm font-bold">Apometria de Guarulhos</span>
+                <span className="font-serif text-xs sm:text-sm md:text-[15px] font-bold tracking-wide">
+                  Fraternidade Cruzeiro do Sul
+                </span>
+                <span className="text-[9px] sm:text-[10px] text-muted-foreground font-sans uppercase tracking-wider font-medium">
+                  Apometria de Guarulhos
+                </span>
               </span>
             </Link>
 
             {/* Desktop Nav Links */}
-            <nav className="hidden xl:flex items-center h-full">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  href={link.path}
-                  className={`eyebrow flex items-center h-8 border-l border-border px-3 2xl:px-4 text-xs transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${
-                    location === link.path
-                      ? "text-primary font-bold bg-primary/5"
-                      : "text-foreground/80"
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
+            <nav className="hidden xl:flex items-center gap-0.5 2xl:gap-1.5 shrink-1">
+              {navLinks.map((link) => {
+                const isActive = location === link.path;
+                return (
+                  <Link
+                    key={link.path}
+                    href={link.path}
+                    className={`px-2 xl:px-2.5 2xl:px-3 py-1.5 text-[11px] 2xl:text-xs font-semibold tracking-wider transition-colors rounded-sm whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                      isActive
+                        ? "text-primary font-bold bg-primary/10"
+                        : "text-foreground/80 hover:text-primary hover:bg-muted/60"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
             </nav>
 
             {/* Desktop CTA */}
-            <div className="hidden xl:flex items-center gap-3 shrink-0">
+            <div className="hidden xl:flex items-center shrink-0">
               <Link
                 href="/atendimento"
-                className="inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-primary-foreground px-5 py-2.5 text-xs font-bold uppercase tracking-widest transition-all shadow-sm rounded-none active:scale-[0.98]"
+                className="inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-primary-foreground px-3.5 2xl:px-5 py-2 2xl:py-2.5 text-[11px] 2xl:text-xs font-bold uppercase tracking-wider transition-all shadow-sm rounded-sm active:scale-[0.98] whitespace-nowrap"
               >
                 Agendar Atendimento
               </Link>
